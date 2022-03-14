@@ -155,7 +155,36 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .should('be.checked')
 
     })
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function(){
+        cy.get('input[type="file"]')
+        .should('not.have.value')
+        .selectFile('./cypress/fixtures/example.json')
+        .should(function($input) {
+            console.log($input) //ajudar verificar onde o example json está no input isos no console do browser
+            expect($input[0].files[0].name).to.equal('example.json')
+        })
+    })
 
+    it('seleciona um arquivo simulando um drag-and-drop', function(){
+        cy.get('input[type="file"]')
+        .should('not.have.value')
+        .selectFile('./cypress/fixtures/example.json', { action: 'drag-drop'})
+        .should(function($input) {
+            console.log($input) //ajudar verificar onde o example json está no input isos no console do browser
+            expect($input[0].files[0].name).to.equal('example.json')
+        })
+    })
+
+    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function(){
+        cy.fixture('example').as('sampleFile')
+        cy.get('input[type="file"]')
+        .should('not.have.value')
+        .selectFile('@sampleFile')
+        // .should(function($input) {
+        //     console.log($input) //ajudar verificar onde o example json está no input isos no console do browser
+        //     expect($input[0].files[0].name).to.equal('example.json')
+        // })
+    })
 
   })
   
