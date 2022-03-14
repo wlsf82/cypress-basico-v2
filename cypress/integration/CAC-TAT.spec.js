@@ -180,10 +180,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('input[type="file"]')
         .should('not.have.value')
         .selectFile('@sampleFile')
-        // .should(function($input) {
-        //     console.log($input) //ajudar verificar onde o example json está no input isos no console do browser
-        //     expect($input[0].files[0].name).to.equal('example.json')
-        // })
+        .should(function($input) {
+            console.log($input) //ajudar verificar onde o example json está no input isos no console do browser
+            expect($input[0].files[0].name).to.equal('example.json')
+        })
     })
 
   })
