@@ -30,3 +30,5 @@ Este é mais um curso da [**Escola Talking About Testing**](https://udemy.com/us
 
 
 - npm run cy:open
+- npm run cy:open:mobile  --script que sobescreve o viewport do arquivo cypress.json
+- npm run test:mobile   -- script para executar em modo handles
