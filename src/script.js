@@ -3,6 +3,15 @@ let isPhoneRequired = false
 const phoneLabelSpan = document.querySelector('.phone-label-span')
 const phoneField = document.getElementById('phone')
 
+document.querySelector("#phone").addEventListener("keypress", function (event) {
+  var charCode =
+    typeof event.which == "undefined" ? event.keyCode : event.which;
+  var charStr = String.fromCharCode(charCode);
+  if (!charStr.match(/^[0-9]+$/)) {
+    event.preventDefault();
+  }
+})
+
 document.querySelector('#phone-checkbox')
   .addEventListener('change', function() {
     if (this.checked) {
