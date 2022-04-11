@@ -866,7 +866,7 @@
 [31m-    cy.getCookies().should('be.empty')[m
 [31m-  })[m
 [31m-})[m
-[1mdiff --git a/cypress/integration/2-advanced-examples/cypress_api.spec.js b/cypress/integration/2-advanced-examples/cypress_api.spec.js[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/cypress_api.spec.js[m
 [1mdeleted file mode 100644[m
 [1mindex ec8ceae..0000000[m
 [1m--- a/cypress/integration/2-advanced-examples/cypress_api.spec.js[m
