@@ -1,0 +1,2324 @@
+[1mdiff --git a/cypress/integration/1-getting-started/todo.spec.js b/cypress/integration/1-getting-started/todo.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 4768ff9..0000000[m
+[1m--- a/cypress/integration/1-getting-started/todo.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,143 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-// Welcome to Cypress![m
+[31m-//[m
+[31m-// This spec file contains a variety of sample tests[m
+[31m-// for a todo list app that are designed to demonstrate[m
+[31m-// the power of writing tests in Cypress.[m
+[31m-//[m
+[31m-// To learn more about how Cypress works and[m
+[31m-// what makes it such an awesome testing tool,[m
+[31m-// please read our getting started guide:[m
+[31m-// https://on.cypress.io/introduction-to-cypress[m
+[31m-[m
+[31m-describe('example to-do app', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    // Cypress starts out with a blank slate for each test[m
+[31m-    // so we must tell it to visit our website with the `cy.visit()` command.[m
+[31m-    // Since we want to visit the same URL at the start of all our tests,[m
+[31m-    // we include it in our beforeEach function so that it runs before each test[m
+[31m-    cy.visit('https://example.cypress.io/todo')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('displays two todo items by default', () => {[m
+[31m-    // We use the `cy.get()` command to get all elements that match the selector.[m
+[31m-    // Then, we use `should` to assert that there are two matched items,[m
+[31m-    // which are the two default items.[m
+[31m-    cy.get('.todo-list li').should('have.length', 2)[m
+[31m-[m
+[31m-    // We can go even further and check that the default todos each contain[m
+[31m-    // the correct text. We use the `first` and `last` functions[m
+[31m-    // to get just the first and last matched elements individually,[m
+[31m-    // and then perform an assertion with `should`.[m
+[31m-    cy.get('.todo-list li').first().should('have.text', 'Pay electric bill')[m
+[31m-    cy.get('.todo-list li').last().should('have.text', 'Walk the dog')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('can add new todo items', () => {[m
+[31m-    // We'll store our item text in a variable so we can reuse it[m
+[31m-    const newItem = 'Feed the cat'[m
+[31m-[m
+[31m-    // Let's get the input element and use the `type` command to[m
+[31m-    // input our new list item. After typing the content of our item,[m
+[31m-    // we need to type the enter key as well in order to submit the input.[m
+[31m-    // This input has a data-test attribute so we'll use that to select the[m
+[31m-    // element in accordance with best practices:[m
+[31m-    // https://on.cypress.io/selecting-elements[m
+[31m-    cy.get('[data-test=new-todo]').type(`${newItem}{enter}`)[m
+[31m-[m
+[31m-    // Now that we've typed our new item, let's check that it actually was added to the list.[m
+[31m-    // Since it's the newest item, it should exist as the last element in the list.[m
+[31m-    // In addition, with the two default items, we should have a total of 3 elements in the list.[m
+[31m-    // Since assertions yield the element that was asserted on,[m
+[31m-    // we can chain both of these assertions together into a single statement.[m
+[31m-    cy.get('.todo-list li')[m
+[31m-      .should('have.length', 3)[m
+[31m-      .last()[m
+[31m-      .should('have.text', newItem)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('can check off an item as completed', () => {[m
+[31m-    // In addition to using the `get` command to get an element by selector,[m
+[31m-    // we can also use the `contains` command to get an element by its contents.[m
+[31m-    // However, this will yield the <label>, which is lowest-level element that contains the text.[m
+[31m-    // In order to check the item, we'll find the <input> element for this <label>[m
+[31m-    // by traversing up the dom to the parent element. From there, we can `find`[m
+[31m-    // the child checkbox <input> element and use the `check` command to check it.[m
+[31m-    cy.contains('Pay electric bill')[m
+[31m-      .parent()[m
+[31m-      .find('input[type=checkbox]')[m
+[31m-      .check()[m
+[31m-[m
+[31m-    // Now that we've checked the button, we can go ahead and make sure[m
+[31m-    // that the list element is now marked as completed.[m
+[31m-    // Again we'll use `contains` to find the <label> element and then use the `parents` command[m
+[31m-    // to traverse multiple levels up the dom until we find the corresponding <li> element.[m
+[31m-    // Once we get that element, we can assert that it has the completed class.[m
+[31m-    cy.contains('Pay electric bill')[m
+[31m-      .parents('li')[m
+[31m-      .should('have.class', 'completed')[m
+[31m-  })[m
+[31m-[m
+[31m-  context('with a checked task', () => {[m
+[31m-    beforeEach(() => {[m
+[31m-      // We'll take the command we used above to check off an element[m
+[31m-      // Since we want to perform multiple tests that start with checking[m
+[31m-      // one element, we put it in the beforeEach hook[m
+[31m-      // so that it runs at the start of every test.[m
+[31m-      cy.contains('Pay electric bill')[m
+[31m-        .parent()[m
+[31m-        .find('input[type=checkbox]')[m
+[31m-        .check()[m
+[31m-    })[m
+[31m-[m
+[31m-    it('can filter for uncompleted tasks', () => {[m
+[31m-      // We'll click on the "active" button in order to[m
+[31m-      // display only incomplete items[m
+[31m-      cy.contains('Active').click()[m
+[31m-[m
+[31m-      // After filtering, we can assert that there is only the one[m
+[31m-      // incomplete item in the list.[m
+[31m-      cy.get('.todo-list li')[m
+[31m-        .should('have.length', 1)[m
+[31m-        .first()[m
+[31m-        .should('have.text', 'Walk the dog')[m
+[31m-[m
+[31m-      // For good measure, let's also assert that the task we checked off[m
+[31m-      // does not exist on the page.[m
+[31m-      cy.contains('Pay electric bill').should('not.exist')[m
+[31m-    })[m
+[31m-[m
+[31m-    it('can filter for completed tasks', () => {[m
+[31m-      // We can perform similar steps as the test above to ensure[m
+[31m-      // that only completed tasks are shown[m
+[31m-      cy.contains('Completed').click()[m
+[31m-[m
+[31m-      cy.get('.todo-list li')[m
+[31m-        .should('have.length', 1)[m
+[31m-        .first()[m
+[31m-        .should('have.text', 'Pay electric bill')[m
+[31m-[m
+[31m-      cy.contains('Walk the dog').should('not.exist')[m
+[31m-    })[m
+[31m-[m
+[31m-    it('can delete all completed tasks', () => {[m
+[31m-      // First, let's click the "Clear completed" button[m
+[31m-      // `contains` is actually serving two purposes here.[m
+[31m-      // First, it's ensuring that the button exists within the dom.[m
+[31m-      // This button only appears when at least one task is checked[m
+[31m-      // so this command is implicitly verifying that it does exist.[m
+[31m-      // Second, it selects the button so we can click it.[m
+[31m-      cy.contains('Clear completed').click()[m
+[31m-[m
+[31m-      // Then we can make sure that there is only one element[m
+[31m-      // in the list and our element does not exist[m
+[31m-      cy.get('.todo-list li')[m
+[31m-        .should('have.length', 1)[m
+[31m-        .should('not.have.text', 'Pay electric bill')[m
+[31m-[m
+[31m-      // Finally, make sure that the clear button no longer exists.[m
+[31m-      cy.contains('Clear completed').should('not.exist')[m
+[31m-    })[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/actions.spec.js b/cypress/integration/2-advanced-examples/actions.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 0926379..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/actions.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,299 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Actions', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/actions')[m
+[31m-  })[m
+[31m-[m
+[31m-  // https://on.cypress.io/interacting-with-elements[m
+[31m-[m
+[31m-  it('.type() - type into a DOM element', () => {[m
+[31m-    // https://on.cypress.io/type[m
+[31m-    cy.get('.action-email')[m
+[31m-      .type('fake@email.com').should('have.value', 'fake@email.com')[m
+[31m-[m
+[31m-      // .type() with special character sequences[m
+[31m-      .type('{leftarrow}{rightarrow}{uparrow}{downarrow}')[m
+[31m-      .type('{del}{selectall}{backspace}')[m
+[31m-[m
+[31m-      // .type() with key modifiers[m
+[31m-      .type('{alt}{option}') //these are equivalent[m
+[31m-      .type('{ctrl}{control}') //these are equivalent[m
+[31m-      .type('{meta}{command}{cmd}') //these are equivalent[m
+[31m-      .type('{shift}')[m
+[31m-[m
+[31m-      // Delay each keypress by 0.1 sec[m
+[31m-      .type('slow.typing@email.com', { delay: 100 })[m
+[31m-      .should('have.value', 'slow.typing@email.com')[m
+[31m-[m
+[31m-    cy.get('.action-disabled')[m
+[31m-      // Ignore error checking prior to type[m
+[31m-      // like whether the input is visible or disabled[m
+[31m-      .type('disabled error checking', { force: true })[m
+[31m-      .should('have.value', 'disabled error checking')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.focus() - focus on a DOM element', () => {[m
+[31m-    // https://on.cypress.io/focus[m
+[31m-    cy.get('.action-focus').focus()[m
+[31m-      .should('have.class', 'focus')[m
+[31m-      .prev().should('have.attr', 'style', 'color: orange;')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.blur() - blur off a DOM element', () => {[m
+[31m-    // https://on.cypress.io/blur[m
+[31m-    cy.get('.action-blur').type('About to blur').blur()[m
+[31m-      .should('have.class', 'error')[m
+[31m-      .prev().should('have.attr', 'style', 'color: red;')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.clear() - clears an input or textarea element', () => {[m
+[31m-    // https://on.cypress.io/clear[m
+[31m-    cy.get('.action-clear').type('Clear this text')[m
+[31m-      .should('have.value', 'Clear this text')[m
+[31m-      .clear()[m
+[31m-      .should('have.value', '')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.submit() - submit a form', () => {[m
+[31m-    // https://on.cypress.io/submit[m
+[31m-    cy.get('.action-form')[m
+[31m-      .find('[type="text"]').type('HALFOFF')[m
+[31m-[m
+[31m-    cy.get('.action-form').submit()[m
+[31m-      .next().should('contain', 'Your form has been submitted!')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.click() - click on a DOM element', () => {[m
+[31m-    // https://on.cypress.io/click[m
+[31m-    cy.get('.action-btn').click()[m
+[31m-[m
+[31m-    // You can click on 9 specific positions of an element:[m
+[31m-    //  -----------------------------------[m
+[31m-    // | topLeft        top       topRight |[m
+[31m-    // |                                   |[m
+[31m-    // |                                   |[m
+[31m-    // |                                   |[m
+[31m-    // | left          center        right |[m
+[31m-    // |                                   |[m
+[31m-    // |                                   |[m
+[31m-    // |                                   |[m
+[31m-    // | bottomLeft   bottom   bottomRight |[m
+[31m-    //  -----------------------------------[m
+[31m-[m
+[31m-    // clicking in the center of the element is the default[m
+[31m-    cy.get('#action-canvas').click()[m
+[31m-[m
+[31m-    cy.get('#action-canvas').click('topLeft')[m
+[31m-    cy.get('#action-canvas').click('top')[m
+[31m-    cy.get('#action-canvas').click('topRight')[m
+[31m-    cy.get('#action-canvas').click('left')[m
+[31m-    cy.get('#action-canvas').click('right')[m
+[31m-    cy.get('#action-canvas').click('bottomLeft')[m
+[31m-    cy.get('#action-canvas').click('bottom')[m
+[31m-    cy.get('#action-canvas').click('bottomRight')[m
+[31m-[m
+[31m-    // .click() accepts an x and y coordinate[m
+[31m-    // that controls where the click occurs :)[m
+[31m-[m
+[31m-    cy.get('#action-canvas')[m
+[31m-      .click(80, 75) // click 80px on x coord and 75px on y coord[m
+[31m-      .click(170, 75)[m
+[31m-      .click(80, 165)[m
+[31m-      .click(100, 185)[m
+[31m-      .click(125, 190)[m
+[31m-      .click(150, 185)[m
+[31m-      .click(170, 165)[m
+[31m-[m
+[31m-    // click multiple elements by passing multiple: true[m
+[31m-    cy.get('.action-labels>.label').click({ multiple: true })[m
+[31m-[m
+[31m-    // Ignore error checking prior to clicking[m
+[31m-    cy.get('.action-opacity>.btn').click({ force: true })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.dblclick() - double click on a DOM element', () => {[m
+[31m-    // https://on.cypress.io/dblclick[m
+[31m-[m
+[31m-    // Our app has a listener on 'dblclick' event in our 'scripts.js'[m
+[31m-    // that hides the div and shows an input on double click[m
+[31m-    cy.get('.action-div').dblclick().should('not.be.visible')[m
+[31m-    cy.get('.action-input-hidden').should('be.visible')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.rightclick() - right click on a DOM element', () => {[m
+[31m-    // https://on.cypress.io/rightclick[m
+[31m-[m
+[31m-    // Our app has a listener on 'contextmenu' event in our 'scripts.js'[m
+[31m-    // that hides the div and shows an input on right click[m
+[31m-    cy.get('.rightclick-action-div').rightclick().should('not.be.visible')[m
+[31m-    cy.get('.rightclick-action-input-hidden').should('be.visible')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.check() - check a checkbox or radio element', () => {[m
+[31m-    // https://on.cypress.io/check[m
+[31m-[m
+[31m-    // By default, .check() will check all[m
+[31m-    // matching checkbox or radio elements in succession, one after another[m
+[31m-    cy.get('.action-checkboxes [type="checkbox"]').not('[disabled]')[m
+[31m-      .check().should('be.checked')[m
+[31m-[m
+[31m-    cy.get('.action-radios [type="radio"]').not('[disabled]')[m
+[31m-      .check().should('be.checked')[m
+[31m-[m
+[31m-    // .check() accepts a value argument[m
+[31m-    cy.get('.action-radios [type="radio"]')[m
+[31m-      .check('radio1').should('be.checked')[m
+[31m-[m
+[31m-    // .check() accepts an array of values[m
+[31m-    cy.get('.action-multiple-checkboxes [type="checkbox"]')[m
+[31m-      .check(['checkbox1', 'checkbox2']).should('be.checked')[m
+[31m-[m
+[31m-    // Ignore error checking prior to checking[m
+[31m-    cy.get('.action-checkboxes [disabled]')[m
+[31m-      .check({ force: true }).should('be.checked')[m
+[31m-[m
+[31m-    cy.get('.action-radios [type="radio"]')[m
+[31m-      .check('radio3', { force: true }).should('be.checked')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.uncheck() - uncheck a checkbox element', () => {[m
+[31m-    // https://on.cypress.io/uncheck[m
+[31m-[m
+[31m-    // By default, .uncheck() will uncheck all matching[m
+[31m-    // checkbox elements in succession, one after another[m
+[31m-    cy.get('.action-check [type="checkbox"]')[m
+[31m-      .not('[disabled]')[m
+[31m-      .uncheck().should('not.be.checked')[m
+[31m-[m
+[31m-    // .uncheck() accepts a value argument[m
+[31m-    cy.get('.action-check [type="checkbox"]')[m
+[31m-      .check('checkbox1')[m
+[31m-      .uncheck('checkbox1').should('not.be.checked')[m
+[31m-[m
+[31m-    // .uncheck() accepts an array of values[m
+[31m-    cy.get('.action-check [type="checkbox"]')[m
+[31m-      .check(['checkbox1', 'checkbox3'])[m
+[31m-      .uncheck(['checkbox1', 'checkbox3']).should('not.be.checked')[m
+[31m-[m
+[31m-    // Ignore error checking prior to unchecking[m
+[31m-    cy.get('.action-check [disabled]')[m
+[31m-      .uncheck({ force: true }).should('not.be.checked')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.select() - select an option in a <select> element', () => {[m
+[31m-    // https://on.cypress.io/select[m
+[31m-[m
+[31m-    // at first, no option should be selected[m
+[31m-    cy.get('.action-select')[m
+[31m-      .should('have.value', '--Select a fruit--')[m
+[31m-[m
+[31m-    // Select option(s) with matching text content[m
+[31m-    cy.get('.action-select').select('apples')[m
+[31m-    // confirm the apples were selected[m
+[31m-    // note that each value starts with "fr-" in our HTML[m
+[31m-    cy.get('.action-select').should('have.value', 'fr-apples')[m
+[31m-[m
+[31m-    cy.get('.action-select-multiple')[m
+[31m-      .select(['apples', 'oranges', 'bananas'])[m
+[31m-      // when getting multiple values, invoke "val" method first[m
+[31m-      .invoke('val')[m
+[31m-      .should('deep.equal', ['fr-apples', 'fr-oranges', 'fr-bananas'])[m
+[31m-[m
+[31m-    // Select option(s) with matching value[m
+[31m-    cy.get('.action-select').select('fr-bananas')[m
+[31m-      // can attach an assertion right away to the element[m
+[31m-      .should('have.value', 'fr-bananas')[m
+[31m-[m
+[31m-    cy.get('.action-select-multiple')[m
+[31m-      .select(['fr-apples', 'fr-oranges', 'fr-bananas'])[m
+[31m-      .invoke('val')[m
+[31m-      .should('deep.equal', ['fr-apples', 'fr-oranges', 'fr-bananas'])[m
+[31m-[m
+[31m-    // assert the selected values include oranges[m
+[31m-    cy.get('.action-select-multiple')[m
+[31m-      .invoke('val').should('include', 'fr-oranges')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.scrollIntoView() - scroll an element into view', () => {[m
+[31m-    // https://on.cypress.io/scrollintoview[m
+[31m-[m
+[31m-    // normally all of these buttons are hidden,[m
+[31m-    // because they're not within[m
+[31m-    // the viewable area of their parent[m
+[31m-    // (we need to scroll to see them)[m
+[31m-    cy.get('#scroll-horizontal button')[m
+[31m-      .should('not.be.visible')[m
+[31m-[m
+[31m-    // scroll the button into view, as if the user had scrolled[m
+[31m-    cy.get('#scroll-horizontal button').scrollIntoView()[m
+[31m-      .should('be.visible')[m
+[31m-[m
+[31m-    cy.get('#scroll-vertical button')[m
+[31m-      .should('not.be.visible')[m
+[31m-[m
+[31m-    // Cypress handles the scroll direction needed[m
+[31m-    cy.get('#scroll-vertical button').scrollIntoView()[m
+[31m-      .should('be.visible')[m
+[31m-[m
+[31m-    cy.get('#scroll-both button')[m
+[31m-      .should('not.be.visible')[m
+[31m-[m
+[31m-    // Cypress knows to scroll to the right and down[m
+[31m-    cy.get('#scroll-both button').scrollIntoView()[m
+[31m-      .should('be.visible')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.trigger() - trigger an event on a DOM element', () => {[m
+[31m-    // https://on.cypress.io/trigger[m
+[31m-[m
+[31m-    // To interact with a range input (slider)[m
+[31m-    // we need to set its value & trigger the[m
+[31m-    // event to signal it changed[m
+[31m-[m
+[31m-    // Here, we invoke jQuery's val() method to set[m
+[31m-    // the value and trigger the 'change' event[m
+[31m-    cy.get('.trigger-input-range')[m
+[31m-      .invoke('val', 25)[m
+[31m-      .trigger('change')[m
+[31m-      .get('input[type=range]').siblings('p')[m
+[31m-      .should('have.text', '25')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.scrollTo() - scroll the window or element to a position', () => {[m
+[31m-    // https://on.cypress.io/scrollto[m
+[31m-[m
+[31m-    // You can scroll to 9 specific positions of an element:[m
+[31m-    //  -----------------------------------[m
+[31m-    // | topLeft        top       topRight |[m
+[31m-    // |                                   |[m
+[31m-    // |                                   |[m
+[31m-    // |                                   |[m
+[31m-    // | left          center        right |[m
+[31m-    // |                                   |[m
+[31m-    // |                                   |[m
+[31m-    // |                                   |[m
+[31m-    // | bottomLeft   bottom   bottomRight |[m
+[31m-    //  -----------------------------------[m
+[31m-[m
+[31m-    // if you chain .scrollTo() off of cy, we will[m
+[31m-    // scroll the entire window[m
+[31m-    cy.scrollTo('bottom')[m
+[31m-[m
+[31m-    cy.get('#scrollable-horizontal').scrollTo('right')[m
+[31m-[m
+[31m-    // or you can scroll to a specific coordinate:[m
+[31m-    // (x axis, y axis) in pixels[m
+[31m-    cy.get('#scrollable-vertical').scrollTo(250, 250)[m
+[31m-[m
+[31m-    // or you can scroll to a specific percentage[m
+[31m-    // of the (width, height) of the element[m
+[31m-    cy.get('#scrollable-both').scrollTo('75%', '25%')[m
+[31m-[m
+[31m-    // control the easing of the scroll (default is 'swing')[m
+[31m-    cy.get('#scrollable-vertical').scrollTo('center', { easing: 'linear' })[m
+[31m-[m
+[31m-    // control the duration of the scroll (in ms)[m
+[31m-    cy.get('#scrollable-both').scrollTo('center', { duration: 2000 })[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/aliasing.spec.js b/cypress/integration/2-advanced-examples/aliasing.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex a02fb2b..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/aliasing.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,39 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Aliasing', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/aliasing')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.as() - alias a DOM element for later use', () => {[m
+[31m-    // https://on.cypress.io/as[m
+[31m-[m
+[31m-    // Alias a DOM element for use later[m
+[31m-    // We don't have to traverse to the element[m
+[31m-    // later in our code, we reference it with @[m
+[31m-[m
+[31m-    cy.get('.as-table').find('tbody>tr')[m
+[31m-      .first().find('td').first()[m
+[31m-      .find('button').as('firstBtn')[m
+[31m-[m
+[31m-    // when we reference the alias, we place an[m
+[31m-    // @ in front of its name[m
+[31m-    cy.get('@firstBtn').click()[m
+[31m-[m
+[31m-    cy.get('@firstBtn')[m
+[31m-      .should('have.class', 'btn-success')[m
+[31m-      .and('contain', 'Changed')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.as() - alias a route for later use', () => {[m
+[31m-    // Alias the route to wait for its response[m
+[31m-    cy.intercept('GET', '**/comments/*').as('getComment')[m
+[31m-[m
+[31m-    // we have code that gets a comment when[m
+[31m-    // the button is clicked in scripts.js[m
+[31m-    cy.get('.network-btn').click()[m
+[31m-[m
+[31m-    // https://on.cypress.io/wait[m
+[31m-    cy.wait('@getComment').its('response.statusCode').should('eq', 200)[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/assertions.spec.js b/cypress/integration/2-advanced-examples/assertions.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 5ba93d1..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/assertions.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,177 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Assertions', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/assertions')[m
+[31m-  })[m
+[31m-[m
+[31m-  describe('Implicit Assertions', () => {[m
+[31m-    it('.should() - make an assertion about the current subject', () => {[m
+[31m-      // https://on.cypress.io/should[m
+[31m-      cy.get('.assertion-table')[m
+[31m-        .find('tbody tr:last')[m
+[31m-        .should('have.class', 'success')[m
+[31m-        .find('td')[m
+[31m-        .first()[m
+[31m-        // checking the text of the <td> element in various ways[m
+[31m-        .should('have.text', 'Column content')[m
+[31m-        .should('contain', 'Column content')[m
+[31m-        .should('have.html', 'Column content')[m
+[31m-        // chai-jquery uses "is()" to check if element matches selector[m
+[31m-        .should('match', 'td')[m
+[31m-        // to match text content against a regular expression[m
+[31m-        // first need to invoke jQuery method text()[m
+[31m-        // and then match using regular expression[m
+[31m-        .invoke('text')[m
+[31m-        .should('match', /column content/i)[m
+[31m-[m
+[31m-      // a better way to check element's text content against a regular expression[m
+[31m-      // is to use "cy.contains"[m
+[31m-      // https://on.cypress.io/contains[m
+[31m-      cy.get('.assertion-table')[m
+[31m-        .find('tbody tr:last')[m
+[31m-        // finds first <td> element with text content matching regular expression[m
+[31m-        .contains('td', /column content/i)[m
+[31m-        .should('be.visible')[m
+[31m-[m
+[31m-      // for more information about asserting element's text[m
+[31m-      // see https://on.cypress.io/using-cypress-faq#How-do-I-get-an-element’s-text-contents[m
+[31m-    })[m
+[31m-[m
+[31m-    it('.and() - chain multiple assertions together', () => {[m
+[31m-      // https://on.cypress.io/and[m
+[31m-      cy.get('.assertions-link')[m
+[31m-        .should('have.class', 'active')[m
+[31m-        .and('have.attr', 'href')[m
+[31m-        .and('include', 'cypress.io')[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  describe('Explicit Assertions', () => {[m
+[31m-    // https://on.cypress.io/assertions[m
+[31m-    it('expect - make an assertion about a specified subject', () => {[m
+[31m-      // We can use Chai's BDD style assertions[m
+[31m-      expect(true).to.be.true[m
+[31m-      const o = { foo: 'bar' }[m
+[31m-[m
+[31m-      expect(o).to.equal(o)[m
+[31m-      expect(o).to.deep.equal({ foo: 'bar' })[m
+[31m-      // matching text using regular expression[m
+[31m-      expect('FooBar').to.match(/bar$/i)[m
+[31m-    })[m
+[31m-[m
+[31m-    it('pass your own callback function to should()', () => {[m
+[31m-      // Pass a function to should that can have any number[m
+[31m-      // of explicit assertions within it.[m
+[31m-      // The ".should(cb)" function will be retried[m
+[31m-      // automatically until it passes all your explicit assertions or times out.[m
+[31m-      cy.get('.assertions-p')[m
+[31m-        .find('p')[m
+[31m-        .should(($p) => {[m
+[31m-          // https://on.cypress.io/$[m
+[31m-          // return an array of texts from all of the p's[m
+[31m-          // @ts-ignore TS6133 unused variable[m
+[31m-          const texts = $p.map((i, el) => Cypress.$(el).text())[m
+[31m-[m
+[31m-          // jquery map returns jquery object[m
+[31m-          // and .get() convert this to simple array[m
+[31m-          const paragraphs = texts.get()[m
+[31m-[m
+[31m-          // array should have length of 3[m
+[31m-          expect(paragraphs, 'has 3 paragraphs').to.have.length(3)[m
+[31m-[m
+[31m-          // use second argument to expect(...) to provide clear[m
+[31m-          // message with each assertion[m
+[31m-          expect(paragraphs, 'has expected text in each paragraph').to.deep.eq([[m
+[31m-            'Some text from first p',[m
+[31m-            'More text from second p',[m
+[31m-            'And even more text from third p',[m
+[31m-          ])[m
+[31m-        })[m
+[31m-    })[m
+[31m-[m
+[31m-    it('finds element by class name regex', () => {[m
+[31m-      cy.get('.docs-header')[m
+[31m-        .find('div')[m
+[31m-        // .should(cb) callback function will be retried[m
+[31m-        .should(($div) => {[m
+[31m-          expect($div).to.have.length(1)[m
+[31m-[m
+[31m-          const className = $div[0].className[m
+[31m-[m
+[31m-          expect(className).to.match(/heading-/)[m
+[31m-        })[m
+[31m-        // .then(cb) callback is not retried,[m
+[31m-        // it either passes or fails[m
+[31m-        .then(($div) => {[m
+[31m-          expect($div, 'text content').to.have.text('Introduction')[m
+[31m-        })[m
+[31m-    })[m
+[31m-[m
+[31m-    it('can throw any error', () => {[m
+[31m-      cy.get('.docs-header')[m
+[31m-        .find('div')[m
+[31m-        .should(($div) => {[m
+[31m-          if ($div.length !== 1) {[m
+[31m-            // you can throw your own errors[m
+[31m-            throw new Error('Did not find 1 element')[m
+[31m-          }[m
+[31m-[m
+[31m-          const className = $div[0].className[m
+[31m-[m
+[31m-          if (!className.match(/heading-/)) {[m
+[31m-            throw new Error(`Could not find class "heading-" in ${className}`)[m
+[31m-          }[m
+[31m-        })[m
+[31m-    })[m
+[31m-[m
+[31m-    it('matches unknown text between two elements', () => {[m
+[31m-      /**[m
+[31m-       * Text from the first element.[m
+[31m-       * @type {string}[m
+[31m-      */[m
+[31m-      let text[m
+[31m-[m
+[31m-      /**[m
+[31m-       * Normalizes passed text,[m
+[31m-       * useful before comparing text with spaces and different capitalization.[m
+[31m-       * @param {string} s Text to normalize[m
+[31m-      */[m
+[31m-      const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()[m
+[31m-[m
+[31m-      cy.get('.two-elements')[m
+[31m-        .find('.first')[m
+[31m-        .then(($first) => {[m
+[31m-          // save text from the first element[m
+[31m-          text = normalizeText($first.text())[m
+[31m-        })[m
+[31m-[m
+[31m-      cy.get('.two-elements')[m
+[31m-        .find('.second')[m
+[31m-        .should(($div) => {[m
+[31m-          // we can massage text before comparing[m
+[31m-          const secondText = normalizeText($div.text())[m
+[31m-[m
+[31m-          expect(secondText, 'second text').to.equal(text)[m
+[31m-        })[m
+[31m-    })[m
+[31m-[m
+[31m-    it('assert - assert shape of an object', () => {[m
+[31m-      const person = {[m
+[31m-        name: 'Joe',[m
+[31m-        age: 20,[m
+[31m-      }[m
+[31m-[m
+[31m-      assert.isObject(person, 'value is object')[m
+[31m-    })[m
+[31m-[m
+[31m-    it('retries the should callback until assertions pass', () => {[m
+[31m-      cy.get('#random-number')[m
+[31m-        .should(($div) => {[m
+[31m-          const n = parseFloat($div.text())[m
+[31m-[m
+[31m-          expect(n).to.be.gte(1).and.be.lte(10)[m
+[31m-        })[m
+[31m-    })[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/connectors.spec.js b/cypress/integration/2-advanced-examples/connectors.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex ae87991..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/connectors.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,97 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Connectors', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/connectors')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.each() - iterate over an array of elements', () => {[m
+[31m-    // https://on.cypress.io/each[m
+[31m-    cy.get('.connectors-each-ul>li')[m
+[31m-      .each(($el, index, $list) => {[m
+[31m-        console.log($el, index, $list)[m
+[31m-      })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.its() - get properties on the current subject', () => {[m
+[31m-    // https://on.cypress.io/its[m
+[31m-    cy.get('.connectors-its-ul>li')[m
+[31m-      // calls the 'length' property yielding that value[m
+[31m-      .its('length')[m
+[31m-      .should('be.gt', 2)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.invoke() - invoke a function on the current subject', () => {[m
+[31m-    // our div is hidden in our script.js[m
+[31m-    // $('.connectors-div').hide()[m
+[31m-[m
+[31m-    // https://on.cypress.io/invoke[m
+[31m-    cy.get('.connectors-div').should('be.hidden')[m
+[31m-      // call the jquery method 'show' on the 'div.container'[m
+[31m-      .invoke('show')[m
+[31m-      .should('be.visible')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.spread() - spread an array as individual args to callback function', () => {[m
+[31m-    // https://on.cypress.io/spread[m
+[31m-    const arr = ['foo', 'bar', 'baz'][m
+[31m-[m
+[31m-    cy.wrap(arr).spread((foo, bar, baz) => {[m
+[31m-      expect(foo).to.eq('foo')[m
+[31m-      expect(bar).to.eq('bar')[m
+[31m-      expect(baz).to.eq('baz')[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  describe('.then()', () => {[m
+[31m-    it('invokes a callback function with the current subject', () => {[m
+[31m-      // https://on.cypress.io/then[m
+[31m-      cy.get('.connectors-list > li')[m
+[31m-        .then(($lis) => {[m
+[31m-          expect($lis, '3 items').to.have.length(3)[m
+[31m-          expect($lis.eq(0), 'first item').to.contain('Walk the dog')[m
+[31m-          expect($lis.eq(1), 'second item').to.contain('Feed the cat')[m
+[31m-          expect($lis.eq(2), 'third item').to.contain('Write JavaScript')[m
+[31m-        })[m
+[31m-    })[m
+[31m-[m
+[31m-    it('yields the returned value to the next command', () => {[m
+[31m-      cy.wrap(1)[m
+[31m-        .then((num) => {[m
+[31m-          expect(num).to.equal(1)[m
+[31m-[m
+[31m-          return 2[m
+[31m-        })[m
+[31m-        .then((num) => {[m
+[31m-          expect(num).to.equal(2)[m
+[31m-        })[m
+[31m-    })[m
+[31m-[m
+[31m-    it('yields the original subject without return', () => {[m
+[31m-      cy.wrap(1)[m
+[31m-        .then((num) => {[m
+[31m-          expect(num).to.equal(1)[m
+[31m-          // note that nothing is returned from this callback[m
+[31m-        })[m
+[31m-        .then((num) => {[m
+[31m-          // this callback receives the original unchanged value 1[m
+[31m-          expect(num).to.equal(1)[m
+[31m-        })[m
+[31m-    })[m
+[31m-[m
+[31m-    it('yields the value yielded by the last Cypress command inside', () => {[m
+[31m-      cy.wrap(1)[m
+[31m-        .then((num) => {[m
+[31m-          expect(num).to.equal(1)[m
+[31m-          // note how we run a Cypress command[m
+[31m-          // the result yielded by this Cypress command[m
+[31m-          // will be passed to the second ".then"[m
+[31m-          cy.wrap(2)[m
+[31m-        })[m
+[31m-        .then((num) => {[m
+[31m-          // this callback receives the value yielded by "cy.wrap(2)"[m
+[31m-          expect(num).to.equal(2)[m
+[31m-        })[m
+[31m-    })[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/cookies.spec.js b/cypress/integration/2-advanced-examples/cookies.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 31587ff..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/cookies.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,77 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Cookies', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    Cypress.Cookies.debug(true)[m
+[31m-[m
+[31m-    cy.visit('https://example.cypress.io/commands/cookies')[m
+[31m-[m
+[31m-    // clear cookies again after visiting to remove[m
+[31m-    // any 3rd party cookies picked up such as cloudflare[m
+[31m-    cy.clearCookies()[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.getCookie() - get a browser cookie', () => {[m
+[31m-    // https://on.cypress.io/getcookie[m
+[31m-    cy.get('#getCookie .set-a-cookie').click()[m
+[31m-[m
+[31m-    // cy.getCookie() yields a cookie object[m
+[31m-    cy.getCookie('token').should('have.property', 'value', '123ABC')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.getCookies() - get browser cookies', () => {[m
+[31m-    // https://on.cypress.io/getcookies[m
+[31m-    cy.getCookies().should('be.empty')[m
+[31m-[m
+[31m-    cy.get('#getCookies .set-a-cookie').click()[m
+[31m-[m
+[31m-    // cy.getCookies() yields an array of cookies[m
+[31m-    cy.getCookies().should('have.length', 1).should((cookies) => {[m
+[31m-      // each cookie has these properties[m
+[31m-      expect(cookies[0]).to.have.property('name', 'token')[m
+[31m-      expect(cookies[0]).to.have.property('value', '123ABC')[m
+[31m-      expect(cookies[0]).to.have.property('httpOnly', false)[m
+[31m-      expect(cookies[0]).to.have.property('secure', false)[m
+[31m-      expect(cookies[0]).to.have.property('domain')[m
+[31m-      expect(cookies[0]).to.have.property('path')[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.setCookie() - set a browser cookie', () => {[m
+[31m-    // https://on.cypress.io/setcookie[m
+[31m-    cy.getCookies().should('be.empty')[m
+[31m-[m
+[31m-    cy.setCookie('foo', 'bar')[m
+[31m-[m
+[31m-    // cy.getCookie() yields a cookie object[m
+[31m-    cy.getCookie('foo').should('have.property', 'value', 'bar')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.clearCookie() - clear a browser cookie', () => {[m
+[31m-    // https://on.cypress.io/clearcookie[m
+[31m-    cy.getCookie('token').should('be.null')[m
+[31m-[m
+[31m-    cy.get('#clearCookie .set-a-cookie').click()[m
+[31m-[m
+[31m-    cy.getCookie('token').should('have.property', 'value', '123ABC')[m
+[31m-[m
+[31m-    // cy.clearCookies() yields null[m
+[31m-    cy.clearCookie('token').should('be.null')[m
+[31m-[m
+[31m-    cy.getCookie('token').should('be.null')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.clearCookies() - clear browser cookies', () => {[m
+[31m-    // https://on.cypress.io/clearcookies[m
+[31m-    cy.getCookies().should('be.empty')[m
+[31m-[m
+[31m-    cy.get('#clearCookies .set-a-cookie').click()[m
+[31m-[m
+[31m-    cy.getCookies().should('have.length', 1)[m
+[31m-[m
+[31m-    // cy.clearCookies() yields null[m
+[31m-    cy.clearCookies()[m
+[31m-[m
+[31m-    cy.getCookies().should('be.empty')[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/cypress_api.spec.js b/cypress/integration/2-advanced-examples/cypress_api.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex ec8ceae..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/cypress_api.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,202 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Cypress.Commands', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  // https://on.cypress.io/custom-commands[m
+[31m-[m
+[31m-  it('.add() - create a custom command', () => {[m
+[31m-    Cypress.Commands.add('console', {[m
+[31m-      prevSubject: true,[m
+[31m-    }, (subject, method) => {[m
+[31m-      // the previous subject is automatically received[m
+[31m-      // and the commands arguments are shifted[m
+[31m-[m
+[31m-      // allow us to change the console method used[m
+[31m-      method = method || 'log'[m
+[31m-[m
+[31m-      // log the subject to the console[m
+[31m-      // @ts-ignore TS7017[m
+[31m-      console[method]('The subject is', subject)[m
+[31m-[m
+[31m-      // whatever we return becomes the new subject[m
+[31m-      // we don't want to change the subject so[m
+[31m-      // we return whatever was passed in[m
+[31m-      return subject[m
+[31m-    })[m
+[31m-[m
+[31m-    // @ts-ignore TS2339[m
+[31m-    cy.get('button').console('info').then(($button) => {[m
+[31m-      // subject is still $button[m
+[31m-    })[m
+[31m-  })[m
+[31m-})[m
+[31m-[m
+[31m-context('Cypress.Cookies', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  // https://on.cypress.io/cookies[m
+[31m-  it('.debug() - enable or disable debugging', () => {[m
+[31m-    Cypress.Cookies.debug(true)[m
+[31m-[m
+[31m-    // Cypress will now log in the console when[m
+[31m-    // cookies are set or cleared[m
+[31m-    cy.setCookie('fakeCookie', '123ABC')[m
+[31m-    cy.clearCookie('fakeCookie')[m
+[31m-    cy.setCookie('fakeCookie', '123ABC')[m
+[31m-    cy.clearCookie('fakeCookie')[m
+[31m-    cy.setCookie('fakeCookie', '123ABC')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.preserveOnce() - preserve cookies by key', () => {[m
+[31m-    // normally cookies are reset after each test[m
+[31m-    cy.getCookie('fakeCookie').should('not.be.ok')[m
+[31m-[m
+[31m-    // preserving a cookie will not clear it when[m
+[31m-    // the next test starts[m
+[31m-    cy.setCookie('lastCookie', '789XYZ')[m
+[31m-    Cypress.Cookies.preserveOnce('lastCookie')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.defaults() - set defaults for all cookies', () => {[m
+[31m-    // now any cookie with the name 'session_id' will[m
+[31m-    // not be cleared before each new test runs[m
+[31m-    Cypress.Cookies.defaults({[m
+[31m-      preserve: 'session_id',[m
+[31m-    })[m
+[31m-  })[m
+[31m-})[m
+[31m-[m
+[31m-context('Cypress.arch', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Get CPU architecture name of underlying OS', () => {[m
+[31m-    // https://on.cypress.io/arch[m
+[31m-    expect(Cypress.arch).to.exist[m
+[31m-  })[m
+[31m-})[m
+[31m-[m
+[31m-context('Cypress.config()', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Get and set configuration options', () => {[m
+[31m-    // https://on.cypress.io/config[m
+[31m-    let myConfig = Cypress.config()[m
+[31m-[m
+[31m-    expect(myConfig).to.have.property('animationDistanceThreshold', 5)[m
+[31m-    expect(myConfig).to.have.property('baseUrl', null)[m
+[31m-    expect(myConfig).to.have.property('defaultCommandTimeout', 4000)[m
+[31m-    expect(myConfig).to.have.property('requestTimeout', 5000)[m
+[31m-    expect(myConfig).to.have.property('responseTimeout', 30000)[m
+[31m-    expect(myConfig).to.have.property('viewportHeight', 660)[m
+[31m-    expect(myConfig).to.have.property('viewportWidth', 1000)[m
+[31m-    expect(myConfig).to.have.property('pageLoadTimeout', 60000)[m
+[31m-    expect(myConfig).to.have.property('waitForAnimations', true)[m
+[31m-[m
+[31m-    expect(Cypress.config('pageLoadTimeout')).to.eq(60000)[m
+[31m-[m
+[31m-    // this will change the config for the rest of your tests![m
+[31m-    Cypress.config('pageLoadTimeout', 20000)[m
+[31m-[m
+[31m-    expect(Cypress.config('pageLoadTimeout')).to.eq(20000)[m
+[31m-[m
+[31m-    Cypress.config('pageLoadTimeout', 60000)[m
+[31m-  })[m
+[31m-})[m
+[31m-[m
+[31m-context('Cypress.dom', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  // https://on.cypress.io/dom[m
+[31m-  it('.isHidden() - determine if a DOM element is hidden', () => {[m
+[31m-    let hiddenP = Cypress.$('.dom-p p.hidden').get(0)[m
+[31m-    let visibleP = Cypress.$('.dom-p p.visible').get(0)[m
+[31m-[m
+[31m-    // our first paragraph has css class 'hidden'[m
+[31m-    expect(Cypress.dom.isHidden(hiddenP)).to.be.true[m
+[31m-    expect(Cypress.dom.isHidden(visibleP)).to.be.false[m
+[31m-  })[m
+[31m-})[m
+[31m-[m
+[31m-context('Cypress.env()', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  // We can set environment variables for highly dynamic values[m
+[31m-[m
+[31m-  // https://on.cypress.io/environment-variables[m
+[31m-  it('Get environment variables', () => {[m
+[31m-    // https://on.cypress.io/env[m
+[31m-    // set multiple environment variables[m
+[31m-    Cypress.env({[m
+[31m-      host: 'veronica.dev.local',[m
+[31m-      api_server: 'http://localhost:8888/v1/',[m
+[31m-    })[m
+[31m-[m
+[31m-    // get environment variable[m
+[31m-    expect(Cypress.env('host')).to.eq('veronica.dev.local')[m
+[31m-[m
+[31m-    // set environment variable[m
+[31m-    Cypress.env('api_server', 'http://localhost:8888/v2/')[m
+[31m-    expect(Cypress.env('api_server')).to.eq('http://localhost:8888/v2/')[m
+[31m-[m
+[31m-    // get all environment variable[m
+[31m-    expect(Cypress.env()).to.have.property('host', 'veronica.dev.local')[m
+[31m-    expect(Cypress.env()).to.have.property('api_server', 'http://localhost:8888/v2/')[m
+[31m-  })[m
+[31m-})[m
+[31m-[m
+[31m-context('Cypress.log', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Control what is printed to the Command Log', () => {[m
+[31m-    // https://on.cypress.io/cypress-log[m
+[31m-  })[m
+[31m-})[m
+[31m-[m
+[31m-context('Cypress.platform', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Get underlying OS name', () => {[m
+[31m-    // https://on.cypress.io/platform[m
+[31m-    expect(Cypress.platform).to.be.exist[m
+[31m-  })[m
+[31m-})[m
+[31m-[m
+[31m-context('Cypress.version', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Get current version of Cypress being run', () => {[m
+[31m-    // https://on.cypress.io/version[m
+[31m-    expect(Cypress.version).to.be.exist[m
+[31m-  })[m
+[31m-})[m
+[31m-[m
+[31m-context('Cypress.spec', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/cypress-api')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Get current spec information', () => {[m
+[31m-    // https://on.cypress.io/spec[m
+[31m-    // wrap the object so we can inspect it easily by clicking in the command log[m
+[31m-    cy.wrap(Cypress.spec).should('include.keys', ['name', 'relative', 'absolute'])[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/files.spec.js b/cypress/integration/2-advanced-examples/files.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex b827343..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/files.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,88 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-/// JSON fixture file can be loaded directly using[m
+[31m-// the built-in JavaScript bundler[m
+[31m-// @ts-ignore[m
+[31m-const requiredExample = require('../../fixtures/example')[m
+[31m-[m
+[31m-context('Files', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/files')[m
+[31m-  })[m
+[31m-[m
+[31m-  beforeEach(() => {[m
+[31m-    // load example.json fixture file and store[m
+[31m-    // in the test context object[m
+[31m-    cy.fixture('example.json').as('example')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.fixture() - load a fixture', () => {[m
+[31m-    // https://on.cypress.io/fixture[m
+[31m-[m
+[31m-    // Instead of writing a response inline you can[m
+[31m-    // use a fixture file's content.[m
+[31m-[m
+[31m-    // when application makes an Ajax request matching "GET **/comments/*"[m
+[31m-    // Cypress will intercept it and reply with the object in `example.json` fixture[m
+[31m-    cy.intercept('GET', '**/comments/*', { fixture: 'example.json' }).as('getComment')[m
+[31m-[m
+[31m-    // we have code that gets a comment when[m
+[31m-    // the button is clicked in scripts.js[m
+[31m-    cy.get('.fixture-btn').click()[m
+[31m-[m
+[31m-    cy.wait('@getComment').its('response.body')[m
+[31m-      .should('have.property', 'name')[m
+[31m-      .and('include', 'Using fixtures to represent data')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.fixture() or require - load a fixture', function () {[m
+[31m-    // we are inside the "function () { ... }"[m
+[31m-    // callback and can use test context object "this"[m
+[31m-    // "this.example" was loaded in "beforeEach" function callback[m
+[31m-    expect(this.example, 'fixture in the test context')[m
+[31m-      .to.deep.equal(requiredExample)[m
+[31m-[m
+[31m-    // or use "cy.wrap" and "should('deep.equal', ...)" assertion[m
+[31m-    cy.wrap(this.example)[m
+[31m-      .should('deep.equal', requiredExample)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.readFile() - read file contents', () => {[m
+[31m-    // https://on.cypress.io/readfile[m
+[31m-[m
+[31m-    // You can read a file and yield its contents[m
+[31m-    // The filePath is relative to your project's root.[m
+[31m-    cy.readFile('cypress.json').then((json) => {[m
+[31m-      expect(json).to.be.an('object')[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.writeFile() - write to a file', () => {[m
+[31m-    // https://on.cypress.io/writefile[m
+[31m-[m
+[31m-    // You can write to a file[m
+[31m-[m
+[31m-    // Use a response from a request to automatically[m
+[31m-    // generate a fixture file for use later[m
+[31m-    cy.request('https://jsonplaceholder.cypress.io/users')[m
+[31m-      .then((response) => {[m
+[31m-        cy.writeFile('cypress/fixtures/users.json', response.body)[m
+[31m-      })[m
+[31m-[m
+[31m-    cy.fixture('users').should((users) => {[m
+[31m-      expect(users[0].name).to.exist[m
+[31m-    })[m
+[31m-[m
+[31m-    // JavaScript arrays and objects are stringified[m
+[31m-    // and formatted into text.[m
+[31m-    cy.writeFile('cypress/fixtures/profile.json', {[m
+[31m-      id: 8739,[m
+[31m-      name: 'Jane',[m
+[31m-      email: 'jane@example.com',[m
+[31m-    })[m
+[31m-[m
+[31m-    cy.fixture('profile').should((profile) => {[m
+[31m-      expect(profile.name).to.eq('Jane')[m
+[31m-    })[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/local_storage.spec.js b/cypress/integration/2-advanced-examples/local_storage.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 534d8bd..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/local_storage.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,52 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Local Storage', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/local-storage')[m
+[31m-  })[m
+[31m-  // Although local storage is automatically cleared[m
+[31m-  // in between tests to maintain a clean state[m
+[31m-  // sometimes we need to clear the local storage manually[m
+[31m-[m
+[31m-  it('cy.clearLocalStorage() - clear all data in local storage', () => {[m
+[31m-    // https://on.cypress.io/clearlocalstorage[m
+[31m-    cy.get('.ls-btn').click().should(() => {[m
+[31m-      expect(localStorage.getItem('prop1')).to.eq('red')[m
+[31m-      expect(localStorage.getItem('prop2')).to.eq('blue')[m
+[31m-      expect(localStorage.getItem('prop3')).to.eq('magenta')[m
+[31m-    })[m
+[31m-[m
+[31m-    // clearLocalStorage() yields the localStorage object[m
+[31m-    cy.clearLocalStorage().should((ls) => {[m
+[31m-      expect(ls.getItem('prop1')).to.be.null[m
+[31m-      expect(ls.getItem('prop2')).to.be.null[m
+[31m-      expect(ls.getItem('prop3')).to.be.null[m
+[31m-    })[m
+[31m-[m
+[31m-    cy.get('.ls-btn').click().should(() => {[m
+[31m-      expect(localStorage.getItem('prop1')).to.eq('red')[m
+[31m-      expect(localStorage.getItem('prop2')).to.eq('blue')[m
+[31m-      expect(localStorage.getItem('prop3')).to.eq('magenta')[m
+[31m-    })[m
+[31m-[m
+[31m-    // Clear key matching string in Local Storage[m
+[31m-    cy.clearLocalStorage('prop1').should((ls) => {[m
+[31m-      expect(ls.getItem('prop1')).to.be.null[m
+[31m-      expect(ls.getItem('prop2')).to.eq('blue')[m
+[31m-      expect(ls.getItem('prop3')).to.eq('magenta')[m
+[31m-    })[m
+[31m-[m
+[31m-    cy.get('.ls-btn').click().should(() => {[m
+[31m-      expect(localStorage.getItem('prop1')).to.eq('red')[m
+[31m-      expect(localStorage.getItem('prop2')).to.eq('blue')[m
+[31m-      expect(localStorage.getItem('prop3')).to.eq('magenta')[m
+[31m-    })[m
+[31m-[m
+[31m-    // Clear keys matching regex in Local Storage[m
+[31m-    cy.clearLocalStorage(/prop1|2/).should((ls) => {[m
+[31m-      expect(ls.getItem('prop1')).to.be.null[m
+[31m-      expect(ls.getItem('prop2')).to.be.null[m
+[31m-      expect(ls.getItem('prop3')).to.eq('magenta')[m
+[31m-    })[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/location.spec.js b/cypress/integration/2-advanced-examples/location.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 299867d..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/location.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,32 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Location', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/location')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.hash() - get the current URL hash', () => {[m
+[31m-    // https://on.cypress.io/hash[m
+[31m-    cy.hash().should('be.empty')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.location() - get window.location', () => {[m
+[31m-    // https://on.cypress.io/location[m
+[31m-    cy.location().should((location) => {[m
+[31m-      expect(location.hash).to.be.empty[m
+[31m-      expect(location.href).to.eq('https://example.cypress.io/commands/location')[m
+[31m-      expect(location.host).to.eq('example.cypress.io')[m
+[31m-      expect(location.hostname).to.eq('example.cypress.io')[m
+[31m-      expect(location.origin).to.eq('https://example.cypress.io')[m
+[31m-      expect(location.pathname).to.eq('/commands/location')[m
+[31m-      expect(location.port).to.eq('')[m
+[31m-      expect(location.protocol).to.eq('https:')[m
+[31m-      expect(location.search).to.be.empty[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.url() - get the current URL', () => {[m
+[31m-    // https://on.cypress.io/url[m
+[31m-    cy.url().should('eq', 'https://example.cypress.io/commands/location')[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/misc.spec.js b/cypress/integration/2-advanced-examples/misc.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 7222bf4..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/misc.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,104 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Misc', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/misc')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.end() - end the command chain', () => {[m
+[31m-    // https://on.cypress.io/end[m
+[31m-[m
+[31m-    // cy.end is useful when you want to end a chain of commands[m
+[31m-    // and force Cypress to re-query from the root element[m
+[31m-    cy.get('.misc-table').within(() => {[m
+[31m-      // ends the current chain and yields null[m
+[31m-      cy.contains('Cheryl').click().end()[m
+[31m-[m
+[31m-      // queries the entire table again[m
+[31m-      cy.contains('Charles').click()[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.exec() - execute a system command', () => {[m
+[31m-    // execute a system command.[m
+[31m-    // so you can take actions necessary for[m
+[31m-    // your test outside the scope of Cypress.[m
+[31m-    // https://on.cypress.io/exec[m
+[31m-[m
+[31m-    // we can use Cypress.platform string to[m
+[31m-    // select appropriate command[m
+[31m-    // https://on.cypress/io/platform[m
+[31m-    cy.log(`Platform ${Cypress.platform} architecture ${Cypress.arch}`)[m
+[31m-[m
+[31m-    // on CircleCI Windows build machines we have a failure to run bash shell[m
+[31m-    // https://github.com/cypress-io/cypress/issues/5169[m
+[31m-    // so skip some of the tests by passing flag "--env circle=true"[m
+[31m-    const isCircleOnWindows = Cypress.platform === 'win32' && Cypress.env('circle')[m
+[31m-[m
+[31m-    if (isCircleOnWindows) {[m
+[31m-      cy.log('Skipping test on CircleCI')[m
+[31m-[m
+[31m-      return[m
+[31m-    }[m
+[31m-[m
+[31m-    // cy.exec problem on Shippable CI[m
+[31m-    // https://github.com/cypress-io/cypress/issues/6718[m
+[31m-    const isShippable = Cypress.platform === 'linux' && Cypress.env('shippable')[m
+[31m-[m
+[31m-    if (isShippable) {[m
+[31m-      cy.log('Skipping test on ShippableCI')[m
+[31m-[m
+[31m-      return[m
+[31m-    }[m
+[31m-[m
+[31m-    cy.exec('echo Jane Lane')[m
+[31m-      .its('stdout').should('contain', 'Jane Lane')[m
+[31m-[m
+[31m-    if (Cypress.platform === 'win32') {[m
+[31m-      cy.exec('print cypress.json')[m
+[31m-        .its('stderr').should('be.empty')[m
+[31m-    } else {[m
+[31m-      cy.exec('cat cypress.json')[m
+[31m-        .its('stderr').should('be.empty')[m
+[31m-[m
+[31m-      cy.exec('pwd')[m
+[31m-        .its('code').should('eq', 0)[m
+[31m-    }[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.focused() - get the DOM element that has focus', () => {[m
+[31m-    // https://on.cypress.io/focused[m
+[31m-    cy.get('.misc-form').find('#name').click()[m
+[31m-    cy.focused().should('have.id', 'name')[m
+[31m-[m
+[31m-    cy.get('.misc-form').find('#description').click()[m
+[31m-    cy.focused().should('have.id', 'description')[m
+[31m-  })[m
+[31m-[m
+[31m-  context('Cypress.Screenshot', function () {[m
+[31m-    it('cy.screenshot() - take a screenshot', () => {[m
+[31m-      // https://on.cypress.io/screenshot[m
+[31m-      cy.screenshot('my-image')[m
+[31m-    })[m
+[31m-[m
+[31m-    it('Cypress.Screenshot.defaults() - change default config of screenshots', function () {[m
+[31m-      Cypress.Screenshot.defaults({[m
+[31m-        blackout: ['.foo'],[m
+[31m-        capture: 'viewport',[m
+[31m-        clip: { x: 0, y: 0, width: 200, height: 200 },[m
+[31m-        scale: false,[m
+[31m-        disableTimersAndAnimations: true,[m
+[31m-        screenshotOnRunFailure: true,[m
+[31m-        onBeforeScreenshot () { },[m
+[31m-        onAfterScreenshot () { },[m
+[31m-      })[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.wrap() - wrap an object', () => {[m
+[31m-    // https://on.cypress.io/wrap[m
+[31m-    cy.wrap({ foo: 'bar' })[m
+[31m-      .should('have.property', 'foo')[m
+[31m-      .and('include', 'bar')[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/navigation.spec.js b/cypress/integration/2-advanced-examples/navigation.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex b85a468..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/navigation.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,56 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Navigation', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io')[m
+[31m-    cy.get('.navbar-nav').contains('Commands').click()[m
+[31m-    cy.get('.dropdown-menu').contains('Navigation').click()[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.go() - go back or forward in the browser\'s history', () => {[m
+[31m-    // https://on.cypress.io/go[m
+[31m-[m
+[31m-    cy.location('pathname').should('include', 'navigation')[m
+[31m-[m
+[31m-    cy.go('back')[m
+[31m-    cy.location('pathname').should('not.include', 'navigation')[m
+[31m-[m
+[31m-    cy.go('forward')[m
+[31m-    cy.location('pathname').should('include', 'navigation')[m
+[31m-[m
+[31m-    // clicking back[m
+[31m-    cy.go(-1)[m
+[31m-    cy.location('pathname').should('not.include', 'navigation')[m
+[31m-[m
+[31m-    // clicking forward[m
+[31m-    cy.go(1)[m
+[31m-    cy.location('pathname').should('include', 'navigation')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.reload() - reload the page', () => {[m
+[31m-    // https://on.cypress.io/reload[m
+[31m-    cy.reload()[m
+[31m-[m
+[31m-    // reload the page without using the cache[m
+[31m-    cy.reload(true)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.visit() - visit a remote url', () => {[m
+[31m-    // https://on.cypress.io/visit[m
+[31m-[m
+[31m-    // Visit any sub-domain of your current domain[m
+[31m-[m
+[31m-    // Pass options to the visit[m
+[31m-    cy.visit('https://example.cypress.io/commands/navigation', {[m
+[31m-      timeout: 50000, // increase total time for the visit to resolve[m
+[31m-      onBeforeLoad (contentWindow) {[m
+[31m-        // contentWindow is the remote page's window object[m
+[31m-        expect(typeof contentWindow === 'object').to.be.true[m
+[31m-      },[m
+[31m-      onLoad (contentWindow) {[m
+[31m-        // contentWindow is the remote page's window object[m
+[31m-        expect(typeof contentWindow === 'object').to.be.true[m
+[31m-      },[m
+[31m-    })[m
+[31m-    })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/network_requests.spec.js b/cypress/integration/2-advanced-examples/network_requests.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 11213a0..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/network_requests.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,163 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Network Requests', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/network-requests')[m
+[31m-  })[m
+[31m-[m
+[31m-  // Manage HTTP requests in your app[m
+[31m-[m
+[31m-  it('cy.request() - make an XHR request', () => {[m
+[31m-    // https://on.cypress.io/request[m
+[31m-    cy.request('https://jsonplaceholder.cypress.io/comments')[m
+[31m-      .should((response) => {[m
+[31m-        expect(response.status).to.eq(200)[m
+[31m-        // the server sometimes gets an extra comment posted from another machine[m
+[31m-        // which gets returned as 1 extra object[m
+[31m-        expect(response.body).to.have.property('length').and.be.oneOf([500, 501])[m
+[31m-        expect(response).to.have.property('headers')[m
+[31m-        expect(response).to.have.property('duration')[m
+[31m-      })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.request() - verify response using BDD syntax', () => {[m
+[31m-    cy.request('https://jsonplaceholder.cypress.io/comments')[m
+[31m-    .then((response) => {[m
+[31m-      // https://on.cypress.io/assertions[m
+[31m-      expect(response).property('status').to.equal(200)[m
+[31m-      expect(response).property('body').to.have.property('length').and.be.oneOf([500, 501])[m
+[31m-      expect(response).to.include.keys('headers', 'duration')[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.request() with query parameters', () => {[m
+[31m-    // will execute request[m
+[31m-    // https://jsonplaceholder.cypress.io/comments?postId=1&id=3[m
+[31m-    cy.request({[m
+[31m-      url: 'https://jsonplaceholder.cypress.io/comments',[m
+[31m-      qs: {[m
+[31m-        postId: 1,[m
+[31m-        id: 3,[m
+[31m-      },[m
+[31m-    })[m
+[31m-    .its('body')[m
+[31m-    .should('be.an', 'array')[m
+[31m-    .and('have.length', 1)[m
+[31m-    .its('0') // yields first element of the array[m
+[31m-    .should('contain', {[m
+[31m-      postId: 1,[m
+[31m-      id: 3,[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.request() - pass result to the second request', () => {[m
+[31m-    // first, let's find out the userId of the first user we have[m
+[31m-    cy.request('https://jsonplaceholder.cypress.io/users?_limit=1')[m
+[31m-      .its('body') // yields the response object[m
+[31m-      .its('0') // yields the first element of the returned list[m
+[31m-      // the above two commands its('body').its('0')[m
+[31m-      // can be written as its('body.0')[m
+[31m-      // if you do not care about TypeScript checks[m
+[31m-      .then((user) => {[m
+[31m-        expect(user).property('id').to.be.a('number')[m
+[31m-        // make a new post on behalf of the user[m
+[31m-        cy.request('POST', 'https://jsonplaceholder.cypress.io/posts', {[m
+[31m-          userId: user.id,[m
+[31m-          title: 'Cypress Test Runner',[m
+[31m-          body: 'Fast, easy and reliable testing for anything that runs in a browser.',[m
+[31m-        })[m
+[31m-      })[m
+[31m-      // note that the value here is the returned value of the 2nd request[m
+[31m-      // which is the new post object[m
+[31m-      .then((response) => {[m
+[31m-        expect(response).property('status').to.equal(201) // new entity created[m
+[31m-        expect(response).property('body').to.contain({[m
+[31m-          title: 'Cypress Test Runner',[m
+[31m-        })[m
+[31m-[m
+[31m-        // we don't know the exact post id - only that it will be > 100[m
+[31m-        // since JSONPlaceholder has built-in 100 posts[m
+[31m-        expect(response.body).property('id').to.be.a('number')[m
+[31m-          .and.to.be.gt(100)[m
+[31m-[m
+[31m-        // we don't know the user id here - since it was in above closure[m
+[31m-        // so in this test just confirm that the property is there[m
+[31m-        expect(response.body).property('userId').to.be.a('number')[m
+[31m-      })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.request() - save response in the shared test context', () => {[m
+[31m-    // https://on.cypress.io/variables-and-aliases[m
+[31m-    cy.request('https://jsonplaceholder.cypress.io/users?_limit=1')[m
+[31m-      .its('body').its('0') // yields the first element of the returned list[m
+[31m-      .as('user') // saves the object in the test context[m
+[31m-      .then(function () {[m
+[31m-        // NOTE 👀[m
+[31m-        //  By the time this callback runs the "as('user')" command[m
+[31m-        //  has saved the user object in the test context.[m
+[31m-        //  To access the test context we need to use[m
+[31m-        //  the "function () { ... }" callback form,[m
+[31m-        //  otherwise "this" points at a wrong or undefined object![m
+[31m-        cy.request('POST', 'https://jsonplaceholder.cypress.io/posts', {[m
+[31m-          userId: this.user.id,[m
+[31m-          title: 'Cypress Test Runner',[m
+[31m-          body: 'Fast, easy and reliable testing for anything that runs in a browser.',[m
+[31m-        })[m
+[31m-        .its('body').as('post') // save the new post from the response[m
+[31m-      })[m
+[31m-      .then(function () {[m
+[31m-        // When this callback runs, both "cy.request" API commands have finished[m
+[31m-        // and the test context has "user" and "post" objects set.[m
+[31m-        // Let's verify them.[m
+[31m-        expect(this.post, 'post has the right user id').property('userId').to.equal(this.user.id)[m
+[31m-      })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.intercept() - route responses to matching requests', () => {[m
+[31m-    // https://on.cypress.io/intercept[m
+[31m-[m
+[31m-    let message = 'whoa, this comment does not exist'[m
+[31m-[m
+[31m-    // Listen to GET to comments/1[m
+[31m-    cy.intercept('GET', '**/comments/*').as('getComment')[m
+[31m-[m
+[31m-    // we have code that gets a comment when[m
+[31m-    // the button is clicked in scripts.js[m
+[31m-    cy.get('.network-btn').click()[m
+[31m-[m
+[31m-    // https://on.cypress.io/wait[m
+[31m-    cy.wait('@getComment').its('response.statusCode').should('be.oneOf', [200, 304])[m
+[31m-[m
+[31m-    // Listen to POST to comments[m
+[31m-    cy.intercept('POST', '**/comments').as('postComment')[m
+[31m-[m
+[31m-    // we have code that posts a comment when[m
+[31m-    // the button is clicked in scripts.js[m
+[31m-    cy.get('.network-post').click()[m
+[31m-    cy.wait('@postComment').should(({ request, response }) => {[m
+[31m-      expect(request.body).to.include('email')[m
+[31m-      expect(request.headers).to.have.property('content-type')[m
+[31m-      expect(response && response.body).to.have.property('name', 'Using POST in cy.intercept()')[m
+[31m-    })[m
+[31m-[m
+[31m-    // Stub a response to PUT comments/ ****[m
+[31m-    cy.intercept({[m
+[31m-      method: 'PUT',[m
+[31m-      url: '**/comments/*',[m
+[31m-    }, {[m
+[31m-      statusCode: 404,[m
+[31m-      body: { error: message },[m
+[31m-      headers: { 'access-control-allow-origin': '*' },[m
+[31m-      delayMs: 500,[m
+[31m-    }).as('putComment')[m
+[31m-[m
+[31m-    // we have code that puts a comment when[m
+[31m-    // the button is clicked in scripts.js[m
+[31m-    cy.get('.network-put').click()[m
+[31m-[m
+[31m-    cy.wait('@putComment')[m
+[31m-[m
+[31m-    // our 404 statusCode logic in scripts.js executed[m
+[31m-    cy.get('.network-put-comment').should('contain', message)[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/querying.spec.js b/cypress/integration/2-advanced-examples/querying.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 0097048..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/querying.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,114 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Querying', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/querying')[m
+[31m-  })[m
+[31m-[m
+[31m-  // The most commonly used query is 'cy.get()', you can[m
+[31m-  // think of this like the '$' in jQuery[m
+[31m-[m
+[31m-  it('cy.get() - query DOM elements', () => {[m
+[31m-    // https://on.cypress.io/get[m
+[31m-[m
+[31m-    cy.get('#query-btn').should('contain', 'Button')[m
+[31m-[m
+[31m-    cy.get('.query-btn').should('contain', 'Button')[m
+[31m-[m
+[31m-    cy.get('#querying .well>button:first').should('contain', 'Button')[m
+[31m-    //              ↲[m
+[31m-    // Use CSS selectors just like jQuery[m
+[31m-[m
+[31m-    cy.get('[data-test-id="test-example"]').should('have.class', 'example')[m
+[31m-[m
+[31m-    // 'cy.get()' yields jQuery object, you can get its attribute[m
+[31m-    // by invoking `.attr()` method[m
+[31m-    cy.get('[data-test-id="test-example"]')[m
+[31m-      .invoke('attr', 'data-test-id')[m
+[31m-      .should('equal', 'test-example')[m
+[31m-[m
+[31m-    // or you can get element's CSS property[m
+[31m-    cy.get('[data-test-id="test-example"]')[m
+[31m-      .invoke('css', 'position')[m
+[31m-      .should('equal', 'static')[m
+[31m-[m
+[31m-    // or use assertions directly during 'cy.get()'[m
+[31m-    // https://on.cypress.io/assertions[m
+[31m-    cy.get('[data-test-id="test-example"]')[m
+[31m-      .should('have.attr', 'data-test-id', 'test-example')[m
+[31m-      .and('have.css', 'position', 'static')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.contains() - query DOM elements with matching content', () => {[m
+[31m-    // https://on.cypress.io/contains[m
+[31m-    cy.get('.query-list')[m
+[31m-      .contains('bananas')[m
+[31m-      .should('have.class', 'third')[m
+[31m-[m
+[31m-    // we can pass a regexp to `.contains()`[m
+[31m-    cy.get('.query-list')[m
+[31m-      .contains(/^b\w+/)[m
+[31m-      .should('have.class', 'third')[m
+[31m-[m
+[31m-    cy.get('.query-list')[m
+[31m-      .contains('apples')[m
+[31m-      .should('have.class', 'first')[m
+[31m-[m
+[31m-    // passing a selector to contains will[m
+[31m-    // yield the selector containing the text[m
+[31m-    cy.get('#querying')[m
+[31m-      .contains('ul', 'oranges')[m
+[31m-      .should('have.class', 'query-list')[m
+[31m-[m
+[31m-    cy.get('.query-button')[m
+[31m-      .contains('Save Form')[m
+[31m-      .should('have.class', 'btn')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.within() - query DOM elements within a specific element', () => {[m
+[31m-    // https://on.cypress.io/within[m
+[31m-    cy.get('.query-form').within(() => {[m
+[31m-      cy.get('input:first').should('have.attr', 'placeholder', 'Email')[m
+[31m-      cy.get('input:last').should('have.attr', 'placeholder', 'Password')[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.root() - query the root DOM element', () => {[m
+[31m-    // https://on.cypress.io/root[m
+[31m-[m
+[31m-    // By default, root is the document[m
+[31m-    cy.root().should('match', 'html')[m
+[31m-[m
+[31m-    cy.get('.query-ul').within(() => {[m
+[31m-      // In this within, the root is now the ul DOM element[m
+[31m-      cy.root().should('have.class', 'query-ul')[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('best practices - selecting elements', () => {[m
+[31m-    // https://on.cypress.io/best-practices#Selecting-Elements[m
+[31m-    cy.get('[data-cy=best-practices-selecting-elements]').within(() => {[m
+[31m-      // Worst - too generic, no context[m
+[31m-      cy.get('button').click()[m
+[31m-[m
+[31m-      // Bad. Coupled to styling. Highly subject to change.[m
+[31m-      cy.get('.btn.btn-large').click()[m
+[31m-[m
+[31m-      // Average. Coupled to the `name` attribute which has HTML semantics.[m
+[31m-      cy.get('[name=submission]').click()[m
+[31m-[m
+[31m-      // Better. But still coupled to styling or JS event listeners.[m
+[31m-      cy.get('#main').click()[m
+[31m-[m
+[31m-      // Slightly better. Uses an ID but also ensures the element[m
+[31m-      // has an ARIA role attribute[m
+[31m-      cy.get('#main[role=button]').click()[m
+[31m-[m
+[31m-      // Much better. But still coupled to text content that may change.[m
+[31m-      cy.contains('Submit').click()[m
+[31m-[m
+[31m-      // Best. Insulated from all changes.[m
+[31m-      cy.get('[data-cy=submit]').click()[m
+[31m-    })[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/spies_stubs_clocks.spec.js b/cypress/integration/2-advanced-examples/spies_stubs_clocks.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 18b643e..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/spies_stubs_clocks.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,205 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-// remove no check once Cypress.sinon is typed[m
+[31m-// https://github.com/cypress-io/cypress/issues/6720[m
+[31m-[m
+[31m-context('Spies, Stubs, and Clock', () => {[m
+[31m-  it('cy.spy() - wrap a method in a spy', () => {[m
+[31m-    // https://on.cypress.io/spy[m
+[31m-    cy.visit('https://example.cypress.io/commands/spies-stubs-clocks')[m
+[31m-[m
+[31m-    const obj = {[m
+[31m-      foo () {},[m
+[31m-    }[m
+[31m-[m
+[31m-    const spy = cy.spy(obj, 'foo').as('anyArgs')[m
+[31m-[m
+[31m-    obj.foo()[m
+[31m-[m
+[31m-    expect(spy).to.be.called[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.spy() retries until assertions pass', () => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/spies-stubs-clocks')[m
+[31m-[m
+[31m-    const obj = {[m
+[31m-      /**[m
+[31m-       * Prints the argument passed[m
+[31m-       * @param x {any}[m
+[31m-      */[m
+[31m-      foo (x) {[m
+[31m-        console.log('obj.foo called with', x)[m
+[31m-      },[m
+[31m-    }[m
+[31m-[m
+[31m-    cy.spy(obj, 'foo').as('foo')[m
+[31m-[m
+[31m-    setTimeout(() => {[m
+[31m-      obj.foo('first')[m
+[31m-    }, 500)[m
+[31m-[m
+[31m-    setTimeout(() => {[m
+[31m-      obj.foo('second')[m
+[31m-    }, 2500)[m
+[31m-[m
+[31m-    cy.get('@foo').should('have.been.calledTwice')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.stub() - create a stub and/or replace a function with stub', () => {[m
+[31m-    // https://on.cypress.io/stub[m
+[31m-    cy.visit('https://example.cypress.io/commands/spies-stubs-clocks')[m
+[31m-[m
+[31m-    const obj = {[m
+[31m-      /**[m
+[31m-       * prints both arguments to the console[m
+[31m-       * @param a {string}[m
+[31m-       * @param b {string}[m
+[31m-      */[m
+[31m-      foo (a, b) {[m
+[31m-        console.log('a', a, 'b', b)[m
+[31m-      },[m
+[31m-    }[m
+[31m-[m
+[31m-    const stub = cy.stub(obj, 'foo').as('foo')[m
+[31m-[m
+[31m-    obj.foo('foo', 'bar')[m
+[31m-[m
+[31m-    expect(stub).to.be.called[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.clock() - control time in the browser', () => {[m
+[31m-    // https://on.cypress.io/clock[m
+[31m-[m
+[31m-    // create the date in UTC so its always the same[m
+[31m-    // no matter what local timezone the browser is running in[m
+[31m-    const now = new Date(Date.UTC(2017, 2, 14)).getTime()[m
+[31m-[m
+[31m-    cy.clock(now)[m
+[31m-    cy.visit('https://example.cypress.io/commands/spies-stubs-clocks')[m
+[31m-    cy.get('#clock-div').click()[m
+[31m-      .should('have.text', '1489449600')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.tick() - move time in the browser', () => {[m
+[31m-    // https://on.cypress.io/tick[m
+[31m-[m
+[31m-    // create the date in UTC so its always the same[m
+[31m-    // no matter what local timezone the browser is running in[m
+[31m-    const now = new Date(Date.UTC(2017, 2, 14)).getTime()[m
+[31m-[m
+[31m-    cy.clock(now)[m
+[31m-    cy.visit('https://example.cypress.io/commands/spies-stubs-clocks')[m
+[31m-    cy.get('#tick-div').click()[m
+[31m-      .should('have.text', '1489449600')[m
+[31m-[m
+[31m-    cy.tick(10000) // 10 seconds passed[m
+[31m-    cy.get('#tick-div').click()[m
+[31m-      .should('have.text', '1489449610')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.stub() matches depending on arguments', () => {[m
+[31m-    // see all possible matchers at[m
+[31m-    // https://sinonjs.org/releases/latest/matchers/[m
+[31m-    const greeter = {[m
+[31m-      /**[m
+[31m-       * Greets a person[m
+[31m-       * @param {string} name[m
+[31m-      */[m
+[31m-      greet (name) {[m
+[31m-        return `Hello, ${name}!`[m
+[31m-      },[m
+[31m-    }[m
+[31m-[m
+[31m-    cy.stub(greeter, 'greet')[m
+[31m-      .callThrough() // if you want non-matched calls to call the real method[m
+[31m-      .withArgs(Cypress.sinon.match.string).returns('Hi')[m
+[31m-      .withArgs(Cypress.sinon.match.number).throws(new Error('Invalid name'))[m
+[31m-[m
+[31m-    expect(greeter.greet('World')).to.equal('Hi')[m
+[31m-    // @ts-ignore[m
+[31m-    expect(() => greeter.greet(42)).to.throw('Invalid name')[m
+[31m-    expect(greeter.greet).to.have.been.calledTwice[m
+[31m-[m
+[31m-    // non-matched calls goes the actual method[m
+[31m-    // @ts-ignore[m
+[31m-    expect(greeter.greet()).to.equal('Hello, undefined!')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('matches call arguments using Sinon matchers', () => {[m
+[31m-    // see all possible matchers at[m
+[31m-    // https://sinonjs.org/releases/latest/matchers/[m
+[31m-    const calculator = {[m
+[31m-      /**[m
+[31m-       * returns the sum of two arguments[m
+[31m-       * @param a {number}[m
+[31m-       * @param b {number}[m
+[31m-      */[m
+[31m-      add (a, b) {[m
+[31m-        return a + b[m
+[31m-      },[m
+[31m-    }[m
+[31m-[m
+[31m-    const spy = cy.spy(calculator, 'add').as('add')[m
+[31m-[m
+[31m-    expect(calculator.add(2, 3)).to.equal(5)[m
+[31m-[m
+[31m-    // if we want to assert the exact values used during the call[m
+[31m-    expect(spy).to.be.calledWith(2, 3)[m
+[31m-[m
+[31m-    // let's confirm "add" method was called with two numbers[m
+[31m-    expect(spy).to.be.calledWith(Cypress.sinon.match.number, Cypress.sinon.match.number)[m
+[31m-[m
+[31m-    // alternatively, provide the value to match[m
+[31m-    expect(spy).to.be.calledWith(Cypress.sinon.match(2), Cypress.sinon.match(3))[m
+[31m-[m
+[31m-    // match any value[m
+[31m-    expect(spy).to.be.calledWith(Cypress.sinon.match.any, 3)[m
+[31m-[m
+[31m-    // match any value from a list[m
+[31m-    expect(spy).to.be.calledWith(Cypress.sinon.match.in([1, 2, 3]), 3)[m
+[31m-[m
+[31m-    /**[m
+[31m-     * Returns true if the given number is event[m
+[31m-     * @param {number} x[m
+[31m-     */[m
+[31m-    const isEven = (x) => x % 2 === 0[m
+[31m-[m
+[31m-    // expect the value to pass a custom predicate function[m
+[31m-    // the second argument to "sinon.match(predicate, message)" is[m
+[31m-    // shown if the predicate does not pass and assertion fails[m
+[31m-    expect(spy).to.be.calledWith(Cypress.sinon.match(isEven, 'isEven'), 3)[m
+[31m-[m
+[31m-    /**[m
+[31m-     * Returns a function that checks if a given number is larger than the limit[m
+[31m-     * @param {number} limit[m
+[31m-     * @returns {(x: number) => boolean}[m
+[31m-     */[m
+[31m-    const isGreaterThan = (limit) => (x) => x > limit[m
+[31m-[m
+[31m-    /**[m
+[31m-     * Returns a function that checks if a given number is less than the limit[m
+[31m-     * @param {number} limit[m
+[31m-     * @returns {(x: number) => boolean}[m
+[31m-     */[m
+[31m-    const isLessThan = (limit) => (x) => x < limit[m
+[31m-[m
+[31m-    // you can combine several matchers using "and", "or"[m
+[31m-    expect(spy).to.be.calledWith([m
+[31m-      Cypress.sinon.match.number,[m
+[31m-      Cypress.sinon.match(isGreaterThan(2), '> 2').and(Cypress.sinon.match(isLessThan(4), '< 4')),[m
+[31m-    )[m
+[31m-[m
+[31m-    expect(spy).to.be.calledWith([m
+[31m-      Cypress.sinon.match.number,[m
+[31m-      Cypress.sinon.match(isGreaterThan(200), '> 200').or(Cypress.sinon.match(3)),[m
+[31m-    )[m
+[31m-[m
+[31m-    // matchers can be used from BDD assertions[m
+[31m-    cy.get('@add').should('have.been.calledWith',[m
+[31m-      Cypress.sinon.match.number, Cypress.sinon.match(3))[m
+[31m-[m
+[31m-    // you can alias matchers for shorter test code[m
+[31m-    const { match: M } = Cypress.sinon[m
+[31m-[m
+[31m-    cy.get('@add').should('have.been.calledWith', M.number, M(3))[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/traversal.spec.js b/cypress/integration/2-advanced-examples/traversal.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 0a3b9d3..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/traversal.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,121 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Traversal', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/traversal')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.children() - get child DOM elements', () => {[m
+[31m-    // https://on.cypress.io/children[m
+[31m-    cy.get('.traversal-breadcrumb')[m
+[31m-      .children('.active')[m
+[31m-      .should('contain', 'Data')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.closest() - get closest ancestor DOM element', () => {[m
+[31m-    // https://on.cypress.io/closest[m
+[31m-    cy.get('.traversal-badge')[m
+[31m-      .closest('ul')[m
+[31m-      .should('have.class', 'list-group')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.eq() - get a DOM element at a specific index', () => {[m
+[31m-    // https://on.cypress.io/eq[m
+[31m-    cy.get('.traversal-list>li')[m
+[31m-      .eq(1).should('contain', 'siamese')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.filter() - get DOM elements that match the selector', () => {[m
+[31m-    // https://on.cypress.io/filter[m
+[31m-    cy.get('.traversal-nav>li')[m
+[31m-      .filter('.active').should('contain', 'About')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.find() - get descendant DOM elements of the selector', () => {[m
+[31m-    // https://on.cypress.io/find[m
+[31m-    cy.get('.traversal-pagination')[m
+[31m-      .find('li').find('a')[m
+[31m-      .should('have.length', 7)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.first() - get first DOM element', () => {[m
+[31m-    // https://on.cypress.io/first[m
+[31m-    cy.get('.traversal-table td')[m
+[31m-      .first().should('contain', '1')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.last() - get last DOM element', () => {[m
+[31m-    // https://on.cypress.io/last[m
+[31m-    cy.get('.traversal-buttons .btn')[m
+[31m-      .last().should('contain', 'Submit')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.next() - get next sibling DOM element', () => {[m
+[31m-    // https://on.cypress.io/next[m
+[31m-    cy.get('.traversal-ul')[m
+[31m-      .contains('apples').next().should('contain', 'oranges')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.nextAll() - get all next sibling DOM elements', () => {[m
+[31m-    // https://on.cypress.io/nextall[m
+[31m-    cy.get('.traversal-next-all')[m
+[31m-      .contains('oranges')[m
+[31m-      .nextAll().should('have.length', 3)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.nextUntil() - get next sibling DOM elements until next el', () => {[m
+[31m-    // https://on.cypress.io/nextuntil[m
+[31m-    cy.get('#veggies')[m
+[31m-      .nextUntil('#nuts').should('have.length', 3)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.not() - remove DOM elements from set of DOM elements', () => {[m
+[31m-    // https://on.cypress.io/not[m
+[31m-    cy.get('.traversal-disabled .btn')[m
+[31m-      .not('[disabled]').should('not.contain', 'Disabled')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.parent() - get parent DOM element from DOM elements', () => {[m
+[31m-    // https://on.cypress.io/parent[m
+[31m-    cy.get('.traversal-mark')[m
+[31m-      .parent().should('contain', 'Morbi leo risus')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.parents() - get parent DOM elements from DOM elements', () => {[m
+[31m-    // https://on.cypress.io/parents[m
+[31m-    cy.get('.traversal-cite')[m
+[31m-      .parents().should('match', 'blockquote')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.parentsUntil() - get parent DOM elements from DOM elements until el', () => {[m
+[31m-    // https://on.cypress.io/parentsuntil[m
+[31m-    cy.get('.clothes-nav')[m
+[31m-      .find('.active')[m
+[31m-      .parentsUntil('.clothes-nav')[m
+[31m-      .should('have.length', 2)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.prev() - get previous sibling DOM element', () => {[m
+[31m-    // https://on.cypress.io/prev[m
+[31m-    cy.get('.birds').find('.active')[m
+[31m-      .prev().should('contain', 'Lorikeets')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.prevAll() - get all previous sibling DOM elements', () => {[m
+[31m-    // https://on.cypress.io/prevall[m
+[31m-    cy.get('.fruits-list').find('.third')[m
+[31m-      .prevAll().should('have.length', 2)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.prevUntil() - get all previous sibling DOM elements until el', () => {[m
+[31m-    // https://on.cypress.io/prevuntil[m
+[31m-    cy.get('.foods-list').find('#nuts')[m
+[31m-      .prevUntil('#veggies').should('have.length', 3)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('.siblings() - get all sibling DOM elements', () => {[m
+[31m-    // https://on.cypress.io/siblings[m
+[31m-    cy.get('.traversal-pills .active')[m
+[31m-      .siblings().should('have.length', 2)[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/utilities.spec.js b/cypress/integration/2-advanced-examples/utilities.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex 24e61a6..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/utilities.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,110 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Utilities', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/utilities')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Cypress._ - call a lodash method', () => {[m
+[31m-    // https://on.cypress.io/_[m
+[31m-    cy.request('https://jsonplaceholder.cypress.io/users')[m
+[31m-      .then((response) => {[m
+[31m-        let ids = Cypress._.chain(response.body).map('id').take(3).value()[m
+[31m-[m
+[31m-        expect(ids).to.deep.eq([1, 2, 3])[m
+[31m-      })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Cypress.$ - call a jQuery method', () => {[m
+[31m-    // https://on.cypress.io/$[m
+[31m-    let $li = Cypress.$('.utility-jquery li:first')[m
+[31m-[m
+[31m-    cy.wrap($li)[m
+[31m-      .should('not.have.class', 'active')[m
+[31m-      .click()[m
+[31m-      .should('have.class', 'active')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Cypress.Blob - blob utilities and base64 string conversion', () => {[m
+[31m-    // https://on.cypress.io/blob[m
+[31m-    cy.get('.utility-blob').then(($div) => {[m
+[31m-      // https://github.com/nolanlawson/blob-util#imgSrcToDataURL[m
+[31m-      // get the dataUrl string for the javascript-logo[m
+[31m-      return Cypress.Blob.imgSrcToDataURL('https://example.cypress.io/assets/img/javascript-logo.png', undefined, 'anonymous')[m
+[31m-      .then((dataUrl) => {[m
+[31m-        // create an <img> element and set its src to the dataUrl[m
+[31m-        let img = Cypress.$('<img />', { src: dataUrl })[m
+[31m-[m
+[31m-        // need to explicitly return cy here since we are initially returning[m
+[31m-        // the Cypress.Blob.imgSrcToDataURL promise to our test[m
+[31m-        // append the image[m
+[31m-        $div.append(img)[m
+[31m-[m
+[31m-        cy.get('.utility-blob img').click()[m
+[31m-          .should('have.attr', 'src', dataUrl)[m
+[31m-      })[m
+[31m-    })[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Cypress.minimatch - test out glob patterns against strings', () => {[m
+[31m-    // https://on.cypress.io/minimatch[m
+[31m-    let matching = Cypress.minimatch('/users/1/comments', '/users/*/comments', {[m
+[31m-      matchBase: true,[m
+[31m-    })[m
+[31m-[m
+[31m-    expect(matching, 'matching wildcard').to.be.true[m
+[31m-[m
+[31m-    matching = Cypress.minimatch('/users/1/comments/2', '/users/*/comments', {[m
+[31m-      matchBase: true,[m
+[31m-    })[m
+[31m-[m
+[31m-    expect(matching, 'comments').to.be.false[m
+[31m-[m
+[31m-    // ** matches against all downstream path segments[m
+[31m-    matching = Cypress.minimatch('/foo/bar/baz/123/quux?a=b&c=2', '/foo/**', {[m
+[31m-      matchBase: true,[m
+[31m-    })[m
+[31m-[m
+[31m-    expect(matching, 'comments').to.be.true[m
+[31m-[m
+[31m-    // whereas * matches only the next path segment[m
+[31m-[m
+[31m-    matching = Cypress.minimatch('/foo/bar/baz/123/quux?a=b&c=2', '/foo/*', {[m
+[31m-      matchBase: false,[m
+[31m-    })[m
+[31m-[m
+[31m-    expect(matching, 'comments').to.be.false[m
+[31m-  })[m
+[31m-[m
+[31m-  it('Cypress.Promise - instantiate a bluebird promise', () => {[m
+[31m-    // https://on.cypress.io/promise[m
+[31m-    let waited = false[m
+[31m-[m
+[31m-    /**[m
+[31m-     * @return Bluebird<string>[m
+[31m-     */[m
+[31m-    function waitOneSecond () {[m
+[31m-      // return a promise that resolves after 1 second[m
+[31m-      // @ts-ignore TS2351 (new Cypress.Promise)[m
+[31m-      return new Cypress.Promise((resolve, reject) => {[m
+[31m-        setTimeout(() => {[m
+[31m-          // set waited to true[m
+[31m-          waited = true[m
+[31m-[m
+[31m-          // resolve with 'foo' string[m
+[31m-          resolve('foo')[m
+[31m-        }, 1000)[m
+[31m-      })[m
+[31m-    }[m
+[31m-[m
+[31m-    cy.then(() => {[m
+[31m-      // return a promise to cy.then() that[m
+[31m-      // is awaited until it resolves[m
+[31m-      // @ts-ignore TS7006[m
+[31m-      return waitOneSecond().then((str) => {[m
+[31m-        expect(str).to.eq('foo')[m
+[31m-        expect(waited).to.be.true[m
+[31m-      })[m
+[31m-    })[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/viewport.spec.js b/cypress/integration/2-advanced-examples/viewport.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex dbcd7ee..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/viewport.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,59 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Viewport', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/viewport')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.viewport() - set the viewport size and dimension', () => {[m
+[31m-    // https://on.cypress.io/viewport[m
+[31m-[m
+[31m-    cy.get('#navbar').should('be.visible')[m
+[31m-    cy.viewport(320, 480)[m
+[31m-[m
+[31m-    // the navbar should have collapse since our screen is smaller[m
+[31m-    cy.get('#navbar').should('not.be.visible')[m
+[31m-    cy.get('.navbar-toggle').should('be.visible').click()[m
+[31m-    cy.get('.nav').find('a').should('be.visible')[m
+[31m-[m
+[31m-    // lets see what our app looks like on a super large screen[m
+[31m-    cy.viewport(2999, 2999)[m
+[31m-[m
+[31m-    // cy.viewport() accepts a set of preset sizes[m
+[31m-    // to easily set the screen to a device's width and height[m
+[31m-[m
+[31m-    // We added a cy.wait() between each viewport change so you can see[m
+[31m-    // the change otherwise it is a little too fast to see :)[m
+[31m-[m
+[31m-    cy.viewport('macbook-15')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('macbook-13')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('macbook-11')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('ipad-2')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('ipad-mini')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('iphone-6+')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('iphone-6')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('iphone-5')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('iphone-4')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('iphone-3')[m
+[31m-    cy.wait(200)[m
+[31m-[m
+[31m-    // cy.viewport() accepts an orientation for all presets[m
+[31m-    // the default orientation is 'portrait'[m
+[31m-    cy.viewport('ipad-2', 'portrait')[m
+[31m-    cy.wait(200)[m
+[31m-    cy.viewport('iphone-4', 'landscape')[m
+[31m-    cy.wait(200)[m
+[31m-[m
+[31m-    // The viewport will be reset back to the default dimensions[m
+[31m-    // in between tests (the  default can be set in cypress.json)[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/waiting.spec.js b/cypress/integration/2-advanced-examples/waiting.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex c8f0d7c..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/waiting.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,31 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Waiting', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/waiting')[m
+[31m-  })[m
+[31m-  // BE CAREFUL of adding unnecessary wait times.[m
+[31m-  // https://on.cypress.io/best-practices#Unnecessary-Waiting[m
+[31m-[m
+[31m-  // https://on.cypress.io/wait[m
+[31m-  it('cy.wait() - wait for a specific amount of time', () => {[m
+[31m-    cy.get('.wait-input1').type('Wait 1000ms after typing')[m
+[31m-    cy.wait(1000)[m
+[31m-    cy.get('.wait-input2').type('Wait 1000ms after typing')[m
+[31m-    cy.wait(1000)[m
+[31m-    cy.get('.wait-input3').type('Wait 1000ms after typing')[m
+[31m-    cy.wait(1000)[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.wait() - wait for a specific route', () => {[m
+[31m-    // Listen to GET to comments/1[m
+[31m-    cy.intercept('GET', '**/comments/*').as('getComment')[m
+[31m-[m
+[31m-    // we have code that gets a comment when[m
+[31m-    // the button is clicked in scripts.js[m
+[31m-    cy.get('.network-btn').click()[m
+[31m-[m
+[31m-    // wait for GET comments/1[m
+[31m-    cy.wait('@getComment').its('response.statusCode').should('be.oneOf', [200, 304])[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/cypress/integration/2-advanced-examples/window.spec.js b/cypress/integration/2-advanced-examples/window.spec.js[m
+[1mdeleted file mode 100644[m
+[1mindex f94b649..0000000[m
+[1m--- a/cypress/integration/2-advanced-examples/window.spec.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,22 +0,0 @@[m
+[31m-/// <reference types="cypress" />[m
+[31m-[m
+[31m-context('Window', () => {[m
+[31m-  beforeEach(() => {[m
+[31m-    cy.visit('https://example.cypress.io/commands/window')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.window() - get the global window object', () => {[m
+[31m-    // https://on.cypress.io/window[m
+[31m-    cy.window().should('have.property', 'top')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.document() - get the document object', () => {[m
+[31m-    // https://on.cypress.io/document[m
+[31m-    cy.document().should('have.property', 'charset').and('eq', 'UTF-8')[m
+[31m-  })[m
+[31m-[m
+[31m-  it('cy.title() - get the title', () => {[m
+[31m-    // https://on.cypress.io/title[m
+[31m-    cy.title().should('include', 'Kitchen Sink')[m
+[31m-  })[m
+[31m-})[m
+[1mdiff --git a/src/script.js b/src/script.js[m
+[1mindex 9ae7d9b..c09530b 100644[m
+[1m--- a/src/script.js[m
+[1m+++ b/src/script.js[m
+[36m@@ -36,7 +36,7 @@[m [mdocument.querySelector('button[type="submit"]')[m
+       return showAndHideErrorMessage()[m
+     }[m
+     if (!emailField.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {[m
+[31m-      return showAndHideErrorMessage()[m
+[32m+[m[32m    //  return showAndHideErrorMessage()[m
+     }[m
+     firstNameField.value = ''[m
+     lastNameField.value = ''[m
