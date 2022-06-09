@@ -25,7 +25,7 @@ describe('Central de Atendimento ao Cliente TAT ',function(){
         cy.get('#lastName').type('gs')
         cy.get('#email').type('v.g')
         cy.get('#open-text-area').type('teste')
-        cy.get('button[type="submit"]').click()
+        cy.contains('button' , 'Enviar').click()
         cy.get('.error').should('be.visible')
     })
 
@@ -36,7 +36,7 @@ describe('Central de Atendimento ao Cliente TAT ',function(){
 
     it('tentar enviar o form sem o número, sendo que tu marcou número no checkbox', function(){
         cy.get('#phone-checkbox').click()
-        cy.get('button[type="submit"]').click()
+        cy.contains('button' , 'Enviar').click()
         cy.get('.error').should('be.visible')
     })
 
@@ -48,7 +48,7 @@ describe('Central de Atendimento ao Cliente TAT ',function(){
     })
 
     it('teste de verificação do envio de dados', function(){
-        cy.get('button[type="submit"]').click()
+        cy.contains('button' , 'Enviar').click()
         cy.get('.error').should('be.visible')
 
         cy.get('#firstName').should('have.value' ,'')
