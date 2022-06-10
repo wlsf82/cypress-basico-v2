@@ -61,5 +61,36 @@ describe('Central de Atendimento ao Cliente TAT ',function(){
         cy.filMandatoryFieldsAndSubmit()
         cy.get('.success').should('be.visible')
     })
+
+    it('preenchendo lista suspensa', function(){ //aqui tem que ser .select() porque é lista suspensa
+        cy.get('#product').select('YouTube').should('have.value' , 'youtube')
+    })
+
+    it('preenchendo lista suspensa', function(){
+        //should(chave, valor)
+        cy.get('#product').select('Mentoria').should('have.value' , 'mentoria')
+    })
+    it('preencher radiobutton', function(){
+        //para radio tu passa o input dele e o value
+        cy.get('input[type="radio"][value="feedback"]').check().should('have.value','feedback')
+    })
+
+    //nesse each, ele itera, fazendo varias vezes a verificação e passando pelos pontos
+    //wrap ele empacota esse código
+    it('marca cada tipo de atendimento', function(){
+        cy.get('input[type="radio"]').should('have.length' , 3)
+            .each(function($radio){
+                cy.wrap($radio).check()
+                cy.wrap($radio).should('be.checked')
+            })
+    })
+
+    it.only('marca ambos checking boxes e depois desmarca o último ' , function(){
+        cy.get('input[type="checkbox"]').check()
+        cy.get('input[type="checkbox"]').last().uncheck().should('not.be.checked')
+    })
+
+
+    
 })
 
