@@ -4,7 +4,7 @@ Cypress.Commands.add('filMandatoryFieldsAndSubmit',function(){
     cy.get('#lastName').type('gs')
     cy.get('#email').type('v.g@g.com')
     cy.get('#open-text-area').type('.', { delay:0})
-    cy.contains('button' , 'Enviar').click()
+    cy.contains('button','Enviar').click()
     cy.get('.success').should('be.visible')
 })
 // ***********************************************
