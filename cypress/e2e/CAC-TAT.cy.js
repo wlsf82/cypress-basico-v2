@@ -31,5 +31,6 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .click()
     cy.get('.success')
       .should('be.visible')
+      
   })
 })
