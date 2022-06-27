@@ -1,8 +1,5 @@
 name: End-to-end tests 🧪
-on:
-  merge_request:
-      branches:
-        - 'main'
+on: [merge]
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
