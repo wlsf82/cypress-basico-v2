@@ -10,7 +10,7 @@ describe('Projeto Amei', function() {
         cy.title().should('be.equal', 'AmeiFront')
     })
 
-    it.only('sair do campo "E-mail", sem digitá-lo corretamente', function(){
+    it('sair do campo "E-mail", sem digitá-lo corretamente', function(){
         cy.get('#email')
         .should('be.visible')
         .type('exemplo')
@@ -22,7 +22,7 @@ describe('Projeto Amei', function() {
         .should('be.visible', 'Digite seu e-mail')
     })
 
-    it.only('sair do campo "E-mail", sem digitá-lo corretamente', function(){
+    it('sair do campo "E-mail", sem digitá-lo corretamente', function(){
         cy.get('#email')
         .should('be.visible')
         .type('exemplo')
