@@ -47,7 +47,7 @@ describe('Projeto Amei', function() {
         .should('be.visible', 'Usuário ou senha incorretos, não autorizado')        
     })
 
-    it('fazer login com e-mail válido', function(){
+    it('fazer login com e-mail e senha válidos', function(){
         cy.get('#email')
         .should('be.visible')
         .type('usuario2@email.com')
