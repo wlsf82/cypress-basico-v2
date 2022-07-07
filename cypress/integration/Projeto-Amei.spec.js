@@ -7,7 +7,7 @@ describe('Projeto Amei', function() {
     })
 
     it('verifica o título da aplicação', function() {
-        cy.title().should('be.equal', 'AmeiFront')
+        cy.title().should('be.equal', 'Amei!')
     })
 
     it('sair do campo "E-mail", sem digitá-lo corretamente', function(){
@@ -44,16 +44,16 @@ describe('Projeto Amei', function() {
         .click()
         
         cy.get('.alert-unathorized')
-        .should('be.visible', 'Usuário ou senha incorretos, não autorizado ng-invalid')        
+        .should('be.visible', 'Usuário ou senha incorretos, não autorizado')        
     })
 
     it('fazer login com e-mail válido', function(){
         cy.get('#email')
         .should('be.visible')
-        .type('usuario@email.com')
+        .type('usuario2@email.com')
         cy.get('#password')
         .should('be.visible')
-        .type('@Password')
+        .type('@Password2')
         cy.get('.btn-login')
         .click()
         
