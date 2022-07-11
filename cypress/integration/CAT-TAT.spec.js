@@ -96,7 +96,7 @@ describe("Central de Atendimento ao Cliente TAT", () => {
 
   // AULA 3 DO CURSO
   it("seleciona um produto (YouTube) por seu texto", function () {
-    cy.get("#product").select("Youtube").should("have.value", "Youtube");
+    cy.get("#product").select("youtube").should("have.value", "youtube");
   });
 
   it("1- seleciona um produto (Mentoria) por seu valor (value)", function () {
