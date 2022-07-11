@@ -166,14 +166,12 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       .invoke("removeAttr", "target")
       .click()
       .url()
-      .should("contains", "privacy.html")
-      
-      cy.contains('Talking About Test')
+      .should("contains", "privacy.html");
+
+    cy.contains("Talking About Test");
   });
 
   it("testa a página da política de privavidade de forma independente", function () {
     cy.get('a[href="privacy.html"]').invoke("removeAttr", "target");
   });
-
-
 });
