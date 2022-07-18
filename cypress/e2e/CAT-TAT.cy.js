@@ -52,11 +52,11 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
             .should('have.value','')       
     })
 
-    it('Exibe menssagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do formulário', () => { 
+    it.only('Exibe menssagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do formulário', () => { 
         cy.get('#firstName').type('Wellington')
         cy.get('#lastName').type('Costa')
         cy.get('#email').type('wellington@cypress.com')
-        cy.get('#phone-checkbox').click()
+        cy.get('#phone-checkbox').check()
         // quando coloca texto muito longo, usa-se delay para diminuir tempo de teste
         cy.get('#open-text-area').type(longtext)    
         cy.contains('button','Enviar').click()
@@ -98,11 +98,31 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         cy.get('input[type="radio"][value="feedback"]').check().should('have.value','feedback')
     })
 
-    it('Marca o tipo de atendimento feedback',()=>{
-        cy.get('input[type="radio"][value="feedback"]').check().should('have.value','feedback')
+
+    it('Marca cada tipo de atendimento',()=>{
+        cy.get('input[type="radio"]')
+            .should('have.length',3)// verifica se tem 3 checkboxs
+            .each(function($radio){
+                cy.wrap($radio).check()
+                cy.wrap($radio).should('be.checked')
+            })
+
     })
 
+    // Marcar os 2 checkboxs e depois desmarcar
+    it('Marca ambos os checkboxes e depois desmarca o último',()=>{
+        cy.get('input[type="checkbox"]')
+        .check() //Dando check nos 2 checkboxes
+        .should('be.checked')
+        .last()
+        .uncheck()
+        .should('not.be.checked')
 
+    })
+
+    it('Selecionando arquivo da pasta fixtures',()=>{
+        
+    } )
 
 
 
