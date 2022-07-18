@@ -23,3 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+const longtext= 'Executando teste de campo de texto de área para verificar quantos caracteres cabem no campo.'
+
+
+Cypress.Commands.add('fiççMandatoryFieldAndSubmit',()=>{
+    cy.get('#firstName').type('Wellington')
+    cy.get('#lastName').type('Costa')
+    cy.get('#email').type('wellington@cypress.com')
+
+    // quando coloca texto muito longo, usa-se delay para diminuir tempo de teste
+    cy.get('#open-text-area').type(longtext,{delay:0})    
+    cy.contains('button','Enviar').click()
+})
