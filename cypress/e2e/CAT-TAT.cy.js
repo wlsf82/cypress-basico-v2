@@ -6,6 +6,8 @@
 // https://on.cypress.io/writing-first-test
 
 ///<reference types="Cypress"/>//
+
+
 const longtext= 'Executando teste de campo de texto de área para verificar quantos caracteres cabem no campo.'
 
 
@@ -52,7 +54,7 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
             .should('have.value','')       
     })
 
-    it.only('Exibe menssagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do formulário', () => { 
+    it('Exibe menssagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do formulário', () => { 
         cy.get('#firstName').type('Wellington')
         cy.get('#lastName').type('Costa')
         cy.get('#email').type('wellington@cypress.com')
@@ -121,10 +123,31 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
     })
 
     it('Selecionando arquivo da pasta fixtures',()=>{
-        
-    } )
+        cy.get('input[type="file"]')
+            .should('not.have.value')
+            .selectFile('./cypress/fixtures/example.json')
+            .should(function($input){
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
+    })
 
+    it('seleciona um arquivo simulando um drag-and-drop',()=>{
+        cy.get('input[type="file"]')
+            .should('not.have.value')
+            .selectFile('./cypress/fixtures/example.json',{action:'drag-drop'})
+            .should(function($input){
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
+    })
 
-
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias',()=>{
+        cy.fixture('example.json').as('sampleFile')
+        cy.get('input[type="file"')
+            .selectFile('@sampleFile')
+            .should(function($input){
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
+    })
+    
 
 })//Fim da switch de testes
