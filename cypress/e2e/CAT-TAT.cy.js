@@ -6,6 +6,8 @@
 // https://on.cypress.io/writing-first-test
 
 ///<reference types="Cypress"/>//
+
+
 const longtext= 'Executando teste de campo de texto de área para verificar quantos caracteres cabem no campo.'
 
 
@@ -56,7 +58,7 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         cy.get('#firstName').type('Wellington')
         cy.get('#lastName').type('Costa')
         cy.get('#email').type('wellington@cypress.com')
-        cy.get('#phone-checkbox').click()
+        cy.get('#phone-checkbox').check()
         // quando coloca texto muito longo, usa-se delay para diminuir tempo de teste
         cy.get('#open-text-area').type(longtext)    
         cy.contains('button','Enviar').click()
@@ -98,13 +100,55 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         cy.get('input[type="radio"][value="feedback"]').check().should('have.value','feedback')
     })
 
-    it('Marca o tipo de atendimento feedback',()=>{
-        cy.get('input[type="radio"][value="feedback"]').check().should('have.value','feedback')
+
+    it('Marca cada tipo de atendimento',()=>{
+        cy.get('input[type="radio"]')
+            .should('have.length',3)// verifica se tem 3 checkboxs
+            .each(function($radio){
+                cy.wrap($radio).check()
+                cy.wrap($radio).should('be.checked')
+            })
+
     })
 
+    // Marcar os 2 checkboxs e depois desmarcar
+    it('Marca ambos os checkboxes e depois desmarca o último',()=>{
+        cy.get('input[type="checkbox"]')
+        .check() //Dando check nos 2 checkboxes
+        .should('be.checked')
+        .last()
+        .uncheck()
+        .should('not.be.checked')
 
+    })
 
+    it('Selecionando arquivo da pasta fixtures',()=>{
+        cy.get('input[type="file"]')
+            .should('not.have.value')
+            .selectFile('./cypress/fixtures/example.json')
+            .should(function($input){
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
+    })
 
+    it('seleciona um arquivo simulando um drag-and-drop',()=>{
+        cy.get('input[type="file"]')
+            .should('not.have.value')
+            .selectFile('./cypress/fixtures/example.json',{action:'drag-drop'})
+            .should(function($input){
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
+    })
 
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias',()=>{
+        cy.fixture('example.json').as('sampleFile')
+        cy.get('input[type="file"')
+            .selectFile('@sampleFile')
+            .should(function($input){
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
+    })
+
+   
 
 })//Fim da switch de testes
