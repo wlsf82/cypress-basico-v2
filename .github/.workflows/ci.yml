@@ -1,4 +1,3 @@
-```yml
 name: End-to-end tests 🧪
 on: [push]
 jobs:
@@ -12,5 +11,3 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
 
-        
-```
