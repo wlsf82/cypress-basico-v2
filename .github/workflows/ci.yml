@@ -1,4 +1,4 @@
-name: End-to-end tests 🧪
+name: End-to-end tests
 on: [push]
 jobs:
   cypress-run:
@@ -10,5 +10,7 @@ jobs:
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v4.1.0
+
         
+
       
