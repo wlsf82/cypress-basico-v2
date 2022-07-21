@@ -1,17 +1,30 @@
-name: End-to-end tests 🧪
+
+#name: End-to-end tests 🧪
+#on: [push]
+#jobs:
+#  cypress-run:
+#    runs-on: ubuntu-20.04
+#    steps:
+     # - name: Checkout
+    #    uses: actions/checkout@v2
+   #   # Install NPM dependencies, cache them correctly
+  #    # and run all Cypress tests
+ #     - name: Cypress run
+#        uses: cypress-io/github-action@v4.1.0
+
+       
+name: integrations tests
 on: [push]
 jobs:
-  cypress-run:
-    runs-on: ubuntu-20.04
+
+  smoke:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.0
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4.1.0
+        uses: actions/checkout@v2
+      - name: Setup node 16.13.2
+        uses: actions/setup-node@v1
         with:
-          config-file: cypress.config.ts
-
-
-        
+          node-version: 16.13.2
+      - name: Cypress integration tests
+        uses: cypress-io/github-action@v4.1.0
