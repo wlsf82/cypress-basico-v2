@@ -202,7 +202,7 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         cy.contains('Talking About Testing').should('be.visible')
     })
 
-  it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+    it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
         cy.get('.success')
           .should('not.be.visible')
           .invoke('show')
@@ -218,5 +218,25 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
           .invoke('hide')
           .should('not.be.visible')
       })
+
+    //repeat : repetir um texto de acordo com a quantiadde de vezes que precisar
+    it('Preenche a área de texto usando o comando invoke',()=>{
+        const longtextinvoke=Cypress._.repeat('Este é teste de inclusão de caracteres por 20x',20)
+
+        cy.get('#open-text-area')
+            .invoke('val',longtextinvoke)
+            .should('have.value',longtextinvoke)
+    })
+
+    //Request 
+    it('Faz uma requisição HTTP',()=>{
+        cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+            .should(function(response){
+                const{status,statusText, body}=response
+                expect(status).to.equal(200)
+                expect(statusText).to.equal('OK')
+                expect(body).to.include('CAC TAT')
+            })
+    })
 
 })//Fim da switch de testes
