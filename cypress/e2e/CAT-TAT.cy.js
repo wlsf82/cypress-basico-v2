@@ -7,12 +7,13 @@
 
 ///<reference types="Cypress"/>//
 
-
+const THERE_SECONDS_IN_MS= 3000
 const longtext= 'Executando teste de campo de texto de área para verificar quantos caracteres cabem no campo.'
 
 
 //Descrição do Switch de teste
-describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente TAT', function(){
+describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente TAT', function(){  
+
 
     beforeEach(function(){
         //Acessando ao site 
@@ -26,18 +27,28 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
 
     })
 
-    it('Preenche os campos obrigatórios da aplicação e envia o formulário', () => {         
+    it('Preenche os campos obrigatórios da aplicação e envia o formulário', () => {      
+        cy.clock() //congela relógio do navegador
         cy.get('#firstName').type('Wellington')
         cy.get('#lastName').type('Costa')
         cy.get('#email').type('wellington@cypress.com')
         // quando coloca texto muito longo, usa-se delay para diminuir tempo de teste
         cy.get('#open-text-area').type(longtext,{delay:0})    
         cy.contains('button','Enviar').click()
+
+
         cy.get('.success').should('be.visible')
+
+        cy.tick(THERE_SECONDS_IN_MS) //Avança no tempo
+
+        cy.get('.success').should('not.be.visible')
+
 
     })
 
-    it('Preenche os campo e-mail com formatação inválida', () => {         
+    it('Preenche os campo e-mail com formatação inválida', () => {  
+        
+        cy.clock()
         cy.get('#firstName').type('Wellington')
         cy.get('#lastName').type('Costa')
         cy.get('#email').type('wellington,com')
@@ -45,6 +56,10 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         cy.get('#open-text-area').type(longtext)    
         cy.contains('button','Enviar').click()
         cy.get('.error').should('be.visible')
+
+        cy.tick(THERE_SECONDS_IN_MS) //Avança no tempo
+
+        cy.get('.error').should('not.be.visible')
     })
 
     it('Campo de telefone continua vazio quando preenchido com valor não numérico', () => { 
@@ -54,17 +69,31 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
             .should('have.value','')       
     })
 
+    
+    //Executa o teste 5X
+   // Cypress._.times(2,()=>{ 
     it('Exibe menssagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do formulário', () => { 
-        cy.get('#firstName').type('Wellington')
-        cy.get('#lastName').type('Costa')
-        cy.get('#email').type('wellington@cypress.com')
-        cy.get('#phone-checkbox').check()
-        // quando coloca texto muito longo, usa-se delay para diminuir tempo de teste
+      
+            cy.clock()
+            cy.get('#firstName').type('Wellington')
+            cy.get('#lastName').type('Costa')
+            cy.get('#email').type('wellington@cypress.com')
+            cy.get('#phone-checkbox').check()
+            // quando coloca texto muito longo, usa-se delay para diminuir tempo de teste
+            cy.get('#open-text-area').type(longtext)    
         cy.get('#open-text-area').type(longtext)    
-        cy.contains('button','Enviar').click()
-        cy.get('.error').should('be.visible')
+            cy.get('#open-text-area').type(longtext)    
+            cy.contains('button','Enviar').click()
+    
+            cy.get('.error').should('be.visible')
+            cy.tick(THERE_SECONDS_IN_MS) //Avança no tempo
+    
+            cy.get('.error').should('not.be.visible')
+    
+        })//fim
 
-    })//fim
+ //   }) // Aplicação do Loadash
+  
 
     it('Preenche e limpa os campos nome, sobrenome, email e telefone', ()=>{
         cy.get('#firstName').type('Wellington').should('have.value','Wellington').clear().should('have.value','')
@@ -76,15 +105,27 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
     })
 
     it('Exibe a messagem de erro ao submeter o formulário sem preencher os campos obrigatórios',()=>{
+        cy.clock()
         cy.get('button[type="submit"]').click()
-        cy.get('.error').should('be.visible')
 
+        cy.get('.error').should('be.visible')
+        cy.tick(THERE_SECONDS_IN_MS) //Avança no tempo
+
+        cy.get('.error').should('not.be.visible')
     })
 
 
     it('Envia o formuário com sucesso usando um comando customizado',()=>{
+
+        cy.clock()
         cy.fiççMandatoryFieldAndSubmit()
+
+
         cy.get('.success').should('be.visible')
+        cy.tick(THERE_SECONDS_IN_MS) //Avança no tempo
+
+        cy.get('.success').should('not.be.visible')
+        
     })
 
     it('Seleciona um produto (Youtube) por seu tesxto',()=>{
@@ -161,5 +202,21 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         cy.contains('Talking About Testing').should('be.visible')
     })
 
+  it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+        cy.get('.success')
+          .should('not.be.visible')
+          .invoke('show')
+          .should('be.visible')
+          .and('contain', 'Mensagem enviada com sucesso.')
+          .invoke('hide')
+          .should('not.be.visible')
+        cy.get('.error')
+          .should('not.be.visible')
+          .invoke('show')
+          .should('be.visible')
+          .and('contain', 'Valide os campos obrigatórios!')
+          .invoke('hide')
+          .should('not.be.visible')
+      })
 
 })//Fim da switch de testes
