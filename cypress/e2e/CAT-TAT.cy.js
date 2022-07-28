@@ -239,4 +239,16 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
             })
     })
 
+    //DESAFIO: Encontando o gato
+    it('Encontrando o gatinho escondido',()=>{
+        cy.get('#cat')
+            .invoke('show')
+            .should('be.visible')
+        cy.get('#title')
+            .invoke('text','CAT CAT')
+        cy.get('#subtitle')
+            .invoke('text','Eu vi o CAT')        
+
+    })
+
 })//Fim da switch de testes
