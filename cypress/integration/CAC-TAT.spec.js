@@ -15,4 +15,11 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('.button').click()
         cy.get('.success').should('be.visible')
     })
+
+    it('Alterado o delay da digitação', function() {
+        const longText = 'Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo, Texto longo'
+       cy.get('#open-text-area').type(longText, { delay: 0 })
+       cy.wait(10)
+       cy.get('#email').type('ana.stadelhofer@cypress.com')
+    })
   })
