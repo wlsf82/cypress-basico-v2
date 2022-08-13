@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wlsf82/cypress-basico-v2.git"
+    "url": "git+https://github.com/AnaStadelhofer/cypress-basico-v2.git"
   },
   "keywords": [
     "Testing",
