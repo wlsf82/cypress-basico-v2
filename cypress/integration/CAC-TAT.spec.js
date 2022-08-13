@@ -1,5 +1,10 @@
 /// <reference types="Cypress" />
 
+const firstName = "Ana"
+const lastName = "Carolina Stadelhofer"
+const email = "ana.stadelhofer@cypress.com"
+const phone = "123456789"
+
 describe('Central de Atendimento ao Cliente TAT', function() {
     beforeEach(() => {
         cy.visit('./src/index.html')
@@ -43,5 +48,17 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#open-text-area').type('Gostaria de fazer um pedido de atendimento, porém estou com dificuldades de realizar o contato.')
         cy.get('.button').click()
         cy.get('.error').should('be.visible')
+    })
+
+    it('Preencher os campos nome, sobrenome, email e telefone, após isso limpar os campos', function() {
+        cy.get('#firstName').type(firstName).should('have.value', firstName)
+        cy.get('#lastName').type(lastName).should('have.value', lastName)
+        cy.get('#email').type(email).should('have.value', email)
+        cy.get('#phone').type(phone).should('have.value', phone)
+        // Clear inputs
+        cy.get('#firstName').clear().should('have.value', '')
+        cy.get('#lastName').clear().should('have.value', '')
+        cy.get('#email').clear().should('have.value', '')
+        cy.get('#phone').clear().should('have.value', '')
     })
   })
