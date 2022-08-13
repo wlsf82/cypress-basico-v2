@@ -72,4 +72,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('.button').click()
         cy.get('.success').should('be.visible')
     })
+
+    it('Enviar fórmulário utilizando o .contains()', function() {
+        cy.fillMandatoryFields()
+        cy.contains('button', 'Enviar').click()
+        cy.get('.success').should('be.visible')
+    })
   })
