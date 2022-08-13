@@ -29,4 +29,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('.button').click()
         cy.get('.error').should('be.visible')
     })
+
+    it('Verificar valores númericos em campo telefone do usuário', function() {
+        cy.get('#phone').type('abcdef').should('have.value', '')
+        cy.get('#phone').type('12345678').should('have.value', 12345678)
+    })
   })
