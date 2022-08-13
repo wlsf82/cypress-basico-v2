@@ -34,4 +34,14 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#phone').type('abcdef').should('have.value', '')
         cy.get('#phone').type('12345678').should('have.value', 12345678)
     })
+
+    it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+        cy.get('#firstName').type('Ana')
+        cy.get('#lastName').type('Carolina Stadelhofer')
+        cy.get('#email').type('ana.stadelhofer@cypres.com')
+        cy.get('#phone-checkbox').check()
+        cy.get('#open-text-area').type('Gostaria de fazer um pedido de atendimento, porém estou com dificuldades de realizar o contato.')
+        cy.get('.button').click()
+        cy.get('.error').should('be.visible')
+    })
   })
