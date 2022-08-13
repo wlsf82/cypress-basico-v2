@@ -78,4 +78,16 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('button', 'Enviar').click()
         cy.get('.success').should('be.visible')
     })
+
+    it('Selecionar um produto (Cursos) por seu texto', function () {
+        cy.get('#product').select('Cursos').should('have.value', 'cursos')
+    })
+
+    it('Selecionar um produto (Cursos) por seu valor', function () {
+        cy.get('#product').select('cursos').should('have.value', 'cursos')
+    })
+
+    it.only('Selecionar um produto (Cursos) por seu indice', function () {
+        cy.get('#product').select(2).should('have.value', 'cursos')
+    })
   })
