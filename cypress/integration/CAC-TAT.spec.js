@@ -107,11 +107,20 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('[type="checkbox"]').last().uncheck().should('not.be.checked')
     })
 
-    it.only('Revisar preenchimento de cadastro quando telefone é obrigatório porem vazio', function() {
+    it('Revisar preenchimento de cadastro quando telefone é obrigatório porem vazio', function() {
         cy.fillMandatoryFields()
         cy.get('[type="checkbox"]').check('phone').should('be.checked')
         cy.get('#phone').type(phone).should('have.value', phone)
         cy.get('.button').click()
         cy.get('.success').should('be.visible')
+    })
+
+    it.only('Selecionar um arquivo da pasta fixtures', function() {
+        cy.get('#file-upload')
+        .should('not.have.value')
+        .selectFile('./cypress/fixtures/example.json')
+        .should(function($input) {
+            expect($input[0].files[0].name).to.equal('example.json')
+        })
     })
   })
