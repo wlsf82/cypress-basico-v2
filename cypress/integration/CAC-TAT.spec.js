@@ -104,7 +104,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     it.only('Marcar todas checkbox, desmarcar a ultima', function() {
         cy.get('[type="checkbox"]').check().should('be.checked')
-        cy.get('[type="checkbox"]').last().uncheck()
+        cy.get('[type="checkbox"]').last().uncheck().should('not.be.checked')
     })
 
     it.only('Revisar preenchimento de cadastro quando telefone é obrigatório porem vazio', function() {
