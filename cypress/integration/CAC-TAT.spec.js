@@ -132,7 +132,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
             expect($input[0].files[0].name).to.equal('example.json')
         })
     })
-    it.only('Selecionar um arquivo da pasta fixtures por alias', function() {
+    it('Selecionar um arquivo da pasta fixtures por alias', function() {
         cy.fixture('example.json').as('exampleFile')
         cy.get('#file-upload')
         .should('not.have.value')
@@ -140,5 +140,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .should(function($input) {
             expect($input[0].files[0].name).to.equal('example.json')
         })
+    })
+
+    it.only('Verificar que a política de privacidade abre em outra aba sem a necessidade de um clique', function() {
+        cy.get('#privacy a').should('have.attr', 'target', '_blank')
     })
   })
