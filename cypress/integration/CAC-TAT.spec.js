@@ -103,7 +103,15 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it.only('Marcar todas checkbox, desmarcar a ultima', function() {
-        cy.get('[type="checkbox"]').check()
+        cy.get('[type="checkbox"]').check().should('be.checked')
         cy.get('[type="checkbox"]').last().uncheck()
+    })
+
+    it.only('Revisar preenchimento de cadastro quando telefone é obrigatório porem vazio', function() {
+        cy.fillMandatoryFields()
+        cy.get('[type="checkbox"]').check('phone').should('be.checked')
+        cy.get('#phone').type(phone).should('have.value', phone)
+        cy.get('.button').click()
+        cy.get('.success').should('be.visible')
     })
   })
