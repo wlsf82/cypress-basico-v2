@@ -6,6 +6,7 @@ const email = "ana.stadelhofer@cypress.com"
 const phone = "123456789"
 
 describe('Central de Atendimento ao Cliente TAT', function() {
+    const Time = 3000
     beforeEach(() => {
         cy.visit('./src/index.html')
     })
@@ -13,12 +14,15 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
     })
     it('Preenche os campos obrigatórios e envia o formulário', function() {
+        cy.clock()
         cy.get('#firstName').type('Ana')
         cy.get('#lastName').type('Carolina Stadelhofer')
         cy.get('#email').type('ana.stadelhofer@cypress.com')
         cy.get('#open-text-area').type('Gostaria de fazer um pedido de atendimento, porém estou com dificuldades de realizar o contato.')
         cy.get('.button').click()
         cy.get('.success').should('be.visible')
+        cy.tick(Time)
+        cy.get('.success').should('not.be.visible')
     })
 
     it('Alterado o delay da digitação', function() {
@@ -27,12 +31,15 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválid', function() {
+        cy.clock()
         cy.get('#firstName').type('Ana')
         cy.get('#lastName').type('Carolina Stadelhofer')
         cy.get('#email').type('ana.stadelhofer')
         cy.get('#open-text-area').type('Gostaria de fazer um pedido de atendimento, porém estou com dificuldades de realizar o contato.')
         cy.get('.button').click()
         cy.get('.error').should('be.visible')
+        cy.tick(Time)
+        cy.get('.error').should('not.be.visible')
     })
 
     it('Verificar valores númericos em campo telefone do usuário', function() {
@@ -41,6 +48,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+        cy.clock()
         cy.get('#firstName').type('Ana')
         cy.get('#lastName').type('Carolina Stadelhofer')
         cy.get('#email').type('ana.stadelhofer@cypres.com')
@@ -48,6 +56,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#open-text-area').type('Gostaria de fazer um pedido de atendimento, porém estou com dificuldades de realizar o contato.')
         cy.get('.button').click()
         cy.get('.error').should('be.visible')
+        cy.tick(Time)
+        cy.get('.error').should('not.be.visible')
     })
 
     it('Preencher os campos nome, sobrenome, email e telefone, após isso limpar os campos', function() {
@@ -63,20 +73,29 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('Exibir mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function() {
+        cy.clock()
         cy.get('.button').click()
         cy.get('.error').should('be.visible')
+        cy.tick(Time)
+        cy.get('.error').should('not.be.visible')
     })
 
     it('Enviar o formuário com sucesso usando um comando customizado', function() {
+        cy.clock()
         cy.fillMandatoryFields()
         cy.get('.button').click()
         cy.get('.success').should('be.visible')
+        cy.tick(Time)
+        cy.get('.success').should('not.be.visible')
     })
 
     it('Enviar fórmulário utilizando o .contains()', function() {
+        cy.clock()
         cy.fillMandatoryFields()
         cy.contains('button', 'Enviar').click()
         cy.get('.success').should('be.visible')
+        cy.tick(Time)
+        cy.get('.success').should('not.be.visible')
     })
 
     it('Selecionar um produto (Cursos) por seu texto', function () {
@@ -150,4 +169,13 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#privacy a').invoke('removeAttr', 'target').click()
         cy.contains('Talking About Testing').should('be.visible')
     })
+
+    it.only('exibe mensagem por 3 segundos', function() {
+        cy.clock()
+        cy.get('.button').click()
+        
+        cy.get('.error').should('be.visible')
+        cy.tick(Time)
+        cy.get('.error').should('not.be.visible')
+      })
   })
