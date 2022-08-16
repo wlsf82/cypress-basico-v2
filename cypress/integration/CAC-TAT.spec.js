@@ -170,6 +170,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('Talking About Testing').should('be.visible')
     })
 
+    Cypress._.times(5, function() {
     it.only('exibe mensagem por 3 segundos', function() {
         cy.clock()
         cy.get('.button').click()
@@ -178,4 +179,5 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.tick(Time)
         cy.get('.error').should('not.be.visible')
       })
-  })
+    })
+})
