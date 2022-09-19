@@ -1,0 +1,27 @@
+# cy-data-test
+
+Estudando automação de teste basico com cypress.
+
+## Pre-requirements
+
+Ter instalado na maquina projeto cypress
+
+> Possui prerequisito em javaScript, html e css
+
+## Installation
+
+Ter instalo `npm install` na maquina que for utiliza
+
+## Tests
+
+> **Note:** Verificação de titulo
+> Tertar funcionalidade do botão
+> Tertar opições de enum
+
+Para roda o projeto necessário executa comando 'npm run cy:open'.
+
+## Support this project
+
+se vc gosto do projeto deixe sua ⭐.
+
+___

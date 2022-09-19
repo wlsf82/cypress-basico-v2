@@ -1,0 +1,10 @@
+name: End-to-end Tests
+on: [push]
+jobs:
+  cypress-run:
+    runs-on: ubuntu=20.04
+    steps:
+      - name: Checkout
+        uses: action/checkout@v2
+      - name: Cypress run
+        uses: Cypress-io/github-action@v2
