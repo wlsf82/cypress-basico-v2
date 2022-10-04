@@ -2,6 +2,8 @@
 
 
 describe('Central de Atendimento ao Cliente TAT', function() {
+    const TEMPOA_DE_CONTAGEM_DE_MENSAGEM = 300
+    
     beforeEach(function() {
         cy.visit('./src/index.html')
     })
@@ -13,6 +15,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     it('preenche os campos obrigatórios e enviar o formulario', function() {
         const longText = 'testy estySeSstyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyestyesty'
         
+        cy.clock()
+        
         cy.get('#firstName').type('Suelen')
         cy.get('#lastName').type('Marques')
         cy.get('#email').type('suelen@hotmail.com.br')
@@ -20,13 +24,18 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('button', 'Enviar').click()
 
         cy.get('.success').should('be.visible')
+        
+        cy.tick(TEMPOA_DE_CONTAGEM_DE_MENSAGEM)
+        cy.get('.success').should('not.be.visible')
+
     })
 
     it('exibe mensagem de erro ao submete o formatação', function() {
+       
         cy.get('#firstName').type('Suelen')
         cy.get('#lastName').type('Marques')
         cy.get('#email').type('suelen@hotmail,com')
-        cy.get('#open-text-area').type('texte')
+        cy.get('#open-text-area').type('texto')
         cy.contains('button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
@@ -40,6 +49,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não preenchido',function(){
+        cy.clock()
+        
         cy.get('#firstName').type('Suelen')
         cy.get('#lastName').type('Marques')
         cy.get('#email').type('suelen@hotmail,com')
@@ -48,6 +59,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
+    
+        cy.tick(TEMPOA_DE_CONTAGEM_DE_MENSAGEM)
+        cy.get('.error').should('not.be.visible')
     })
 
     it('preenche e limpa os campo nome, sobrenome, email e telefone', function(){
