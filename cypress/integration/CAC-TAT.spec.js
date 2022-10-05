@@ -212,6 +212,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#open-text-area')
           .invoke('val', longText)
           .should('have.value', longText)
-      })
+    })
+
+    it('', function(){
+        
+    })
 })
 
