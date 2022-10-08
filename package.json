@@ -7,7 +7,8 @@
     "cy:open": "cypress open",
     "cy:open:mobile": "cypress open --config viewportWidth=410 viewportHeight=860",
     "test": "cypress run",
-    "test:mobile": "cypress run --config viewportWidth=410 viewportHeight=860"
+    "test:mobile": "cypress run --config viewportWidth=410 viewportHeight=860",
+    "test:webkit": "cypress run --browser webkit"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   "license": "MIT",
   "homepage": "https://github.com/wlsf82/cypress-basico-v2#readme",
   "devDependencies": {
-    "cypress": "^10.7.0"
+    "cypress": "^10.8.0",
+    "playwright-webkit": "^1.26.0"
   }
 }
