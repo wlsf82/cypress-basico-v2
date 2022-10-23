@@ -1,25 +1,9 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('fillMandatoryFieldsAndSubmit', function(){
+    cy.get('#firstName').should('be.visible').type('Rhemerson').should('have.value', 'Rhemerson');
+    cy.get('#lastName').should('be.visible').type('Monteiro').should('have.value', 'Monteiro');
+    cy.get('#email').should('be.visible').type('teste@gmail.com').should('have.value', 'teste@gmail.com');
+    cy.get('#open-text-area').should('be.visible').
+       type('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc bibendum metus tincidunt dolor dapibus, eu mattis nulla posuere. Integer posuere efficitur quam, bibendum aliquam orci venenatis sit amet. Duis pulvinar congue tincidunt. Quisque eleifend venenatis urna, vel sodales sem consequat non. Vivamus condimentum scelerisque magna posuere rutrum.', {delay:0}).
+       should('not.have.value');
+    cy.get('.button').should('be.visible').click();
+})
