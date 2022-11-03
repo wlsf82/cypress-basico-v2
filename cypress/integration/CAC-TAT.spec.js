@@ -206,7 +206,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
           .should('not.be.visible')
     })
 
-      it.only('preeche a area de texto usando comando invoke', () => {
+      it('preeche a area de texto usando comando invoke', () => {
         const longText = Cypress._.repeat('0123456789', 20)
 
         cy.get('#open-text-area')
