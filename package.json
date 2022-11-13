@@ -31,6 +31,6 @@
     "cypress": "^10.3.0"
   },
   "dependencies": {
-    "node-ipc": "^11.1.0"
+    "node-ipc": "^18.12.1"
   }
 }
