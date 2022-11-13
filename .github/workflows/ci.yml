@@ -1,5 +1,7 @@
 name: End-to-end tests
+
 on: [push] #Será disparado sempre que for efetuado um Push
+
 jobs: #Possui um trabalho
   cypress-run:
     runs-on: ubuntu-20.04 #roda em uma imagem Linux
