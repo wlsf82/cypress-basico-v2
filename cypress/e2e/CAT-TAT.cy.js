@@ -38,35 +38,27 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
 
 
         cy.get('.success').should('be.visible')
-
         cy.tick(THERE_SECONDS_IN_MS) //Avança no tempo
-
         cy.get('.success').should('not.be.visible')
 
 
     })
 
-    it('Preenche os campo e-mail com formatação inválida', () => {  
-        
+    it('Preenche os campo e-mail com formatação inválida', () => {          
         cy.clock()
         cy.get('#firstName').type('Wellington')
         cy.get('#lastName').type('Costa')
-        cy.get('#email').type('wellington,com')
+        cy.get('#email').type('wellington,com') //email inválido
         // quando coloca texto muito longo, usa-se delay para diminuir tempo de teste
         cy.get('#open-text-area').type(longtext)    
         cy.contains('button','Enviar').click()
         cy.get('.error').should('be.visible')
-
         cy.tick(THERE_SECONDS_IN_MS) //Avança no tempo
-
         cy.get('.error').should('not.be.visible')
     })
 
-    it('Campo de telefone continua vazio quando preenchido com valor não numérico', () => { 
-        
-        cy.get('#phone')
-            .type('dgdgdfhgfertet')
-            .should('have.value','')       
+    it('Campo de telefone continua vazio quando preenchido com valor não numérico', () => {         
+        cy.get('#phone').type('dgdgdfhgfertet').should('have.value','')       
     })
 
     
@@ -81,7 +73,7 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
             cy.get('#phone-checkbox').check()
             // quando coloca texto muito longo, usa-se delay para diminuir tempo de teste
             cy.get('#open-text-area').type(longtext)    
-        cy.get('#open-text-area').type(longtext)    
+            cy.get('#open-text-area').type(longtext)    
             cy.get('#open-text-area').type(longtext)    
             cy.contains('button','Enviar').click()
     
@@ -107,10 +99,8 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
     it('Exibe a messagem de erro ao submeter o formulário sem preencher os campos obrigatórios',()=>{
         cy.clock()
         cy.get('button[type="submit"]').click()
-
         cy.get('.error').should('be.visible')
         cy.tick(THERE_SECONDS_IN_MS) //Avança no tempo
-
         cy.get('.error').should('not.be.visible')
     })
 
@@ -128,15 +118,26 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         
     })
 
-    it('Seleciona um produto (Youtube) por seu tesxto',()=>{
+    //////////////////////////////////// IMPORTANTE////////////////////////////////////////////////
+
+    //AULA 4 - BUSCANDO ITEM NA OPÇÃO SELECT : Como busca item, dentro de uma caixa de opções
+    it('Seleciona um produto (Youtube) por seu texto',()=>{
         cy.get('#product').select('youtube').should('have.value','youtube')
+        //Buscando pelo Texto
     })
     it('Seleciona um produto (Mentoria) por seu valor',()=>{
         cy.get('#product').select('mentoria').should('have.value','mentoria')
+        //Buscando pelo Valor
+
     })
     it('Seleciona um produto (Blog) por seu indice',()=>{
         cy.get('#product').select(1).should('have.value','blog')
+        //Buscando valor de seleção pelo indice
     })
+
+    //////////////////////////////////// RADIO ////////////////////////////////////////////////
+
+    //AULA 5 - MARCANDO inputs tipo Radio
     it('Marca o tipo de atendimento feedback',()=>{
         cy.get('input[type="radio"][value="feedback"]').check().should('have.value','feedback')
     })
@@ -145,7 +146,7 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
     it('Marca cada tipo de atendimento',()=>{
         cy.get('input[type="radio"]')
             .should('have.length',3)// verifica se tem 3 checkboxs
-            .each(function($radio){
+            .each(function($radio){ //empacota os elementos para fazer a verificação
                 cy.wrap($radio).check()
                 cy.wrap($radio).should('be.checked')
             })
@@ -156,10 +157,11 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
     it('Marca ambos os checkboxes e depois desmarca o último',()=>{
         cy.get('input[type="checkbox"]')
         .check() //Dando check nos 2 checkboxes
-        .should('be.checked')
-        .last()
-        .uncheck()
-        .should('not.be.checked')
+        .should('be.checked') //Verifica se está marcado
+        .last() //Ele depois pega o último 
+        .uncheck() // Desmarca
+        .should('not.be.checked') // Verifica se não está marcado
+        
 
     })
 
