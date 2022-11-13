@@ -118,7 +118,7 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         
     })
 
-    //////////////////////////////////// IMPORTANTE////////////////////////////////////////////////
+//////////////////////////////////// IMPORTANTE////////////////////////////////////////////////
 
     //AULA 4 - BUSCANDO ITEM NA OPÇÃO SELECT : Como busca item, dentro de uma caixa de opções
     it('Seleciona um produto (Youtube) por seu texto',()=>{
@@ -135,7 +135,7 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         //Buscando valor de seleção pelo indice
     })
 
-    //////////////////////////////////// RADIO ////////////////////////////////////////////////
+//////////////////////////////////// RADIO ////////////////////////////////////////////////
 
     //AULA 5 - MARCANDO inputs tipo Radio
     it('Marca o tipo de atendimento feedback',()=>{
@@ -153,6 +153,9 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
 
     })
 
+
+//////////////////////////////////// CHECKBOX ////////////////////////////////////////////////
+
     // Marcar os 2 checkboxs e depois desmarcar
     it('Marca ambos os checkboxes e depois desmarca o último',()=>{
         cy.get('input[type="checkbox"]')
@@ -161,28 +164,34 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
         .last() //Ele depois pega o último 
         .uncheck() // Desmarca
         .should('not.be.checked') // Verifica se não está marcado
-        
+
 
     })
+
+//////////////////////////////////// UPLOAD DE ARQUIVOS ////////////////////////////////////////////////
 
     it('Selecionando arquivo da pasta fixtures',()=>{
         cy.get('input[type="file"]')
-            .should('not.have.value')
-            .selectFile('./cypress/fixtures/example.json')
+            .should('not.have.value') // Já verifica se não possui nenhum arquivo
+            .selectFile('./cypress/fixtures/example.json') // Caminho onde está arquivo
             .should(function($input){
-                expect($input[0].files[0].name).to.equal('example.json')
+                expect($input[0].files[0].name).to.equal('example.json') //pega retorno dado no inspecionar e verifica se valor retornado é mesmo da solictação
             })
     })
 
+//////////////////////////////////// SELECIONA ARQUIVO DRAG-AND-DROP ////////////////////////////////////////////////
+
+/* drag-drop faz Teste de envio de arquivo como se fosse no modo arrastar*/
     it('seleciona um arquivo simulando um drag-and-drop',()=>{
         cy.get('input[type="file"]')
             .should('not.have.value')
-            .selectFile('./cypress/fixtures/example.json',{action:'drag-drop'})
+            .selectFile('./cypress/fixtures/example.json',{action:'drag-drop'}) //Insere drag-drop
             .should(function($input){
                 expect($input[0].files[0].name).to.equal('example.json')
             })
     })
 
+//////////////////////////////////// SELECIONA ARQUIVO EXEMPLO ////////////////////////////////////////////////
     it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias',()=>{
         cy.fixture('example.json').as('sampleFile')
         cy.get('input[type="file"')
@@ -192,6 +201,9 @@ describe('Switch de testes da tela cadastro da Central de Atendiemtno ao Cliente
             })
     })
 
+//////////////////////////////////// LINKS QUE ABREM EM OUTRA ABA NO NAVEGADOR ////////////////////////////////////////////////
+
+    /* */
     it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique',()=>{
         cy.get('#privacy a').should('have.attr','target','_blank')
     })
