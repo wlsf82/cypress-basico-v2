@@ -1,0 +1,41 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm install
+  cypress-tests-desktop:
+    needs: setup
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run tests on desktop viewport 🧪
+        uses: cypress-io/github-action@v2
+        
+        with:
+          command: npm test
+  cypress-tests-tablet:
+    needs: setup
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run  tests on tablet viewport 🧪
+        uses: cypress-io/github-action@v2
+
+        with:
+          command: npm run test:tablet
