@@ -1,4 +1,4 @@
-# nome do arquivo - ci = continuous integration,
+# nome do arquivo - ci = continuous integration
 
 name: End-to-end tests 🧪
 on: [push]
