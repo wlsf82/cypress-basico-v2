@@ -35,7 +35,7 @@ describe("Central de Atendimento ao Cliente TAT", function () {
         'Texto de teste para a área "como podemos ajudar".'
       );
 
-    cy.get('button[type="submit"]').should("be.visible").click();
+      cy.contains('button', 'Enviar').should("be.visible").click();
 
     cy.get(".success").should("be.visible");
   });
@@ -45,7 +45,7 @@ describe("Central de Atendimento ao Cliente TAT", function () {
     cy.get("#lastName").type("Ross");
     cy.get("#email").type("email@teste,com");
     cy.get("#open-text-area").type("Teste");
-    cy.get('button[type="submit"]').click();
+    cy.contains('button', 'Enviar').click();
 
     cy.get(".error").should("be.visible");
   });
@@ -70,7 +70,7 @@ describe("Central de Atendimento ao Cliente TAT", function () {
     cy.get("#email").type("email@teste.com");
     cy.get("#phone-checkbox").click();
     cy.get("#open-text-area").type("Teste");
-    cy.get('button[type="submit"]').click();
+    cy.contains('button', 'Enviar').click();
 
     cy.get(".error").should("be.visible");
   });
@@ -97,4 +97,16 @@ describe("Central de Atendimento ao Cliente TAT", function () {
       .clear()
       .should("have.value", "");
   });
+
+  it("exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", () => {
+    cy.contains('button', 'Enviar').click();
+    cy.get(".error").should("be.visible");
+  })
+
+  it("envia o formuário com sucesso usando um comando customizado", () => {
+    // fillMandatoryFieldsAndSubmit criado em support/commands.js
+    cy.fillMandatoryFieldsAndSubmit();
+
+    cy.get(".success").should("be.visible");
+  })
 });
