@@ -140,10 +140,10 @@ Cypress.Commands.add('uncheckContactCheckbox', function(contact){
 
 Cypress.Commands.add('inputFileFromFixture', function(){
     cy.get(chooseFileMap).should('be.visible')
-        .selectFile('cypress\\fixtures\\example.json')
+        .selectFile('cypress/fixtures/example.json')
         .then((input) =>{
             cy.log(input);
-            expect(input[0].files[0].name).to.equal('cypress\\fixtures\\example.json');
+            expect(input[0].files[0].name).to.equal('example.json');
         });   
 });
 
