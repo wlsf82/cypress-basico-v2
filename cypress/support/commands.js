@@ -163,6 +163,7 @@ Cypress.Commands.add('inputFileFromAliasedFixture', function(){
         .then((input) =>{
             cy.log(input);
             expect(input[0].files[0].name).to.equal('example.json');
+            
         });   
 });
 
