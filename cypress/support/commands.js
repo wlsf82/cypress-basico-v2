@@ -149,10 +149,10 @@ Cypress.Commands.add('inputFileFromFixture', function(){
 
 Cypress.Commands.add('inputFileFromDragNDrop', function(){
     cy.get(chooseFileMap).should('be.visible')
-        .selectFile('cypress\\fixtures\\example.json', {action : 'drag-drop'})
+        .selectFile('cypress/fixtures/example.json', {action : 'drag-drop'})
         .then((input) =>{
             cy.log(input);
-            expect(input[0].files[0].name).to.equal('cypress\\fixtures\\example.json');
+            expect(input[0].files[0].name).to.equal('example.json');
         });   
 });
 
