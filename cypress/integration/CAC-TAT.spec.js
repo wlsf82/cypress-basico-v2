@@ -132,11 +132,11 @@ describe('Central de Atendimento ao Cliente TAT', function(){
         cy.uncheckContactCheckbox('PhonE');
     });
 
-    it.only('Escolher o arquivo da pasta fixtures', function(){
+    it('Escolher o arquivo da pasta fixtures', function(){
        cy.inputFileFromFixture();
     });
 
-    it.only('Escolher o arquivo da pasta fixtures via drag and drop', function(){
+    it('Escolher o arquivo da pasta fixtures via drag and drop', function(){
        cy.inputFileFromDragNDrop();
     });
 
