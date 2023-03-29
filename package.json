@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wlsf82/cypress-basico-v2.git"
+    "url": "git+https://github.com/guipgarcia/cypress-basico-v2.git"
   },
   "keywords": [
     "Testing",
@@ -22,7 +22,7 @@
   ],
   "author": "Walmyr Filho <wlsf82@gmail.com> (https://walmyr.dev/)",
   "license": "MIT",
-  "homepage": "https://github.com/wlsf82/cypress-basico-v2#readme",
+  "homepage": "https://github.com/guipgarcia/cypress-basico-v2#readme",
   "devDependencies": {
     "cypress": "^9.5.1"
   }
