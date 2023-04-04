@@ -1,12 +1,37 @@
-name: End-to-end tests 🧪
-on: [push]
+name: End-to-end Tests 🧪
+on: push
 jobs:
-  cypress-run:
-    runs-on: ubuntu-20.04
+  chrome:
+    runs-on: ubuntu-22.04
+    name: E2E on Chrome
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+      - uses: actions/checkout@v3
+      - uses: cypress-io/github-action@v5
+        with:
+          browser: chrome
+  firefox:
+    runs-on: ubuntu-22.04
+    name: E2E on Firefox
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cypress-io/github-action@v5
+        with:
+          browser: firefox
+  edge:
+    runs-on: ubuntu-22.04
+    name: E2E on Edge
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cypress-io/github-action@v5
+        with:
+          browser: edge
+  safari:
+    runs-on: ubuntu-22.04
+    name: E2E on Webkit
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install webkit dependencies on Linux
+        run: npx playwright install-deps webkit
+      - uses: cypress-io/github-action@v5
+        with:
+          command: npx cypress run --browser webkit
