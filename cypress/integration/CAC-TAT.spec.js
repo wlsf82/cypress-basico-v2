@@ -9,17 +9,6 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.title().should('equal', 'Central de Atendimento ao Cliente TAT')
     })
 
-    /** Exercicio 00
-        Digitar dados nos campos:
-        - Nome
-        - Sobrenome
-        - Email
-        - Como podemos te ajudar?
-        
-        O teste deve clicar no botão Enviar após preencher os campos.
-
-        Depois do clique, uma mensagem de sucesso deve ser exibida
-     */
     it('preenche os campos obrigatórios e envia o formulário', function () {
         cy.get('form').within(function () {
             cy.get('input[name="firstName"]')
@@ -43,12 +32,123 @@ describe('Central de Atendimento ao Cliente TAT', function () {
                 .type('Esse é um teste de escrita no text-area')
                 .should('have.value', 'Esse é um teste de escrita no text-area');
 
-            cy.get('button[type="submit"]')
+            cy.contains('button', 'Enviar')
                 .should('be.visible')
                 .click();
         })
 
         cy.get('.success')
             .should('be.visible');
+    })
+    
+    // Exercício extra 1
+    it('escrever texto de forma estantanea', function() {
+        cy.get('form').within(function() {
+            cy.get('input[name="firstName"]')
+                .type('Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti blanditiis, vero quo voluptas id ex ratione saepe velit recusandae alias! Iusto facilis officia recusandae at nihil odit animi error nulla?', {
+                    delay: 0,
+                })
+        })
+    })
+
+    // Exercício extra 2
+    it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function() {
+        cy.get('form').within(function () {
+            cy.get('input[name="firstName"]')
+                .type('Marcos')
+
+            cy.get('input[name="lastName"]')
+                .type('Santos')
+
+
+            cy.get('input[type="email"]')
+                .type('marcos@gmail,com')
+
+            cy.get('textarea[name="open-text-area"]')
+                .type('Esse é um teste de escrita no text-area')
+
+            cy.contains('button', 'Enviar')
+                .should('be.visible')
+                .click();
+        })
+
+        cy.get('.error')
+            .should('be.visible');
+    })
+
+    // Exercício extra 3
+    it('não permitir escrever caracters que não são numeros no campo de telefone', function() {
+        cy.get('form').within(function() {
+            cy.get('input[name="phone"][type="number"]')
+                .type('Hello world')
+                .should('be.empty');
+        })
+    })
+
+    // Exercício extra 4
+    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+        cy.get('form').within(function() {
+            cy.get('input[name="firstName"]').type('mensagem de teste');
+            cy.get('input[name="lastName"]').type('mensagem de teste');
+            cy.get('input[type="email"][name="email"]').type('example@test.com');
+            cy.get('textarea[name="open-text-area"]').type('mensagem de teste');
+            
+
+            cy.get('#check > input[type="checkbox"]')
+                .check('phone');
+
+            cy.contains('button', 'Enviar')
+                .should('be.visible')
+                .click();
+        });
+        
+        cy.get('.error')
+            .should('be.visible');
+    })
+
+    // Exercício extra 5
+    it('preenche e limpa os campos nome, sobrenome, email e telefone', function() {
+        cy.get('input[name="firstName"]')
+            .type('Marcos')
+            .should('have.value', 'Marcos')
+            .clear()
+            .should('have.value', '');
+
+        cy.get('input[name="lastName"]')
+            .type('Santos')
+            .should('have.value', 'Santos')
+            .clear()
+            .should('have.value', '');
+
+        cy.get('input[type="email"][name="email"]')
+            .type('marcos@gmail.com')
+            .should('have.value', 'marcos@gmail.com')
+            .clear()
+            .should('have.value', '');
+
+        cy.get('input[type="number"][name="phone"]')
+            .type('12345678')
+            .should('have.value', '12345678')
+            .clear()
+            .should('have.value', '');
+    })
+    
+    // Exercício extra 6
+    it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function() {
+        cy.contains('button', 'Enviar')
+            .should('be.visible')
+            .click();
+
+        cy.get('.error')
+            .should('be.visible')
+            .find('strong')
+            .should('have.text', 'Valide os campos obrigatórios!');
+    })
+
+    // Exercício extra 7 - custom comands
+    it('envia o formuário com sucesso usando um comando customizado', function () {
+        cy.fillMandatoryFieldsAndSubmit();
+
+        cy.get('.success').should('be.visible');
     })
 })
