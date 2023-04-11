@@ -212,4 +212,40 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         })
     })
 
+    // ---------------------- AULA 06 -------------------------------
+    it('seleciona um arquivo da pasta fixtures', function() {
+        cy.get('input[type="file"][id="file-upload"]')
+            .selectFile('cypress/fixtures/example.json')
+            .then(function($input) {
+                const files = $input[0].files;
+
+                expect(files[0].name).to.eq('example.json');
+            })
+    })
+
+
+    it('seleciona um arquivo simulando um drag-and-drop', function() {
+        cy.get('input[type="file"][id="file-upload"]')
+            .selectFile(
+                'cypress/fixtures/example.json',
+                { action: 'drag-drop' }
+            )
+            .then(function($input) {
+                const files = $input[0].files;
+
+                expect(files[0].name).to.be.equal('example.json');
+            })
+    })
+
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
+        cy.fixture('example.json').as('fileSelected');
+
+        cy.get('input[type="file"][id="file-upload"]')
+            .selectFile('@fileSelected')
+            .then(function($input) {
+                const files = $input[0].files;
+
+                expect(files[0].name).to.be.equal('example.json');
+            })
+    })
 })
