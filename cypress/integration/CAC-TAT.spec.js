@@ -171,9 +171,29 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     })
 
     // Exercício extra 2
-    it.only('seleciona um produto (Blog) por seu índice', function() {
+    it('seleciona um produto (Blog) por seu índice', function() {
         cy.get('select[id="product"]')
             .select(1)
             .should('have.value', 'blog')
     })
+
+    // ---------------------- AULA 04 -------------------------------
+    it('marca o tipo de atendimento "Feedback"', function() {
+        cy.get('#support-type').within(function() {
+            cy.get('input[value="feedback"]')
+                .check()
+        })
+    })
+
+    it('marca cada tipo de atendimento', function() {
+        cy.get('#support-type').within(function() {
+            cy.get('input[type="radio"]')
+            .should('have.length', 3)
+            .each(($checkbox) => {
+                cy.wrap($checkbox)
+                    .check()
+                    .should('be.checked')
+            })
+        })
+    })  
 })
