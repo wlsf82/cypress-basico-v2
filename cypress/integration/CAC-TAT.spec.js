@@ -44,10 +44,10 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('.success')
             .should('be.visible');
     })
-        
+
     // Exercício extra 1
-    it('escrever texto de forma estantanea', function() {
-        cy.get('form').within(function() {
+    it('escrever texto de forma estantanea', function () {
+        cy.get('form').within(function () {
             cy.get('input[name="firstName"]')
                 .type('Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti blanditiis, vero quo voluptas id ex ratione saepe velit recusandae alias! Iusto facilis officia recusandae at nihil odit animi error nulla?', {
                     delay: 0,
@@ -56,7 +56,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     })
 
     // Exercício extra 2
-    it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function() {
+    it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function () {
         cy.get('form').within(function () {
             cy.get('input[name="firstName"]')
                 .type('Marcos')
@@ -81,8 +81,8 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     })
 
     // Exercício extra 3
-    it('não permitir escrever caracters que não são numeros no campo de telefone', function() {
-        cy.get('form').within(function() {
+    it('não permitir escrever caracters que não são numeros no campo de telefone', function () {
+        cy.get('form').within(function () {
             cy.get('input[name="phone"][type="number"]')
                 .type('Hello world')
                 .should('be.empty');
@@ -90,13 +90,13 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     })
 
     // Exercício extra 4
-    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
-        cy.get('form').within(function() {
+    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function () {
+        cy.get('form').within(function () {
             cy.get('input[name="firstName"]').type('mensagem de teste');
             cy.get('input[name="lastName"]').type('mensagem de teste');
             cy.get('input[type="email"][name="email"]').type('example@test.com');
             cy.get('textarea[name="open-text-area"]').type('mensagem de teste');
-            
+
 
             cy.get('#check > input[type="checkbox"]')
                 .check('phone');
@@ -105,13 +105,13 @@ describe('Central de Atendimento ao Cliente TAT', function () {
                 .should('be.visible')
                 .click();
         });
-        
+
         cy.get('.error')
             .should('be.visible');
     })
 
     // Exercício extra 5
-    it('preenche e limpa os campos nome, sobrenome, email e telefone', function() {
+    it('preenche e limpa os campos nome, sobrenome, email e telefone', function () {
         cy.get('input[name="firstName"]')
             .type('Marcos')
             .should('have.value', 'Marcos')
@@ -136,9 +136,9 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             .clear()
             .should('have.value', '');
     })
-    
+
     // Exercício extra 6
-    it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function() {
+    it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function () {
         cy.contains('button', 'Enviar')
             .should('be.visible')
             .click();
@@ -157,43 +157,59 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     })
 
     // ---------------------- AULA 03 -------------------------------
-    it('seleciona um produto (YouTube) por seu texto', function() {
+    it('seleciona um produto (YouTube) por seu texto', function () {
         cy.get('select[id="product"]')
             .select('YouTube')
             .should('have.value', 'youtube')
     })
 
     // Exercício extra 1
-    it('seleciona um produto (Mentoria) por seu valor (value)', function() {
+    it('seleciona um produto (Mentoria) por seu valor (value)', function () {
         cy.get('select[id="product"]')
             .select('mentoria')
             .should('have.value', 'mentoria')
     })
 
     // Exercício extra 2
-    it('seleciona um produto (Blog) por seu índice', function() {
+    it('seleciona um produto (Blog) por seu índice', function () {
         cy.get('select[id="product"]')
             .select(1)
             .should('have.value', 'blog')
     })
 
     // ---------------------- AULA 04 -------------------------------
-    it('marca o tipo de atendimento "Feedback"', function() {
-        cy.get('#support-type').within(function() {
+    it('marca o tipo de atendimento "Feedback"', function () {
+        cy.get('#support-type').within(function () {
             cy.get('input[value="feedback"]')
                 .check()
         })
     })
 
-    it('marca cada tipo de atendimento', function() {
-        cy.get('#support-type').within(function() {
+    it('marca cada tipo de atendimento', function () {
+        cy.get('#support-type').within(function () {
             cy.get('input[type="radio"]')
-            .should('have.length', 3)
-            .each(($checkbox) => {
-                cy.wrap($checkbox)
-                    .check()
-                    .should('be.checked')
-            })
+                .should('have.length', 3)
+                .each(($radioElement) => {
+                    cy.wrap($radioElement)
+                        .check()
+                        .should('be.checked')
+                })
         })
-    })  
+    })
+
+    // ---------------------- AULA 05 -------------------------------
+    it('marca ambos checkboxes, depois desmarca o último', function () {
+        cy.get('#check').within(function () {
+            cy.get('input[type="checkbox"]')
+                .as('checkboxes');
+
+            cy.get('@checkboxes')
+                .check()
+                .should('be.checked')
+                .last()
+                .uncheck()
+                .should('not.be.checked');
+        })
+    })
+
 })
