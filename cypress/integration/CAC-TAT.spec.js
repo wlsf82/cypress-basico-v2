@@ -106,7 +106,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
                 .click();
         });
 
-        cy.get('.errorr')
+        cy.get('.error')
             .should('be.visible');
     })
 
