@@ -1,4 +1,4 @@
-# cypres-basico-v2
+# cypres-basico-v2 (TEST RELEASE)
 
 Sample project for the basic course of the Talking Abot Testing online school.
 
