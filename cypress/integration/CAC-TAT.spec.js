@@ -99,8 +99,52 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.fillMandatoryFieldsAndSubmit()
 
       cy.get('.success').should('be.visible')
-    }) 
+    })
 
+    // Exercício 8 - Campos de Seleção Suspensa
+    it('seleciona um produto (YouTube) por seu texto', function() {
+      cy.get('#product')
+        .select('YouTube')
+        .should('have.value', 'youtube')
+    })
 
+    // Exercício extra - Value
+    it('seleciona um produto (Mentoria) por seu valor (value)', function() {
+      cy.get('#product')
+        .select('mentoria')
+        .should('have.value', 'mentoria')
+    })
+
+    // Exercício extra - Índice
+    it('seleciona um produto (Blog) por seu índice', function() {
+      cy.get('#product')
+        .select(1)
+        .should('have.value', 'blog')
+    })
+
+    // Exercício 9 - Radio Input
+    it('marca o tipo de atendimento "Feedback"', function() {
+      cy.get('[type="radio"]')
+        .check('feedback')
+        .should('be.checked')
+        .and('have.value', 'feedback')
+    })
+
+    // Exercício extra - Radio Button
+    it('marca cada tipo de atendimento', function() {
+      cy.get('[type="radio"]')
+        .should('be.checked')
+        .and('have.value', 'ajuda')
+
+      cy.get('[type="radio"]')
+        .check('elogio')
+        .should('be.checked')
+        .and('have.value', 'elogio')
+
+        cy.get('[type="radio"]')
+          .check('feedback')
+          .should('be.checked')
+          .and('have.value', 'feedback')
+    })
 })
 
