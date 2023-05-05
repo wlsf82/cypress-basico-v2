@@ -14,11 +14,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     it('Preenche os campos obrigatórios e envia o formulário', function(){
         cy.get('#firstName').type('Leonardo');
-        cy.contains('#firstName', '')
         cy.get('#lastName').type('Gutierrez');
         cy.get('#email').type('gutierrez.medeiros12@gmail.com');
-        cy.get('#open-text-area').type('Me ajude comprando um saco de pão');
-        cy.get('button[type="submit"]').click();
+        cy.get('#open-text-area').type('Me ajude comprando um saco de pão', {delay:0});
+        cy.contains('button', 'Enviar').click();
         cy.get('.success').should('be.visible', 'Mensagem enviada com sucesso.');
     })
 
@@ -26,19 +25,18 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#firstName').type('Leonardo');
         cy.get('#lastName').type('Gutierrez');
         cy.get('#email').type('gutierrez.medeiros12gmail.com');
-        cy.get('#open-text-area').type('Me ajude comprando um saco de pão');
-        cy.get('button[type="submit"]').click();
+        cy.get('#open-text-area').type('Me ajude comprando um saco de pão', {delay:0});
+        cy.contains('button', 'Enviar').click();
         cy.get('.error').should('be.visible', 'Valide os campos obrigatórios!');
     })
 
-    it('validação número', function(){
-        cy.get('#phone').type('123456789')
-        .should('have.value', '123456789')
+    it('validação número extra 3', function(){
+        cy.get('#phone').type('abc').should('have.value', '')
     })
 
-    it('Exibe mensagem de erro quando o telefone se torna obrigat´roio mas não é preenchido antes do envio do formulário extra 4', function(){
+    it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário extra 4', function(){
         cy.get('#phone-checkbox').click();
-        cy.get('button[type="submit"]').click();
+        cy.contains('button', 'Enviar').click();
         cy.get('.error').should('be.visible', 'Valide os campos obrigatórios!');
     })
 
@@ -50,12 +48,14 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios extra 6', function(){
-        cy.get('button[type="submit"]').click();
+        cy.contains('button', 'Enviar').click();
         cy.get('.error').should('be.visible', 'Valide os campos obrigatórios!');
     })
 
     it('Envia o formulário com uscesso usando um comando customizado extra 7', function(){
-        //fillMandatoryFieldsAndSubmit();
+        cy.fillMandatoryFieldsAndSubmit();
+
+        cy.get('.success').should('be.visible');
     })
 
 
