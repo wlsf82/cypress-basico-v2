@@ -8,7 +8,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     }); 
     
     it('Verifica o título da aplicação', function() {
-        
         cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
     }) 
 
@@ -58,5 +57,19 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('.success').should('be.visible');
     })
 
+    it('Seleciona um produto (Youtube) por seu texto', function(){
+        cy.get('#product').select('YouTube').should('have.value', 'youtube');
+    })
+
+    it('Seleciona um produto (Mentoria) por seu valor (value)', function(){
+        cy.get('#product').select('mentoria').should('have.value', 'mentoria');
+    })
+
+    it.only('Seleciona um produto (Blog) por seu índice', function(){
+        cy.get('#product')
+        .should('be.visible')
+        .select(1)
+        .should('have.value', 'blog');
+    })
 
 })
