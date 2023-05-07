@@ -34,7 +34,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário extra 4', function(){
-        cy.get('#phone-checkbox').click();
+        cy.get('#phone-checkbox').check();
         cy.contains('button', 'Enviar').click();
         cy.get('.error').should('be.visible', 'Valide os campos obrigatórios!');
     })
@@ -65,11 +65,33 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#product').select('mentoria').should('have.value', 'mentoria');
     })
 
-    it.only('Seleciona um produto (Blog) por seu índice', function(){
+    it('Seleciona um produto (Blog) por seu índice', function(){
         cy.get('#product')
         .should('be.visible')
         .select(1)
         .should('have.value', 'blog');
+    })
+
+    it('Marca o tipo de atendimento "Feedback"', function(){
+        cy.get('input[value="feedback"]')
+        .should('be.visible')
+        .check()
+        .should('have.value', 'feedback')
+    })
+
+    it('Marca cada tipo de atendimento', function(){
+        cy.get('input[value="ajuda"]').check().should('be.checked')
+        cy.get('input[value="elogio"]').check().should('be.checked')
+        cy.get('input[value="feedback"]').check().should('be.checked')
+    })
+
+    it('Marca ambos checkboxes, depois desmarca o último', function(){
+        cy.get('input[type="checkbox"]')
+            .check()
+            .should('be.checked')
+            .last()
+            .uncheck()
+            .should('not.be.checked')
     })
 
 })
