@@ -108,4 +108,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('p', 'Não salvamos dados submetidos no formulário da aplicação CAC TAT.').should('be.visible')
     })
 
+    it('Testando viewport', function(){
+        
+    })
 })
