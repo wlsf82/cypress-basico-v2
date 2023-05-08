@@ -94,4 +94,18 @@ describe('Central de Atendimento ao Cliente TAT', function() {
             .should('not.be.checked')
     })
 
+    it('Seleciona um arquivo da pasta fixtures', function(){
+        cy.get('#file-upload')
+            .selectFile('cypress/fixtures/example.json')  
+    })
+
+    it('Verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function(){
+        cy.contains('a', 'Política de Privacidade').should('have.attr', 'target', '_blank')
+    })
+
+    it('acessa a página da política de privacidade removendo o target e então clicando no link', function(){
+        cy.contains('a', 'Política de Privacidade').invoke('removeAttr', 'target').click();
+        cy.contains('p', 'Não salvamos dados submetidos no formulário da aplicação CAC TAT.').should('be.visible')
+    })
+
 })
