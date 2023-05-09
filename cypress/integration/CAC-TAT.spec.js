@@ -107,8 +107,4 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('a', 'Política de Privacidade').invoke('removeAttr', 'target').click();
         cy.contains('p', 'Não salvamos dados submetidos no formulário da aplicação CAC TAT.').should('be.visible')
     })
-
-    it('Testando viewport', function(){
-        
-    })
 })
