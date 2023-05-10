@@ -42,7 +42,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     // Exercício 4
-    it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
         cy.get('#firstName').type('Luiz')
         cy.get('#lastName').type('Carlos')
         cy.get('#email').type('teste@email.com')
@@ -148,7 +148,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     // Exercício 10 - Checkbox
-    it.only('marca ambos checkboxes, depois desmarca o último', function() {
+    it('marca ambos checkboxes, depois desmarca o último', function() {
       cy.get('#email-checkbox')
         .check('email')
         .should('be.checked')
@@ -164,5 +164,30 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .uncheck()
         .should('not.be.checked')
         .and('have.value', 'phone')
+    })
+    
+    // Exercício 11 - Upload de arquivo
+    it.only('seleciona um arquivo da pasta fixtures', function() {
+      cy.get('#file-upload')
+        .selectFile('cypress/fixtures/example.json')
+        .then(input => {
+          expect(input[0].files[0].name).to.eq('example.json')
+        // O .then está capturando o input do comando interior e validando se o nome do primeiro arquivo
+        // do primeiro input está igual ao nome informado no .equal
+        })
+    })
+
+    // Exercício extra - Upload de arquivo
+    it.only('seleciona um arquivo simulando um drag-and-drop', function() {
+      cy.get('#file-upload')
+        .selectFile('cypress/fixtures/example.json', { action: "drag-drop"})
+        .then(input => {
+          expect(input[0].files[0].name).to.eq('example.json')
+        })
+    })
+
+    // Exercício extra 2 - Upload de Arquivo
+    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
+      
     })
 })
