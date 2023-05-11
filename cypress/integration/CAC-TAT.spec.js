@@ -188,6 +188,12 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     // Exercício extra 2 - Upload de Arquivo
     it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
+      cy.fixture('example.json', { encoding: null }).as('exampleFile')
       
+      cy.get('#file-upload')
+        .selectFile('@exampleFile')
+        .then(input => {
+          expect(input[0].files[0].name).to.eq('example.json')
+        })
     })
 })
