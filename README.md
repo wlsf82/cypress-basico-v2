@@ -2,7 +2,7 @@
 
 Sample project to demonstrate Cypress basic commands.
 
-## What I'm learning?
+## What I've learned?
 
 - How to configure a Cypress project from the beginning
 - How to visit local and remote pages
@@ -19,18 +19,28 @@ Sample project to demonstrate Cypress basic commands.
 
 ___
 
+## Pre-requirements
+
+It is required to have Node.js and npm installed to run this project.
+
+> I used versions `v19.7.0` and `9.5.0` of Node.js and npm, respectively. I suggest you use the same or later versions.
+
 ## Installation
-Run npm install (or npm i for the short version) to install the dev dependencies.
+
+Run `npm install` (or `npm i` for the short version) to install the dev dependencies.
 
 ## Tests
-> **_NOTE:_**  Before running the tests, make a copy of the cypress.env.example.json file as cypress.env.json, which in the real world, you would update with valid credentials.
-> <p> The cypress.env.json file is included on [.gitignore](https://github.com/lvizrosario/cypress-basico-v2/blob/main/.gitignore) and you're safe that confidential info won't be versioned.</p>
 
-Run npm test (or npm t for the short version) to run the test in headless mode.
+> **Note:** Before running the tests, make a copy of the `cypress.env.example.json` file as `cypress.env.json`, which in the real world, you would update with valid credentials.
+>
+> The `cypress.env.json` file is included on [`.gitignore`](./.gitignore) and you're safe that confidential info won't be versioned.
 
-Or, run npm run cy:open to open Cypress in interactive mode.
+Run `npm test` (or `npm t` for the short version) to run the test in headless mode.
+
+Or, run `npm run cy:open` to open Cypress in interactive mode.
 
 ## Support this project
+
 If you want to support this project, leave a ⭐.
 
 
