@@ -13,6 +13,7 @@ Cypress.Commands.add('Login', function(){
 Cypress.Commands.add('AdicionarQuestao', function(disciplina){
     cy.get('button[title="Disciplinas"]').click()
     cy.contains('.text', disciplina).click()
+    cy.wait(6000)
     cy.contains('button[type="button"]', ' Adicionar').click()
     cy.contains('button[type="button"]', ' Adicionar').click()
     cy.contains('button[type="button"]', ' Adicionar').click()
