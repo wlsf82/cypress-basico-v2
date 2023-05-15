@@ -167,7 +167,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
     
     // Exercício 11 - Upload de arquivo
-    it.only('seleciona um arquivo da pasta fixtures', function() {
+    it('seleciona um arquivo da pasta fixtures', function() {
       cy.get('#file-upload')
         .selectFile('cypress/fixtures/example.json')
         .then(input => {
@@ -178,7 +178,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     // Exercício extra - Upload de arquivo
-    it.only('seleciona um arquivo simulando um drag-and-drop', function() {
+    it('seleciona um arquivo simulando um drag-and-drop', function() {
       cy.get('#file-upload')
         .selectFile('cypress/fixtures/example.json', { action: "drag-drop"})
         .then(input => {
@@ -187,7 +187,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     // Exercício extra 2 - Upload de Arquivo
-    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
       cy.fixture('example.json', { encoding: null }).as('exampleFile')
       
       cy.get('#file-upload')
@@ -195,5 +195,21 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .then(input => {
           expect(input[0].files[0].name).to.eq('example.json')
         })
+    })
+
+    // Exercício 12 - Links que abrem em outra aba
+    it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function() {
+      cy.get('a')
+        .should('have.attr', 'target', '_blank')
+    })
+
+    // Exercício extra 1 - Links que abrem em outra aba
+    it('acessa a página da política de privacidade removendo o target e então clicando no link', function() {
+      cy.get('a')
+        .invoke('removeAttr', 'target')
+        .click()
+
+      cy.url()
+        .should('be.eq', 'http://localhost:59899/src/privacy.html')
     })
 })
