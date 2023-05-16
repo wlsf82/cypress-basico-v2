@@ -101,5 +101,10 @@ it('EXTRA 1 - seleciona um produto (Mentoria) por seu valor (value)', function (
     
 })
 
+it.only('EXTRA 2 - seleciona um produto (Blog) por seu índice', function () {
+    cy.get('select').select(1).should('have.value','blog')
+    
+})
+
 
 })
