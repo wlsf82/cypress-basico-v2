@@ -90,6 +90,9 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         
     })
 
-
-
+//********************** Aula 03 **********************\\
+it.only('seleciona um produto (YouTube) por seu texto', function () {
+    cy.get('select').select('YouTube').should('have.value','youtube')
+    
+})
 })
