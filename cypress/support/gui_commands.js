@@ -7,6 +7,6 @@ Cypress.Commands.add('enviaCamposObrigatorios', (nome, sobrenome, email, texto )
         .type(email);
     cy.get('#open-text-area')
         .type(texto, {delay: 0});
-    cy.get('button[type="submit"]')
+    cy.contains('button', 'Enviar')
         .click();
 })

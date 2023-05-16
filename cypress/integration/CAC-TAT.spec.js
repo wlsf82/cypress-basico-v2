@@ -7,25 +7,38 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('verifica o título da aplicação', function() {  
-        cy.title().should('eq', 'Central de Atendimento ao Cliente TAT');    
+        cy.title()
+            .should('eq', 'Central de Atendimento ao Cliente TAT');    
     });
 
-    it('Preenche os campos obrigatórios e envia o formulário', () => {
-        cy.get('#firstName').type('Rafael')
-        cy.get('#lastName').type('Almeida')
-        cy.get('#email').type('almeida@mail.com')
-        cy.get('#open-text-area').type('Testando marotamente, fazendo um teste com uma linha maior', {delay: 1})
-        cy.get('button[type="submit"]').click()
-        cy.get('.success > strong').should('be.visible')
+    it.only('Preenche os campos obrigatórios e envia o formulário', () => {
+        cy.get('#firstName')
+            .type('Rafael');
+        cy.get('#lastName')
+            .type('Almeida');
+        cy.get('#email')
+            .type('almeida@mail.com');
+        cy.get('#open-text-area')
+            .type('Testando marotamente, fazendo um teste com uma linha maior', {delay: 1});
+        cy.contains('button', 'Enviar')
+            .click();
+        cy.get('.success > strong')
+            .should('be.visible');
     });
     
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
-        cy.get('#firstName').type('Rafael')
-        cy.get('#lastName').type('Almeida')
-        cy.get('#email').type('almeidamail.com')
-        cy.get('#open-text-area').type('Testando marotamente, fazendo um teste com uma linha maior')
-        cy.get('button[type="submit"]').click()
-        cy.get('.error > strong').should('be.visible')
+        cy.get('#firstName')
+            .type('Rafael');
+        cy.get('#lastName')
+            .type('Almeida');
+        cy.get('#email')
+            .type('almeidamail.com');
+        cy.get('#open-text-area')
+            .type('Testando marotamente, fazendo um teste com uma linha maior');
+        cy.contains('button', 'Enviar')
+            .click();
+        cy.get('.error > strong')
+            .should('be.visible');
     });
 
     it('Verificar se o campo de telefone aceita valor não-numérico', () => {
@@ -35,14 +48,22 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     });
 
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
-        cy.get('#firstName').type('Rafael')
-        cy.get('#lastName').type('Almeida')
-        cy.get('#email').type('almeida@mail.com')
-        cy.get('button[type="submit"]').click()
-        cy.get('#open-text-area').type('Teste')
-        cy.get('#phone-checkbox').check()
-        cy.get('.error > strong').should('be.visible')
-        cy.get('.phone-label-span').should('be.visible')        
+        cy.get('#firstName')
+            .type('Rafael');
+        cy.get('#lastName')
+            .type('Almeida');
+        cy.get('#email')
+            .type('almeida@mail.com');
+        cy.contains('button', 'Enviar')
+            .click();
+        cy.get('#open-text-area')
+            .type('Teste');
+        cy.get('#phone-checkbox')
+            .check();
+        cy.get('.error > strong')
+            .should('be.visible');
+        cy.get('.phone-label-span')
+            .should('be.visible');        
     });
 
     it('preenche e limpa os campos nome, sobrenome, email e telefone', () => {
@@ -69,11 +90,13 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     });
 
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
-        cy.get('button[type="submit"]').click()
-        cy.get('.error > strong').should('be.visible')
+        cy.contains('button', 'Enviar')
+            .click();
+        cy.get('.error > strong')
+            .should('be.visible');
     });
 
-    it.only('envia o formulário com sucesso usando um comando customizado', () => {
+    it('envia o formulário com sucesso usando um comando customizado', () => {
         cy.enviaCamposObrigatorios('Rafael', 'Almeida', 'almeida@mail.com', 'teste');
         cy.get('.success > strong')
             .should('be.visible');
