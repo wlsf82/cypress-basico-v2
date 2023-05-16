@@ -26,7 +26,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('#firstName').type('Patricia').should('have.value', 'Patricia')
         cy.get('#lastName').type('Possari').should('have.value', 'Possari')
         cy.get('#email').type('patricia.possari@teste.com').should('have.value', 'patricia.possari@teste.com')
-        cy.get('#open-text-area').type(longText, { delay: 0 }).should('have.value',longText)
+        cy.get('#open-text-area').type(longText, { delay: 0 }).should('have.value', longText)
         cy.get('button[type="submit"]').click()
         cy.get('.success').should('be.visible')
     })
@@ -86,25 +86,25 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     })
 
     it('EXTRA8 - uso do contains', function () {
-        cy.contains( 'button', 'Enviar')
-        
+        cy.contains('button', 'Enviar')
+
     })
 
-//********************** Aula 03 **********************\\
-it('seleciona um produto (YouTube) por seu texto', function () {
-    cy.get('select').select('YouTube').should('have.value','youtube')
-    
-})
+    //********************** Aula 03 **********************\\
+    it('seleciona um produto (YouTube) por seu texto', function () {
+        //cy.get('select').select('YouTube').should('have.value','youtube')
+        cy.get('#product').select('YouTube').should('have.value', 'youtube')
+    })
 
-it('EXTRA 1 - seleciona um produto (Mentoria) por seu valor (value)', function () {
-    cy.get('select').select('mentoria').should('have.value','mentoria')
-    
-})
+    it('EXTRA 1 - seleciona um produto (Mentoria) por seu valor (value)', function () {
+        //cy.get('select').select('mentoria').should('have.value', 'mentoria')
+        cy.get('#product').select('mentoria').should('have.value', 'mentoria')
+    })
 
-it.only('EXTRA 2 - seleciona um produto (Blog) por seu índice', function () {
-    cy.get('select').select(1).should('have.value','blog')
-    
-})
+    it.only('EXTRA 2 - seleciona um produto (Blog) por seu índice', function () {
+        //cy.get('select').select(1).should('have.value', 'blog')
+        cy.get('#product').select(1).should('have.value', 'blog')
+    })
 
 
 })
