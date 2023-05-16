@@ -114,7 +114,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
        .should('have.value','feedback')
     })
 
-    it.only('EXTRA - marca cada tipo de atendimento"', function () {
+    it('EXTRA - marca cada tipo de atendimento"', function () {
         cy.get('[type="radio"]')
         .should('have.length',3)
         .each(function($radio){
@@ -122,5 +122,26 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             cy.wrap($radio).should('be.checked')
         })
     })
+
+     //********************** Aula 05 **********************\\
+     it('marca ambos checkboxes, depois desmarca o último"', function () {
+        cy.get('input[type="checkbox"]')
+        .check()
+        .should('be.checked')
+        .last()
+        .uncheck()
+        .should('not.be.checked')     
+    })
+
+    it('EXTRA - exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário"', function () {
+        cy.get('#firstName').type('Patricia')
+        cy.get('#lastName').type('Possari')
+        cy.get('#email').type('patricia.possari@teste.com')
+        cy.get('#phone-checkbox').check()
+        cy.get('#open-text-area').type("Texto de teste")
+        cy.get('button[type="submit"]').click()
+        cy.get('.error').should('be.visible')   
+    })
+
 
 })
