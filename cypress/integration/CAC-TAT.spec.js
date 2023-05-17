@@ -11,10 +11,12 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it.only('preenche os campos obrigatórios e envia o formulário', function(){
+        const longText = 'Teste Teste, Teste Teste Teste Teste, Teste Teste Teste Teste, Teste Teste Teste Teste, Teste Teste Teste Teste, Teste Teste Teste Teste, Teste Teste Teste Teste, Teste Teste Teste Teste, Teste Teste Teste Teste, Teste Teste Teste Teste, Teste Teste Teste Teste'
         cy.get('#firstName').type('Walid')
         cy.get('#lastName').type('Arnous')
         cy.get('#email').type('walid@teste.com.br')
-        cy.get('#open-text-area').type('Teste Campo')
+        //Usar o Delay para poder copiar e colar o conteúdo, para não perder tempo "digitando"
+        cy.get('#open-text-area').type(longText, {delay: 0})
         cy.get('button[type="submit"]').click()
 
         cy.get('.success').should('be.visible')
