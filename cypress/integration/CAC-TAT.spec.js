@@ -108,29 +108,29 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
     //********************** Aula 04 **********************\\
     it('marca o tipo de atendimento "Feedback"', function () {
-       // cy.get('[type="radio"]').check('feedback')-- solucao errada
-       cy.get('input[type="radio"][value="feedback"]')
-       .check()
-       .should('have.value','feedback')
+        // cy.get('[type="radio"]').check('feedback')-- solucao errada
+        cy.get('input[type="radio"][value="feedback"]')
+            .check()
+            .should('have.value', 'feedback')
     })
 
     it('EXTRA - marca cada tipo de atendimento"', function () {
         cy.get('[type="radio"]')
-        .should('have.length',3)
-        .each(function($radio){
-            cy.wrap($radio).check()
-            cy.wrap($radio).should('be.checked')
-        })
+            .should('have.length', 3)
+            .each(function ($radio) {
+                cy.wrap($radio).check()
+                cy.wrap($radio).should('be.checked')
+            })
     })
 
-     //********************** Aula 05 **********************\\
-     it('marca ambos checkboxes, depois desmarca o último"', function () {
+    //********************** Aula 05 **********************\\
+    it('marca ambos checkboxes, depois desmarca o último', function () {
         cy.get('input[type="checkbox"]')
-        .check()
-        .should('be.checked')
-        .last()
-        .uncheck()
-        .should('not.be.checked')     
+            .check()
+            .should('be.checked')
+            .last()
+            .uncheck()
+            .should('not.be.checked')
     })
 
     it('EXTRA - exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário"', function () {
@@ -140,7 +140,42 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('#phone-checkbox').check()
         cy.get('#open-text-area').type("Texto de teste")
         cy.get('button[type="submit"]').click()
-        cy.get('.error').should('be.visible')   
+        cy.get('.error').should('be.visible')
+    })
+
+    //********************** Aula 06 **********************\\
+    it('seleciona um arquivo da pasta fixtures', function () {
+        //cy.get('input[type="file"]#file-upload')---podemos usar id=file-upload que é bem especifico 
+        cy.get('input[type="file"]')
+            .should('not.have.value')
+            .selectFile('cypress/fixtures/example.json')
+            .then(function ($input) {
+                console.log($input)
+                //expect($input[0].files[0].name).to.eq('example.json') --pode ser usado deste modo também
+                const files = $input[0].files
+                expect(files[0].name).to.eq('example.json')
+            })
+    })
+
+    it('EXTRA1 - seleciona um arquivo simulando um drag-and-drop', function () {
+        // cy.get('input[type=file]').selectFile('cypress/fixtures/example.json', { action: 'drag-drop' })
+
+        cy.get('input[type="file"]')
+            .should('not.have.value')
+            .selectFile('cypress/fixtures/example.json', { action: 'drag-drop' })
+            .then(function ($input) {
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
+    })
+
+    it.only('EXTRA2 -seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function () {
+
+        cy.fixture('example.json').as('sampleFile')
+        cy.get('input[type="file"]')
+            .selectFile('@sampleFile')
+            .should(function ($input) {
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
     })
 
 
