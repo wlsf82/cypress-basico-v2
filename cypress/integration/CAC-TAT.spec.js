@@ -18,7 +18,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#email').type('walid@teste.com.br')
         //Usar o Delay para poder copiar e colar o conteúdo, para não perder tempo "digitando"
         cy.get('#open-text-area').type(longText, {delay: 0})
-        cy.get('button[type="submit"]').click()
+        cy.contains('button', 'Enviar').click()
 
         cy.get('.success').should('be.visible')
     })
@@ -29,7 +29,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#lastName').type('Arnous')
         cy.get('#email').type('walid...teste.com.br')
         cy.get('#open-text-area').type('Teste')
-        cy.get('button[type="submit"]').click()
+        cy.contains('button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
     })
@@ -48,7 +48,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#email').type('walid@teste.com.br')
         cy.get('#open-text-area').type('Teste')
         cy.get('#phone-checkbox').click()
-        cy.get('button[type="submit"]').click()
+        cy.contains('button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
     })
@@ -82,7 +82,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     
     //#6
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatório', function(){
-        cy.get('button[type="submit"]').click()
+        cy.contains('button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
     })
@@ -93,5 +93,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
         cy.get('.success').should('be.visible')
     })
+
 })
   
