@@ -134,6 +134,15 @@ describe('Central de Atendimento ao Cliente TAT', function() {
                 cy.wrap($radio).should('be.checked')
         }) 
     });
+
+    it('marca ambos checkboxes, depois desmarca o último', () => {
+        cy.get('input[type="checkbox"]')
+            .should('have.length', 2)
+            .check()
+            .last()
+            .uncheck()
+            .should('not.be.checked', 'phone')
+    });
 })
   
 
