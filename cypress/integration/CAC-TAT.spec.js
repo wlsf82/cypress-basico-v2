@@ -6,7 +6,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.visit('./src/index.html');
     })
 
-    it('verifica o título da aplicação', function() {  
+    it('verifica o título da aplicação', () => {  
         cy.title()
             .should('eq', 'Central de Atendimento ao Cliente TAT');    
     });
@@ -143,6 +143,35 @@ describe('Central de Atendimento ao Cliente TAT', function() {
             .uncheck()
             .should('not.be.checked', 'phone')
     });
+
+    it('seleciona um arquivo da pasta fixtures', () => {
+      cy.get('input[type="file"]#file-upload')
+        .should('not.have.value')
+        .selectFile('cypress/fixtures/example.json')
+        .then(arq => {
+          expect(arq[0].files[0].name).to.equal('example.json')
+        })
+    });
+
+    it('seleciona um arquivo simulando um drag-and-drop', () => {
+      cy.get('input[type="file"]#file-upload')
+        .should('not.have.value')
+        .selectFile('cypress/fixtures/example.json', { action: 'drag-drop' })
+        .then(arq => {
+          expect(arq[0].files[0].name).to.equal('example.json')
+        })
+    });
+
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+      cy.fixture('example.json').as('exemploTeste')
+      cy.get('#file-upload')
+        .should('not.have.value')
+        .selectFile('@exemploTeste')
+        .should(function(arquivo) {
+          expect(arquivo[0].files[0].name).to.be.equal('example.json')
+        })
+    });
+        
 })
   
 
