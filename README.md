@@ -1,29 +1,29 @@
-# Testes automatizados com Cypress - Básico
+# Cypress Básico
 
-👋 Seja bem-vindo(a)!
+Curso básico de Cypress, realizado pela plataforma Udemy e de autoria da escola Talking About Testing online school.
 
-É muito bom tê-lo(a) aqui. Tenho certeza que você vai adorar este curso. ❤️
+## Pre-requirements
 
-## O que você vai aprender
+Antes de começar, garanta que os seguintes sistemas estejam instalados em seu computador.
 
-Durante o curso de testes automatizados com Cypress (básico), você vai aprender:
+- [git](https://git-scm.com/) (estou usando a versão `2.37.3`) 
+- [Node.js](https://nodejs.org/en/) (estou usando a versão `v18.13.0`)
+- npm (estou usando a versão `9.5.1`)
+- [Google Chrome](https://www.google.com/intl/pt_br/chrome/) 
+- [Visual Studio Code](https://code.visualstudio.com/) (estou usando a versão `1.78.2`) ou alguma outra IDE de sua preferência
 
-- Como configurar um projeto Cypress do zero
-- Como visitar páginas locais e remotas
-- Como lidar com os elementos mais comuns encontrados em aplicações web
-- Como testar _upload_ de arquivos
-- Como realizar as mais diversas verificações de resultados esperados
-- Como criar comandos customizados
-- Como lidar com links que abrem em outra aba do navegador
-- Como rodar testes simulando as dimensões de um dispositivo móvel
-- Como resolver os mesmos problemas de diferentes formas, conhecendo a [API do Cypress](https://docs.cypress.io/api/table-of-contents)
-- Como executar os testes em um _pipeline_ de integração contínua sempre que mudanças ocorrerem no código da aplicação (ou dos testes)
-- Como criar uma documentação mínima para seu projeto de testes automatizados
+## Installation
 
-## Vamos começar?
+Rode `npm install` (ou `npm i` para versão reduzida) para instalar as dependências do desenvolvedor
 
-Vá para a seção [estrutura do curso](./lessons/_course-structure_.md).
+## Tests
+
+> O arquivo `cypress.env.json` está incluído em [`.gitignore`](./.gitignore) e você está seguro de que informações confidenciais não serão controladas.
+
+Execute `npm test` (ou `npm t` para a versão curta) para executar o teste no modo headless.
+
+Ou execute `npm run cy:open` para abrir o Cypress no modo interativo.
+
+
 
 ___
-
-Este é mais um curso da [**Escola Talking About Testing**](https://udemy.com/user/walmyr).
