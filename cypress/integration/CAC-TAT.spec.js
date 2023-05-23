@@ -1,6 +1,8 @@
 /// <reference types="Cypress" />
 
 describe('Central de Atendimento ao Cliente TAT', function () {
+
+    //********************** Aula 02 **********************\\
     beforeEach(function () {
         // antes de cada teste, roda esta funcao
         cy.visit('./src/index.html')
@@ -10,7 +12,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.title()
             .should('be.equal', 'Central de Atendimento ao Cliente TAT')
     })
-
+    //********************** Aula 03 **********************\\
     it('preenche os campos obrigatórios e envia o formulário', function () {
         cy.get('#firstName').should('be.visible').type('Patricia').should('have.value', 'Patricia')
         cy.get('#lastName').should('be.visible').type('Possari').should('have.value', 'Possari')
@@ -90,7 +92,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
     })
 
-    //********************** Aula 03 **********************\\
+    //********************** Aula 04 **********************\\
     it('seleciona um produto (YouTube) por seu texto', function () {
         //cy.get('select').select('YouTube').should('have.value','youtube')
         cy.get('#product').select('YouTube').should('have.value', 'youtube')
@@ -106,7 +108,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('#product').select(1).should('have.value', 'blog')
     })
 
-    //********************** Aula 04 **********************\\
+    //********************** Aula 05 **********************\\
     it('marca o tipo de atendimento "Feedback"', function () {
         // cy.get('[type="radio"]').check('feedback')-- solucao errada
         cy.get('input[type="radio"][value="feedback"]')
@@ -123,7 +125,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             })
     })
 
-    //********************** Aula 05 **********************\\
+    //********************** Aula 06 **********************\\
     it('marca ambos checkboxes, depois desmarca o último', function () {
         cy.get('input[type="checkbox"]')
             .check()
@@ -143,7 +145,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('.error').should('be.visible')
     })
 
-    //********************** Aula 06 **********************\\
+    //********************** Aula 07 **********************\\
     it('seleciona um arquivo da pasta fixtures', function () {
         //cy.get('input[type="file"]#file-upload')---podemos usar id=file-upload que é bem especifico 
         cy.get('input[type="file"]')
@@ -178,7 +180,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             })
     })
 
-    //********************** Aula 07 **********************\\
+    //********************** Aula 08 **********************\\
 
     it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function () {
         //  cy.get('.some-link').should('have.attr', 'target', '_blank')    
@@ -190,8 +192,39 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.contains('Talking About Testing').should('be.visible')
     })
 
-    it.only('EXTRA 2 - testa a página da política de privacidade de forma independente', function () {
+    it('EXTRA 2 - testa a página da política de privacidade de forma independente', function () {
         cy.visit('./src/privacy.html')
         cy.contains('Talking About Testing').should('be.visible')
     })
+
+
+    //********************** Aula 09 **********************\\
+    // Simulando as dimensões de um dispositivo móvel
+
+
+
+    //********************** Aula 10 **********************\\
+    //Documentação do projeto de testes automatizados
+    /*
+    >> Pre-requirements
+    É necessário ter instalados para executar este projeto.:
+        Node.js;
+        Npm .
+    
+    >> Instalação
+    Execute para instalar as dependências do desenvolvedor:
+        npm install (ou npm i para a versão curta).
+    
+    >> Testes
+    > Teste em Desktop:
+    Run 'npm test' (ou 'npm t' para a versão curta) para executar o teste no modo headless.
+    Run 'npm run cy:open' para abrir o Cypress no modo interativo.
+    > Teste em Mobile:
+    Run 'npm run test:mobile'  para executar o teste no modo headless.
+    Run 'npm run cy:open:mobile' para abrir o Cypress no modo interativo.
+
+
+    */
+//********************** Aula 11 **********************\\
+
 })
