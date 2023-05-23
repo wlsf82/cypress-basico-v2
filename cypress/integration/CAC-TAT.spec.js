@@ -244,7 +244,14 @@ describe('Central de Atendimento ao Cliente TAT', function() {
                 expect(statusText).to.equal('OK')
                 expect(body).to.include('CAC TAT')
             })
-    })
+    });
+
+    it.only('encontre o gato', () => {
+        cy.get('#cat')
+            .should('not.be.visible')
+            .invoke('show')
+            .should('be.visible')
+    });
         
 })
   
