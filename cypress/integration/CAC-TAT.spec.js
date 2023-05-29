@@ -225,6 +225,118 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
 
     */
-//********************** Aula 11 **********************\\
+    //********************** Aula 11 **********************\\
+    // Integração contínua com GitHub Actions
 
+
+    //********************** Aula 12 **********************\\
+    //Avançando no uso do Cypress
+
+    it('EXERCICIO - verifica mensagens (de sucesso e erro)', function () {
+        cy.get('button[type="submit"]').click()
+        cy.clock()
+        cy.contains('.error', 'Valide os campos obrigatórios!')
+            .should('be.visible')
+        cy.tick(3000)
+        cy.contains('.error', 'Valide os campos obrigatórios!')
+            .should('not.be.visible')
+
+        cy.fillMandatoryFieldsAndSubmit()
+        cy.contains('.success', 'Mensagem enviada com sucesso.')
+            .should('be.visible')
+        cy.tick(3000)
+        cy.contains('.success', 'Mensagem enviada com sucesso.')
+            .should('not.be.visible')
+    })
+
+    Cypress._.times(5, () => {
+        it(' EXTRA 1 - verifica mensagens (de sucesso e erro) - Cypress._.times()', function () {
+            cy.clock()
+            cy.get('button[type="submit"]').click()
+
+            cy.contains('.error', 'Valide os campos obrigatórios!')
+                .should('be.visible')
+            cy.tick(3000)
+            cy.contains('.error', 'Valide os campos obrigatórios!')
+                .should('not.be.visible')
+
+            cy.fillMandatoryFieldsAndSubmit()
+            cy.contains('.success', 'Mensagem enviada com sucesso.')
+                .should('be.visible')
+            cy.tick(3000)
+            cy.contains('.success', 'Mensagem enviada com sucesso.')
+                .should('not.be.visible')
+        })
+
+    });
+
+    Cypress._.times(5, () => {
+        it(' EXTRA 1 - texto long com repeat', function () {
+           const longText = Cypress._.repeat("TextoLongo-",20)
+            cy.get('#firstName').should('be.visible').type('Patricia').should('have.value', 'Patricia')
+            cy.get('#lastName').should('be.visible').type('Possari').should('have.value', 'Possari')
+            cy.get('#email').should('be.visible').type('patricia.possari@teste.com').should('have.value', 'patricia.possari@teste.com')
+            cy.get('#open-text-area').should('be.visible').type(longText).should('have.value', longText)
+            cy.get('button[type="submit"]').click()
+            cy.get('.success').should('be.visible')
+        })
+    });
+
+    it('EXTRA 2 - exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+        cy.get('.success')
+          .should('not.be.visible')
+          .invoke('show')
+          .should('be.visible')
+          .and('contain', 'Mensagem enviada com sucesso.')
+          .invoke('hide')
+          .should('not.be.visible')
+        cy.get('.error')
+          .should('not.be.visible')
+          .invoke('show')
+          .should('be.visible')
+          .and('contain', 'Valide os campos obrigatórios!')
+          .invoke('hide')
+          .should('not.be.visible')
+      })
+
+      it('EXTRA 3 - preenche a area de texto usando o comando invoke', function () {
+        const longText = Cypress._.repeat("TextoLongo -",20)
+        cy.get('#open-text-area')
+        .invoke('val',longText)
+        .should('have.value',longText)
+       })
+
+       it('EXTRA 4 -faz uma requisição HTTP', function () {       
+        cy.request({
+            method: 'GET',
+            url: 'https://cac-tat.s3.eu-central-1.amazonaws.com/index.html'
+          })
+         .then((response) => {
+            expect(response.status).to.equal(200)
+            expect(response.statusText).to.equal('OK')
+           expect(response.body).to.include('CAC TAT')
+        })
+/*
+        .should(function(response) {
+            const{status, statusText, body} = response
+            expect(status).to.equal(200)
+            expect(statusText).to.equal('OK')
+            expect(body).to.include('CAC TAT')
+          })
+*/
+
+    })
+
+    //********************** Aula 13 **********************\\
+    // Desafio
+    it.only('DESAFIO - Encontre o gato', function () {  
+        cy.get('#cat')
+        .invoke('show')
+          .should('be.visible')
+          cy.get('#title')
+          .invoke('text', 'CAT TAT')
+          cy.get('#subtitle')
+          .invoke('text', 'I Love Cats')
+          
+    })
 })
