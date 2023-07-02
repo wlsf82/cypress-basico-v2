@@ -20,9 +20,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('#lastName').type('Silva')
       cy.get('#email').type('ana@email.com')
       cy.get('#phone').type('55999899658')
-      cy.get('#open-text-area').type('Testes com cypress curso Walmyr')
+      cy.get('#open-text-area').type('Testes com cypress curso Walmyr', {delay: 100})
       cy.get('.button[type="submit"]').click({forece: true})
 
       cy.get('.success').should('be.visible')
     })
+
   })
