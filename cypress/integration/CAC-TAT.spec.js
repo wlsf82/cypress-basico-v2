@@ -16,7 +16,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
     })
     it('preenche os campos obrigatórios e envia o formulário', () => {
-      const longText('vita frui quia brevis est sicut fulgur cum advenerit, terremur et subito dilabimur spectaculum erat cum cognovimus')
+      const longText = 'vita frui quia brevis est sicut fulgur cum advenerit, terremur et subito dilabimur spectaculum erat cum cognovimus'
 
       cy.get('#firstName').type('Ana')
       cy.get('#lastName').type('Silva')
@@ -37,10 +37,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       
       cy.get('.error').should('be.visible')
     })
-    it.only('verifica se o campo telefone contém apenas valores válidos', () => {
-      cy.get('#phone').type('ana')
-      cy.get('#phone').should('have.value', '')
-      cy.get('.button[type="submit"]').click({forece: true})
+    it('verifica se o campo telefone contém apenas valores numéricos', () => {
+      cy.get('#phone')
+        .type('ana')
+        .should('have.value', '')     
     })
      
   })
