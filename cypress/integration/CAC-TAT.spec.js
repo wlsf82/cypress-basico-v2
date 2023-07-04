@@ -8,13 +8,14 @@
 
 
 describe('Central de Atendimento ao Cliente TAT', function() {
- 
+
   beforeEach(() => {
     cy.visit('./src/index.html')
   })
     it('verifica o título da aplicação', function() {
       cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
     })
+     //Exercício aula 1
     it('preenche os campos obrigatórios e envia o formulário', () => {
       const longText = 'vita frui quia brevis est sicut fulgur cum advenerit, terremur et subito dilabimur spectaculum erat cum cognovimus'
 
@@ -27,6 +28,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
       cy.get('.success').should('be.visible')
     })
+    //exercio extra 2
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
       cy.get('#firstName').type('Ana')
       cy.get('#lastName').type('Silva')
@@ -37,11 +39,13 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       
       cy.get('.error').should('be.visible')
     })
+    //exercio extra 3
     it('verifica se o campo telefone contém apenas valores numéricos', () => {
       cy.get('#phone')
         .type('ana')
         .should('have.value', '')     
     })
+    //exercio extra 4
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
       cy.get('#firstName').type('Ana')
       cy.get('#lastName').type('Silva')
@@ -52,6 +56,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       
       cy.get('.error').should('be.visible')
     })
+    //exercio extra 5
     it('preenche e limpa os campos nome, sobrenome, email e telefone', () => {
       cy.get('#firstName').type('Ana').should('have.value', 'Ana').clear().should('have.value', '')
       cy.get('#lastName').type('Silva').should('have.value', 'Silva').clear().should('have.value', '')
@@ -60,6 +65,11 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('.button[type="submit"]').click({forece: true})
       
       cy.get('.error').should('be.visible')
-      
+    })
+    //exercicio extra 6
+    it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
+      cy.get('.button[type="submit"]').click({forece: true})
+      cy.get('.error').should('be.visible')
+
     })
   })
