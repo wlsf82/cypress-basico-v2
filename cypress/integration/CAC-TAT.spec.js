@@ -83,4 +83,83 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('#open-text-area').type('Teste de digitação').should('have.value', 'Teste de digitação').clear().should('have.value', '')
       cy.contains('button', 'Enviar').click({forece: true})
     })
+    //exercicio aula 3 - selecionar produto pelo seu texto
+    it('seleciona um produto (YouTube) por seu texto', () => {
+      cy.get('#product').select('YouTube').should('have.value', 'youtube')
+    })
+    //exercicio extra 1 - selecionar produto pelo seu valor
+    it('seleciona um produto (Mentoria) por seu valor (value)', () => {
+      cy.get('#product').select('mentoria').should('have.value', 'mentoria')
+    })
+    //exercicio extra 2 - selecionar produto pelo seu índice
+    it('seleciona um produto (Blog) por seu índice', () => {
+      cy.get('#product').select(1).should('have.value', 'blog')
+    })
+     //exercicio aula 4 - marcando inputs do tipo radio
+     it('marca o tipo de atendimento "Feedback"', () => {
+      cy.get('input[type="radio"]').check('feedback').should('have.value', 'feedback')
+    })
+    //exercicio extra 1 - marcando inputs do tipo radio
+    it('marca o tipo de atendimento "Feedback"', () => {
+      cy.get('input[type="radio"]').should('have.length',3)
+        .each(function($radio){
+          cy.wrap($radio).check().should('be.checked')
+        })
+    })
+    //exercicio aula 5 - marca e desmarca os checkbox
+    it('marca ambos checkboxes, depois desmarca o último', () => {
+      cy.get('input[type="checkbox"]').check().should('be.checked').last().uncheck().should('not.be.checked')
+    }) 
+    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+      cy.get('input[id="phone-checkbox"]').check().should('be.checked')
+      cy.get('#phone').should('be.empty')
+      cy.contains('button', 'Enviar').click({forece: true})
+      cy.get('.error').should('be.visible')
+    }) 
+    //exercício aula 06 - Fazendo upload de arquivos com Cypress
+    it('seleciona um arquivo da pasta fixtures', () => {
+      cy.get('input[id="file-upload"]')
+        .should('not.have.value')
+        .selectFile('cypress/fixtures/example.json')
+        .should(function($input){
+          //console.log($input)
+          expect($input[0].files[0].name).to.equal('example.json')
+        })
+    })
+     //exercício extra 1 - Fazendo upload de arquivos usando drag-and-drop
+    it('seleciona um arquivo simulando um drag-and-drop', () => {
+      cy.get('input[id="file-upload"]').selectFile('cypress/fixtures/example.json', { action: 'drag-drop' })
+         .should(function($input){
+          //console.log($input)
+          expect($input[0].files[0].name).to.equal('example.json')
+      })
   })
+  //exercício extra 2 - Fazendo upload de arquivos com alias
+  it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alia', () => {
+    cy.fixture('example.json').as('sampleFile')
+        cy.get('input[id="file-upload"]').selectFile('@sampleFile')
+          .should(function($input){
+            expect($input[0].files[0].name).to.equal('example.json')
+          })
+  })
+  //exercício aula 07 - Lidando com links que abrem em outra aba
+  it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+    cy.get('a[href="privacy.html"]').should('have.attr', 'target', '_blank')
+  })
+  //exercício extra 1
+  it('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+    cy.get('a[href="privacy.html"]').invoke('removeAttr', 'target').should('not.have.attr', 'target', '_blank')
+  })
+  //exercício extra 2 
+  it('testa a página da política de privacidade de forma independente', () => {
+    cy.get('a[href="privacy.html"]')
+      .invoke('removeAttr', 'target')
+      .click({force:true})
+      .should('not.have.attr', 'target', '_blank')
+      
+    cy.get('h1[id="title"]').should('be.visible')
+      
+  })
+  
+
+})
