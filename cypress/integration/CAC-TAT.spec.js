@@ -111,10 +111,15 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('input[type="checkbox"]').check().should('be.checked').last().uncheck().should('not.be.checked')
     }) 
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
-      cy.get('input[id="phone-checkbox"]').check().should('be.checked')
-      cy.get('#phone').should('be.empty')
-      cy.contains('button', 'Enviar').click({forece: true})
-      cy.get('.error').should('be.visible')
+      cy.get('input[id="phone-checkbox"]')
+        .check()
+        .should('be.checked')
+      cy.get('#phone')
+        .should('be.empty')
+      cy.contains('button', 'Enviar')
+        .click({forece: true})
+      cy.get('.error')
+        .should('be.visible')
     }) 
     //exercício aula 06 - Fazendo upload de arquivos com Cypress
     it('seleciona um arquivo da pasta fixtures', () => {
