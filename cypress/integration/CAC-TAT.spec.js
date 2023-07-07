@@ -148,18 +148,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {
   })
   //exercício extra 1
   it('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
-    cy.get('a[href="privacy.html"]').invoke('removeAttr', 'target').should('not.have.attr', 'target', '_blank')
-  })
-  //exercício extra 2 
-  it('testa a página da política de privacidade de forma independente', () => {
-    cy.get('a[href="privacy.html"]')
-      .invoke('removeAttr', 'target')
-      .click({force:true})
-      .should('not.have.attr', 'target', '_blank')
-      
-    cy.get('h1[id="title"]').should('be.visible')
-      
+    cy.get('a[href="privacy.html"]').invoke('removeAttr', 'target').click({force:true})
+    cy.contains('Talking About Testing').should('be.visible') 
   })
   
-
 })
