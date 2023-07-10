@@ -13,7 +13,7 @@ describe("Central de Atendimento ao Cliente TAT", () => {
 
   it("preenche os campos obrigatórios e envia o formulário", () => {
     const longText = `testar bem testado é muito bom porque teste testa testando tudo que precisa de teste então teste, teste teste
-    testar bem testado é muito bom porque teste testa testando tudo que precisa de teste então teste, teste teste
+    teste git --testar bem testado é muito bom porque teste testa testando tudo que precisa de teste então teste, teste teste
     testar bem testado é muito bom porque teste testa testando tudo que precisa de teste então teste, teste teste`
     cy.get('#firstName').type('Cristiano')
     cy.get('#lastName').type("Muroni")
