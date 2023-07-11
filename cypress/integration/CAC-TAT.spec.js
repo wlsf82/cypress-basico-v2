@@ -89,4 +89,10 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     cy.fillMandatoryFieldsAndSubmit()
     cy.get('.success').should('be.visible');
   })
+
+  it.only('Seleciona um produto (YouTube) por seu texto', () => {
+    cy.get('#product')
+      .select('YouTube')
+      .should('have.value', 'youtube')
+  })
 });
