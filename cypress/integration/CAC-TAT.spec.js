@@ -89,10 +89,16 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     cy.fillMandatoryFieldsAndSubmit()
     cy.get('.success').should('be.visible');
   })
-//subindo ao github com user diferente
-  it.only('Seleciona um produto (YouTube) por seu texto', () => {
+
+  it('Seleciona um produto (YouTube) por seu texto', () => {
     cy.get('#product')
       .select('YouTube')
       .should('have.value', 'youtube')
+  })
+
+  it.only('Selecioando um produto (Mentoria) por seu valor (value)', () => {
+    cy.get('#product')
+      .select('mentoria')
+      .should('have.value', 'mentoria')
   })
 });
