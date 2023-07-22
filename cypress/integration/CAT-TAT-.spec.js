@@ -1,4 +1,4 @@
-describe("Devo acessar a tela  ", () => {
+describe("aula 01 - 02 ", () => {
   beforeEach(() => {
     cy.visit("./src/index.html");
   });
@@ -70,5 +70,18 @@ describe("Devo acessar a tela  ", () => {
   it("preenche os campos obrigatórios e envia o formulário pt2", () => {
     cy.fillMandatoryFieldsAndSubmit();
     cy.get(".success").should("be.visible");
+  });
+});
+
+describe("aula 03 - ", () => {
+  beforeEach(() => {
+    cy.visit("./src/index.html");
+  });
+
+  it("seleciona um produto (YouTube) por seu texto", () => {
+    cy.get("select").select("youtube").should("have.value", "youtube");
+  });
+  it.only("seleciona um produto (Blog) por seu índice", () => {
+    cy.get("select").select(1).should("have.value", "blog");
   });
 });
