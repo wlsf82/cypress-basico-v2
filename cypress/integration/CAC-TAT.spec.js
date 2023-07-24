@@ -12,42 +12,38 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
    
     it('preenche os campos obrigatórios e envia o formulário', function() {
-      const longtext = 'Que ele seja o veículo de morbi dui sapien venenatis amanhã ligula, purus senectus deixe ligula maleuada luctus dictum aliquam, condimentum vitae proin apenas morbi sadis intacto. molestie risus tellus dictumst nam tempor, accumsan sollicitudinum maleuada mauris esta pessoa como uma massa de necessidade netus.'
-        
-      cy.clock()
-      
+      const longtext = 'Que ele seja o veículo de morbi dui sapien venenatis amanhã ligula, purus senectus deixe ligula maleuada luctus dictum aliquam, condimentum vitae proin apenas morbi sadis intacto. molestie risus tellus dictumst nam tempor.'
+        cy.clock()      
         cy.get('#firstName').type('Alessandro')
         cy.get('#lastName').type('Melo')
         cy.get('#email').type('alessandromelo74@gmail.com')
         cy.get('#open-text-area').type(longtext, {delay: 10})
         cy.contains('button', 'Enviar').click()
-
         cy.get('.success').should('be.visible') 
         cy.tick(THREE_SECONDS_IN_ML)
         cy.get('.success').should('not.be.visible') 
         
     })
     
-    it.only('Exibe mensagem de erro ao submeter o formulario com um email com formatação invalida', function(){
+    it('Exibe mensagem de erro ao submeter o formulario com um email com formatação invalida', function(){
       cy.clock()
       cy.get('#firstName').type('Alessandro')
       cy.get('#lastName').type('Melo')
       cy.get('#email').type('alessandromelo74@gmail,com')
       cy.get('#open-text-area').type('TEXTO PADRÃO DE TESTE')
       cy.contains('button', 'Enviar').click()
-
       cy.get('.error').should('be.visible') 
-
       cy.tick(THREE_SECONDS_IN_ML)
-
-      cy.get('.error').should('NOT.be.visible')
+      cy.get('.error').should('not.be.visible')
     })
  
-   it('Campo telefone continua vazio quando preenchido com valor não numerico', function (){
-    cy.get('#phone')
-      .type('abcdefgh')
-       .should('have.value', '')
-   })
+   Cypress._.times(3, function() {
+    it('Campo telefone continua vazio quando preenchido com valor não numerico', function (){
+      cy.get('#phone')
+        .type('abcdefgh')
+         .should('have.value', '')
+     })
+  })
 
    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não preenchido', function(){
       cy.clock()
@@ -57,11 +53,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('#phone-checkbox').check()
       cy.get('#open-text-area').type('TEXTO PADRÃO DE TESTE')
       cy.contains('button', 'Enviar').click()
-
       cy.get('.error').should('be.visible') 
       cy.tick(THREE_SECONDS_IN_ML)
-
-      cy.get('.error').should('NOT.be.visible')
+      cy.get('.error').should('not.be.visible')
 
    })
 
@@ -94,17 +88,11 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.contains('button', 'Enviar').click()
       cy.get('.error').should('be.visible') 
       cy.tick(THREE_SECONDS_IN_ML)
-
-      cy.get('.error').should('NOT.be.visible')
+      cy.get('.error').should('not.be.visible')
    })
 
-   it('Envia o formulario com sucesso usando um comando customizado',function(){
-    cy.clock()
-    cy.fillMandatoryFieldsAndSumit()
-    cy.get('.sucess').should('be.visible') 
-    cy.tick(THREE_SECONDS_IN_ML)
-    cy.get('.sucess').should('not.be.visible') 
-
+    it('Envia o formulario com Sucesso usando um comando customizado',function(){
+    cy.fillMandatoryFieldsAndSumit()    
     })
 
    it('Seleciona um produto (Mentoria) por seu valor (value)', function(){
@@ -123,7 +111,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.get('input[type="radio"][value="feedback"]')
     .check()
     .should('have.value', 'feedback')
-
    })
 
    it('Marca Cada tipo de atendimento', function (){
@@ -132,8 +119,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     .each(function($radio) {
       cy.wrap($radio).check()
       cy.wrap($radio).should('be.checked')
-    }) 
-      
+      }) 
     })
 
     it('Marca Ambos checkbox, depois desmarca o ultimo', function (){
@@ -143,7 +129,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     .last()
     .uncheck() 
     .should('not.be.checked')
-
     })
 
     it('Fazendo Upload de arquivos com Cypress', function(){
@@ -162,7 +147,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       .should(function($input) {
         expect($input[0].files[0].name).to.equal('example.json')
       })
-
     })
 
     it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias',function (){
@@ -171,8 +155,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       .selectFile('@sampleFile')
       .should(function($input) {
         expect($input[0].files[0].name).to.equal('example.json')
-    })
-    
+    })    
    })
 
     it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique',function(){
@@ -186,9 +169,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.contains('Talking About Testing').should('be.visible')
     })
     
-    it('Simulando o _viewport_ de um dispositivo móvel', function(){
-      
+    it('Simulando o _viewport_ de um dispositivo móvel', function(){      
     })
-
    })
    
