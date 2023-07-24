@@ -169,7 +169,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.contains('Talking About Testing').should('be.visible')
     })
     
-    it('Simulando o _viewport_ de um dispositivo móvel', function(){      
+    it('Simulando o Viewport_ de um dispositivo móvel', function(){      
     })
    })
    
