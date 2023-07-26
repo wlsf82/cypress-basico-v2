@@ -1,29 +1,28 @@
-# Testes automatizados com Cypress - Básico
+# Curso-cypress-basico-udemy
 
-👋 Seja bem-vindo(a)!
+Sample project to demonstrate the subject learned in the talking about testing school testing course.
 
-É muito bom tê-lo(a) aqui. Tenho certeza que você vai adorar este curso. ❤️
+## Pre-requirements
+ Before starting make sure the following systems are installed on your computer.
+> I used versions `v16.13.2` and `v16.13.2` of Node.js and npm, respectively. I suggest you use the same or later versions.
 
-## O que você vai aprender
+## Installation
 
-Durante o curso de testes automatizados com Cypress (básico), você vai aprender:
+Run `npm install` (or `npm i` for the short version) to install the dev dependencies.
 
-- Como configurar um projeto Cypress do zero
-- Como visitar páginas locais e remotas
-- Como lidar com os elementos mais comuns encontrados em aplicações web
-- Como testar _upload_ de arquivos
-- Como realizar as mais diversas verificações de resultados esperados
-- Como criar comandos customizados
-- Como lidar com links que abrem em outra aba do navegador
-- Como rodar testes simulando as dimensões de um dispositivo móvel
-- Como resolver os mesmos problemas de diferentes formas, conhecendo a [API do Cypress](https://docs.cypress.io/api/table-of-contents)
-- Como executar os testes em um _pipeline_ de integração contínua sempre que mudanças ocorrerem no código da aplicação (ou dos testes)
-- Como criar uma documentação mínima para seu projeto de testes automatizados
+## Tests
+You can run the tests on simulanting a desktop or  mobile viewport.
+### Desktop
 
-## Vamos começar?
+Run `npm test` (or `npm t` for the short version) to run the test in headless mode on a desktop viewport.
 
-Vá para a seção [estrutura do curso](./lessons/_course-structure_.md).
+Or, run `npm run cy:open` to open Cypress in interactive mode on a desktop viewport.
+### Mobile
+ run `npm run test:mobile ` to run the test  in a headless mode on a mobile viewport.
+ Or, run `npm run cy:open:mobile` to open Cypress in interctive mode on a mobile Viewport.
+ 
+## Support this project
+
+If you want to support this project, leave a ⭐.
 
 ___
-
-Este é mais um curso da [**Escola Talking About Testing**](https://udemy.com/user/walmyr).
