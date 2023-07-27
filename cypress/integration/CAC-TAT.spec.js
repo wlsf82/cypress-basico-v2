@@ -7,7 +7,7 @@
 
 /// <reference types="cypress"/>
 
-const cypress = require("cypress")
+//const cypress = require("cypress")
 
 describe('Central de Atendimento ao Cliente TAT', function() { //aqui é minha suite de testes
     this.beforeEach(function() {
@@ -19,7 +19,7 @@ describe('Central de Atendimento ao Cliente TAT', function() { //aqui é minha s
         cy.visit ('./src/index.html')
         cy.title().should('eq', 'Central de Atendimento ao Cliente TAT')
     })
-    it.only ('preenche os campos obrigatorios e envia o form', function() { // .only para executar somente etste teste
+    it('preenche os campos obrigatorios e envia o form', function() { // .only para executar somente etste teste
         cy.get('#firstName').type('Claudio')
         cy.get('#lastName').type('Feitosa')
         cy.get('#email').type('claudio.cpf.cpf@gmail.com')
@@ -159,7 +159,7 @@ describe('Central de Atendimento ao Cliente TAT', function() { //aqui é minha s
 
     })
 
-    it.only('-Aula6 ex2: Seleciona um arquivo simulando um drag-and-drop', function(){
+    it('-Aula6 ex2: Seleciona um arquivo simulando um drag-and-drop', function(){
         cy.get('input[type="file"]')
           .should('not.have.value')
           .selectFile('./cypress/support/commands.js',{action: 'drag-drop'})
