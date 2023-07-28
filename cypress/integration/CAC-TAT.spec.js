@@ -11,7 +11,7 @@
 
 describe('Central de Atendimento ao Cliente TAT', function() { //aqui é minha suite de testes
     this.beforeEach(function() {
-        cy.viewport(1024, 768)
+        //cy.viewport(1024, 768)
         cy.visit('./src/index.html')
             })
             
@@ -177,4 +177,28 @@ describe('Central de Atendimento ao Cliente TAT', function() { //aqui é minha s
             expect($input[0].files[0].name).to.equal('example.json')
           })
       })
+    
+      it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function(){
+        cy.get('#privacy a').should('have.attr','target','_blank')
+      })
+it('acessa a página da política de privacidade removendo o target e então clicando no link', function(){
+    cy.get('#privacy a')
+      .invoke('removeAttr', 'target')
+      .click()
+    cy.contains('Talking About Testing')
+        .should('be.visible')
+    })
+it('testa a página da política de privacidade de forma independente', function(){
+    cy.get('#privacy a')
+    .invoke('removeAttr', 'target')
+    .click()
+    cy.contains('HTML')
+      .should('be.visible')
+    cy.contains('CSS ')
+      .should('be.visible')
+      
+      
+
+})
+
 })
