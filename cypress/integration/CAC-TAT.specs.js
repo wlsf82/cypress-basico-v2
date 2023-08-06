@@ -11,6 +11,7 @@ describe('Central de Atendimento ao Cliente TAT', function(){
     })
 
     it.only('Preenche os campos obrigatórios e envia o formulário', () => {
+        const longText = "Teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste "
         
         cy.get('#firstName').should('be.visible')
         .type('Bruno')
@@ -25,10 +26,10 @@ describe('Central de Atendimento ao Cliente TAT', function(){
         .should('have.value', 'brunoluizb@hotmail.com');
 
         cy.get('#open-text-area').should('be.visible')
-        .type('Apenas rodando o cypress')
-        .should('have.value', 'Apenas rodando o cypress');        
+        .type(longText, {delay: 0})
+        .should('have.value', longText);        
         
-        cy.get('.button').click();
+        cy.get('button[type="submit"]').click();
 
         cy.get('.success').should('be.visible')
 
