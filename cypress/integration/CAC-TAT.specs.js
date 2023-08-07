@@ -31,7 +31,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
         cy.contains('button', 'Enviar').click();
 
-        cy.get('.success').should('be.visible')
+        cy.get('.success').should('be.visible');
 
     });
 
@@ -56,7 +56,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
         cy.contains('button', 'Enviar').click();
 
-        cy.get('.error').should('be.visible')
+        cy.get('.error').should('be.visible');
     })
 
     it('Campo telefone continua vazio quando preenchido com valor não-numérico', () => {
@@ -92,7 +92,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
         cy.contains('button', 'Enviar').click();
 
-        cy.get('.error').should('be.visible')
+        cy.get('.error').should('be.visible');
     })
 
     it('Preenche e limpa os campos de nome, sobrenome, email e telefone', () => {
@@ -133,14 +133,19 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
     it('Envia um formulario com sucesso usando um comando customizado', () => {
 
-        cy.fillMandatoryFieldsAndSubmit('Bruno', 'Faria', 'Brunoluizb@hotmail.com', 'Teste, teste, teste, teste')
+        cy.fillMandatoryFieldsAndSubmit('Bruno', 'Faria', 'Brunoluizb@hotmail.com', 'Teste, teste, teste, teste');
 
-        cy.get('.success').should('be.visible')
+        cy.get('.success').should('be.visible');
 
     })
 
-    it.only('Seleciona um produto (Youtube) por seu texto', () => {
+    it('Seleciona um produto (Youtube) por seu texto', () => {
 
         cy.get('#product').select('YouTube').should('have.value', 'youtube');
+    })
+
+    it('Seleciona um produto (Mentoria) por seu valor (value)', () => {
+
+        cy.get('#product').select('mentoria').should('have.value', 'mentoria');
     })
 })
