@@ -80,7 +80,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('#email').should('be.visible')
             .type('brunoluizb@hotmail.com')
             .should('have.value', 'brunoluizb@hotmail.com');
-        
+
         cy.get('#phone')
             .should('have.value', '');
 
@@ -93,5 +93,34 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('button[type="submit"]').click();
 
         cy.get('.error').should('be.visible')
+    })
+
+    it.only('Preenche e limpa os campos de nome, sobrenome, email e telefone', () => {
+
+        const longText = "Teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste "
+
+        cy.get('#firstName')
+            .type('Bruno')
+            .should('have.value', 'Bruno')
+            .clear()
+            .should('have.value', '');
+
+        cy.get('#lastName')
+            .type('Faria')
+            .should('have.value', 'Faria')
+            .clear()
+            .should('have.value', '');
+
+        cy.get('#email')
+            .type('brunoluizb@hotmail.com')
+            .should('have.value', 'brunoluizb@hotmail.com')
+            .clear()
+            .should('have.text', '');
+
+        cy.get('#phone')
+            .type('12345678910')
+            .should('have.value', '12345678910')
+            .clear()
+            .should('have.text', '');
     })
 })
