@@ -29,7 +29,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             .type(longText, { delay: 0 })
             .should('have.value', longText);
 
-        cy.get('button[type="submit"]').click();
+        cy.contains('button', 'Enviar').click();
 
         cy.get('.success').should('be.visible')
 
@@ -54,7 +54,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             .type(longText, { delay: 0 })
             .should('have.value', longText);
 
-        cy.get('button[type="submit"]').click();
+        cy.contains('button', 'Enviar').click();
 
         cy.get('.error').should('be.visible')
     })
@@ -90,7 +90,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             .type(longText, { delay: 0 })
             .should('have.value', longText);
 
-        cy.get('button[type="submit"]').click();
+        cy.contains('button', 'Enviar').click();
 
         cy.get('.error').should('be.visible')
     })
@@ -126,7 +126,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
     it('Exibe mensagem de erro ao submeter o formulario sem preencher os campos obrigatorios', () => {
         
-        cy.get('button[type="submit"]').click();
+        cy.contains('button', 'Enviar').click();
 
         cy.get('.error').should('be.visible')
     })
