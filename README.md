@@ -6,7 +6,7 @@ Sample project for the basic course of the Talking About Testing online school.
 
 It is required to have Node.js and npm installed to run this project.
 
-> I used versions `v16.13.2` and `8.3.2` of Node.js and npm, respectively. I suggest you use the same or later versions.
+> I used versions `v18.12.0` and `9.4.2` of Node.js and npm, respectively. I suggest you use the same or later versions.
 
 ## Installation
 
