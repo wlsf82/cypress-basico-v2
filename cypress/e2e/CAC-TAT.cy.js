@@ -12,9 +12,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
   it('preenche os campos obrigatórios e envia o formulário', function() {
     const longText = 'Teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste.'
 
-    cy.get('#firstName').type('Walmyr')
-    cy.get('#lastName').type('Filho')
-    cy.get('#email').type('walmyr@exemplo.com')
+    cy.get('#firstName').type('Ricardo')
+    cy.get('#lastName').type('Volk')
+    cy.get('#email').type('Volk@exemplo.com')
     cy.get('#open-text-area').type(longText, { delay: 0 })
     cy.contains('button', 'Enviar').click()
 
@@ -22,9 +22,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
   })
 
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function() {
-    cy.get('#firstName').type('Walmyr')
-    cy.get('#lastName').type('Filho')
-    cy.get('#email').type('walmyr@exemplo,com')
+    cy.get('#firstName').type('Ricardo')
+    cy.get('#lastName').type('Volk')
+    cy.get('#email').type('Volk@exemplo,com')
     cy.get('#open-text-area').type('Teste')
     cy.contains('button', 'Enviar').click()
 
@@ -38,9 +38,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
   })
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
-    cy.get('#firstName').type('Walmyr')
-    cy.get('#lastName').type('Filho')
-    cy.get('#email').type('walmyr@exemplo.com')
+    cy.get('#firstName').type('Ricardo')
+    cy.get('#lastName').type('Volk')
+    cy.get('#email').type('Volk@exemplo.com')
     cy.get('#phone-checkbox').check()
     cy.get('#open-text-area').type('Teste')
     cy.contains('button', 'Enviar').click()
@@ -50,17 +50,17 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
   it('preenche e limpa os campos nome, sobrenome, email e telefone', function() {
     cy.get('#firstName')
-      .type('Walmyr')
-      .should('have.value', 'Walmyr').clear()
+      .type('Ricardo')
+      .should('have.value', 'Ricardo').clear()
       .should('have.value', '')
     cy.get('#lastName')
-      .type('Filho')
-      .should('have.value', 'Filho')
+      .type('Volk')
+      .should('have.value', 'Volk')
       .clear()
       .should('have.value', '')
     cy.get('#email')
-      .type('walmyr@exemplo.com')
-      .should('have.value', 'walmyr@exemplo.com')
+      .type('Volk@exemplo.com')
+      .should('have.value', 'Volk@exemplo.com')
       .clear()
       .should('have.value', '')
     cy.get('#phone')
@@ -162,7 +162,4 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     cy.contains('Talking About Testing').should('be.visible')
   })
-
-
-
 })

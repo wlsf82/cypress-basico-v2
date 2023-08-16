@@ -25,9 +25,9 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('fillMandatoryFieldsAndSubmit', function() {
-    cy.get('#firstName').type('Walmyr')
-    cy.get('#lastName').type('Filho')
-    cy.get('#email').type('walmyr@exemplo.com')
+    cy.get('#firstName').type('Ricardo')
+    cy.get('#lastName').type('Volk')
+    cy.get('#email').type('volk@exemplo.com')
     cy.get('#open-text-area').type('Teste')
     cy.contains('button', 'Enviar').click()
   })
