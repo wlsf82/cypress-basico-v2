@@ -196,4 +196,25 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     it('Simulando o Viewport_ de um dispositivo móvel', function(){
     
     })
-   })
+
+    it('Encotra o gato escondido', function(){
+      cy.get('#cat')
+       .invoke('show')
+       .should('be.visible')
+       cy.get('#title')
+       .invoke('text', 'Shark The Best')
+       cy.get('#subtitle')
+       .invoke('text', 'Eu sou Foda 🫶🏻')
+
+     })
+it('Faz uma requisiçã HTTP', function(){
+  cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+  .should(function(response) {
+    console.log(response)
+    const { status, statusText, body } = response
+    expect(status).to.equal(200)
+    expect(statusText).to.equal('OK')
+    expect(body).to.include('CAC TAT')
+    })
+  })
+})
