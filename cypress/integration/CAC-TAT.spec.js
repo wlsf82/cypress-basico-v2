@@ -158,9 +158,9 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
 
     it('Selecione um arquivo da pasta fixtures', function(){
         cy.get('input[type="file"]')
-        .selectFile('cypress/fixtures/example.json')
+        .selectFile('cypress/fixtures/Documento PDF 2.pdf')
         .should(function($input) {
-        expect($input[0].files[0].name).to.equal('example.json')   
+        expect($input[0].files[0].name).to.equal('Documento PDF 2.pdf')   
          //console.log($input)
          // Para dúvidas, ver aula 29
 
@@ -169,20 +169,20 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
 
     it('Seleciona um arquivo simulando um drag-and-drop (arrastando)', function(){
         cy.get('input[type="file"]')
-        .selectFile('cypress/fixtures/example.json', {action:'drag-drop'})
+        .selectFile('cypress/fixtures/Documento PDF 2.pdf', {action:'drag-drop'})
         .should(function($input) {
-        expect($input[0].files[0].name).to.equal('example.json')   
+        expect($input[0].files[0].name).to.equal('Documento PDF 2.pdf')   
    
         })   
     })
 
 
     it('Seleciona um arquivo utilizando uma fixture para o qual foi dada um alias', function(){
-        cy.fixture('example.json').as('sampleFile')
+        cy.fixture('Documento PDF 2.pdf').as('sampleFile')
         cy.get('input[type="file"]')
         .selectFile('@sampleFile')
         .should(function($input) {
-        expect($input[0].files[0].name).to.equal('example.json')   
+        expect($input[0].files[0].name).to.equal('Documento PDF 2.pdf')   
       
         }) 
     })
@@ -208,18 +208,45 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
   
     })
 
-    it.only('Parar / Adiantar tempo do teste', function() {
+    it('Parar / Adiantar tempo do teste', function() {
         cy.clock()
         const longText = 'Teste, teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,'
-        cy.get('#firstName').type('Igor', {delay:0})
-        cy.get('#lastName').type('Lima', {delay:0})
-        cy.get('#email').type('igorlimamp1@gmail.com'), {delay:0}
-        cy.get('#open-text-area').type(longText, {delay:0})
+        cy.get('#firstName').type('Igor')
+        cy.get('#lastName').type('Lima')
+        cy.get('#email').type('igorlimamp1@gmail.com')
+        cy.get('#open-text-area').type(longText)
         cy.contains('button', 'Enviar').click()
         cy.get('.success').should('be.visible')
         cy.tick(3000)
         cy.get('.success').should('not.be.visible')
 
+    })
+
+    it('Exibe e esconde as mensagens de sucesso e erro usando .invoke', function() {
+        cy.get('#firstName').type('Igor')
+        cy.get('#lastName').type('Lima')
+        cy.get('#email').type('igorlimamp1@gmail.com')
+        cy.contains('button', 'Enviar').click()
+        .should('be.visible')
+        cy.get('.error').invoke('hide')
+        .should('not.be.visible')
+        cy.get('.error').invoke('show')
+        .should('be.visible').and('contain', 'Valide os campos obrigatórios')
+
+        cy.get('#open-text-area').type('Teste')
+        cy.contains('button', 'Enviar').click()
+        cy.get('.success').invoke('hide')
+        .should('not.be.visible')
+
+
+    })
+
+    it('Preenche a area de texto usando o comando invoke', function(){
+        const varia = 'hahahaahahaahahahaahhhaahhahaahahhaahha'
+        cy.get('#firstName').type('Igor')
+        cy.get('#lastName').type('Lima')
+        cy.get('#email').type('igorlimamp1@gmail.com')
+        cy.get('#open-text-area').invoke('val', varia)
     })
 
 })
