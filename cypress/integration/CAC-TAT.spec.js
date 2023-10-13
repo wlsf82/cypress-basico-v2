@@ -241,12 +241,27 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
 
     })
 
-    it.only('Preenche a area de texto usando o comando invoke', function(){
+    it('Preenche a area de texto usando o comando invoke', function(){
         const varia = 'hahahaahahaahahahaahhhaahhahaahahhaahha'
         cy.get('#firstName').type('Igor')
         cy.get('#lastName').type('Lima')
         cy.get('#email').type('igorlimamp1@gmail.com')
         cy.get('#open-text-area').invoke('val', varia)
+    })
+
+    it('Faz uma requisição HTTP', function(){
+        cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+            .should(function(response) {
+                const {status, statusText, body} = response
+                expect(status).to.equal(200)
+                expect(statusText).to.include('OK')
+                expect(body).to.include('CAC TAT')
+        })
+    })
+
+    it('Encontre o gato', function(){
+     cy.get('span[id="cat"]').invoke('show')
+     .should('be.visible')
     })
 
 })
