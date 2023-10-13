@@ -241,7 +241,7 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
 
     })
 
-    it('Preenche a area de texto usando o comando invoke', function(){
+    it.only('Preenche a area de texto usando o comando invoke', function(){
         const varia = 'hahahaahahaahahahaahhhaahhahaahahhaahha'
         cy.get('#firstName').type('Igor')
         cy.get('#lastName').type('Lima')
