@@ -200,4 +200,26 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
 
     })
 
+    Cypress._.times(3, function(){
+        it('Executar o mesmo  teste, varias vezes', function(){
+        cy.get('#firstName').type('Igor')
+
+        })
+  
+    })
+
+    it.only('Parar / Adiantar tempo do teste', function() {
+        cy.clock()
+        const longText = 'Teste, teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,teste,'
+        cy.get('#firstName').type('Igor', {delay:0})
+        cy.get('#lastName').type('Lima', {delay:0})
+        cy.get('#email').type('igorlimamp1@gmail.com'), {delay:0}
+        cy.get('#open-text-area').type(longText, {delay:0})
+        cy.contains('button', 'Enviar').click()
+        cy.get('.success').should('be.visible')
+        cy.tick(3000)
+        cy.get('.success').should('not.be.visible')
+
+    })
+
 })
