@@ -158,9 +158,9 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
 
     it('Selecione um arquivo da pasta fixtures', function(){
         cy.get('input[type="file"]')
-        .selectFile('C:/Automação/cypress-basico-v2/cypress/fixtures/Documento PDF 2.pdf')
+        .selectFile('C:/Automação/cypress-basico-v2/cypress/fixtures/example.json')
         .should(function($input) {
-        expect($input[0].files[0].name).to.equal('Documento PDF 2.pdf')   
+        expect($input[0].files[0].name).to.equal('example.json')   
          //console.log($input)
          // Para dúvidas, ver aula 29
 
@@ -169,20 +169,20 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
 
     it('Seleciona um arquivo simulando um drag-and-drop (arrastando)', function(){
         cy.get('input[type="file"]')
-        .selectFile('C:/Automação/cypress-basico-v2/cypress/fixtures/Documento PDF 2.pdf', {action:'drag-drop'})
+        .selectFile('C:/Automação/cypress-basico-v2/cypress/fixtures/example.json', {action:'drag-drop'})
         .should(function($input) {
-        expect($input[0].files[0].name).to.equal('Documento PDF 2.pdf')   
+        expect($input[0].files[0].name).to.equal('example.json')   
    
         })   
     })
 
 
     it('Seleciona um arquivo utilizando uma fixture para o qual foi dada um alias', function(){
-        cy.fixture('Documento PDF 2.pdf').as('sampleFile')
+        cy.fixture('example.json').as('sampleFile')
         cy.get('input[type="file"]')
         .selectFile('@sampleFile')
         .should(function($input) {
-        expect($input[0].files[0].name).to.equal('Documento PDF 2.pdf')   
+        expect($input[0].files[0].name).to.equal('example.json')   
       
         }) 
     })
