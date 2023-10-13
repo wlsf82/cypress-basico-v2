@@ -158,7 +158,7 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
 
     it('Selecione um arquivo da pasta fixtures', function(){
         cy.get('input[type="file"]')
-        .selectFile('C:/Automação/cypress-basico-v2/cypress/fixtures/example.json')
+        .selectFile('cypress/fixtures/example.json')
         .should(function($input) {
         expect($input[0].files[0].name).to.equal('example.json')   
          //console.log($input)
@@ -169,7 +169,7 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
 
     it('Seleciona um arquivo simulando um drag-and-drop (arrastando)', function(){
         cy.get('input[type="file"]')
-        .selectFile('C:/Automação/cypress-basico-v2/cypress/fixtures/example.json', {action:'drag-drop'})
+        .selectFile('cypress/fixtures/example.json', {action:'drag-drop'})
         .should(function($input) {
         expect($input[0].files[0].name).to.equal('example.json')   
    
