@@ -31,8 +31,7 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit',(name,lastName,email, number
     cy.get('#phone-checkbox').click()
     cy.get('#phone').type(number).should('have.value',number)
     cy.get('#open-text-area').type('preciso que voces resolvam meu problema de falta de emprego mandis', { delay: 0 })
-    cy.get('button[type*="submit"]').click()
-    cy.get('span[class*="success"]').should('be.visible')
-      .contains('Mensagem enviada com sucesso.')
+    cy.contains('button', 'Enviar').click().should('be.visible')
+  
 
   })

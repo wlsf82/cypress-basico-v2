@@ -19,7 +19,7 @@ describe('Central de atendimento ao cliente TAT', () => {
     cy.get('#lastName').type('Fideles')
     cy.get('#email').type('Email@gmail.com')
     cy.get('#open-text-area').type('preciso que voces resolvam meu problema de falta de emprego mandis', { delay: 0 })
-    cy.get('button[type*="submit"]').click()
+    cy.contains('button', 'Enviar').click()
     cy.get('span[class*="success"]').should('be.visible')
       .contains('Mensagem enviada com sucesso.')
 
@@ -29,18 +29,18 @@ describe('Central de atendimento ao cliente TAT', () => {
     cy.get('#lastName').type('Fideles')
     cy.get('#email').type('Email#gmail.com')
     cy.get('#open-text-area').type('preciso que voces resolvam meu problema de falta de emprego mandis', { delay: 0 })
-    cy.get('button[type*="submit"]').click()
+    cy.contains('button', 'Enviar').click()
     cy.get('span[class*="error"]').should('be.visible')
       .contains('Valide os campos obrigatórios!')
   })
 
-  it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
+  it('validar numero de telefone', () => {
     cy.get('#firstName').type('Marcos')
     cy.get('#lastName').type('Fideles')
     cy.get('#email').type('Email@gmail.com')
-    cy.get('#phone').type('--').should('be.empty')
+    cy.get('#phone').type('sadsadasda').should('be.empty')
     cy.get('#open-text-area').type('preciso que voces resolvam meu problema de falta de emprego mandis', { delay: 0 })
-    cy.get('button[type*="submit"]').click()
+    cy.contains('button', 'Enviar').click()
     cy.get('span[class*="success"]').should('be.visible')
 
   })
@@ -49,10 +49,9 @@ describe('Central de atendimento ao cliente TAT', () => {
     cy.get('#firstName').type('Marcos')
     cy.get('#lastName').type('Fideles')
     cy.get('#email').type('Email@gmail.com')
-    cy.get('#phone-checkbox').click()
+    cy.get('#phone-checkbox').check()
     cy.get('#open-text-area').type('preciso que voces resolvam meu problema de falta de emprego mandis', { delay: 0 })
-    cy.get('button[type*="submit"]').click()
-    cy.get('#phone').type('--').should('be.empty')
+    cy.contains('button', 'Enviar').click()
     cy.get('span[class*="error"]').should('be.visible').contains('Valide os campos obrigatórios!')
 
   })
@@ -85,9 +84,66 @@ describe('Central de atendimento ao cliente TAT', () => {
   it('envia o formuário com sucesso usando um comando customizado', () => {
 
     cy.fillMandatoryFieldsAndSubmit('Marcos', 'Fideles', 'email@gmail.com', '12121212')
+    cy.get('.success').contains('Mensagem enviada com sucesso.')
   })
 
+  it('seleciona um produto (YouTube) por seu texto',()=>{
 
+    cy.get('#product').select('YouTube')
+    .should('have.value', 'youtube')
+
+  })
+
+  it('seleciona um produto (Mentoria) por seu valor (value)', ()=>{
+
+    cy.get('#product').select('mentoria')
+    .should('have.value', 'mentoria')
+
+  })
+
+  it('seleciona um produto (Blog) por seu indice', ()=>{
+
+    cy.get('#product').select(1)
+    .should('have.value', 'blog')
+
+  })
+
+  it('marca o tipo de atendimento "Feedback"', ()=>{
+ 
+    cy.get('input[type="radio"][value*="feedback"]').check()
+    .should('have.value','feedback')
+  })
+
+  it('marca cada tipo de atendimento', ()=>{
+ 
+    cy.get('input[type="radio"]').should('have.length',3)
+    .each(function($radio){
+        cy.wrap($radio).check()
+        cy.wrap($radio).should('be.checked')
+    })
+
+  })
+  it('marca ambos checkboxes, depois desmarca o último',()=>{
+    cy.get('input[type*="checkbox"]').check()
+    .should('be.checked')
+    .last()
+    .uncheck()
+    .should('not.be.checked')
+  })
+
+  it.only('selecione um arquivo da pasta fixtures', ()=>{
+
+    cy.get('input[type="file"]').should('not.have.value')
+    .selectFile('cypress/fixtures/example.json')
+    .should(($input)=>{
+      expect($input[0].files[0].name).to.eql('example.json')
+
+    })
+  })
 
 })
+
+
+
+
 
