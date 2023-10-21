@@ -107,10 +107,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
                     .should('have.value', '')
                   */
                     })
-                    it('Exercicio 6', () => {
+                    it.only('Exercicio 6', () => {
                         cy.get('#firstName')
                         .should('be.visible')
-                        .type(Cypress.env('user_name'), {log: false})
+                        .type("michael_teste")
                         .should('contain.value', 'michael')
                         .clear()
                         .should('have.value','')
