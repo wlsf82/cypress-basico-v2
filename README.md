@@ -20,4 +20,4 @@ Durante o curso de testes automatizados com Cypress (básico), eu aprendi:
 - Como executar os testes em um _pipeline_ de integração contínua sempre que mudanças ocorrerem no código da aplicação (ou dos testes)
 - Como criar uma documentação mínima para seu projeto de testes automatizados
 
-vá para a pasta cypress > integration > 
+vá para a pasta cypress/integration/CAC-TAT.spec.js
