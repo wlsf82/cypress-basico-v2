@@ -10,7 +10,7 @@ Neste mesmo [repositório](https://github.com/wlsf82/cypress-basico-v2), você e
 >
 > **Obs.:** Apesar do título da _Live_ citar a versão 10, o mesmo vale para versões 11, 12, etc.
 >
-> **Obs. 2:** Dependendo da versão para qual você fizer o _upgrade_, pode ser necessário utilizar a imagem [`cypress-io/github-action@v5`](https://github.com/cypress-io/github-action) no _pipeline_ de integração contínua do GitHub Actions.
+> **Obs. 2:** Dependendo da versão para qual você fizer o _upgrade_, pode ser necessário utilizar a imagem [`cypress-io/github-action@v5`](https://github.com/cypress-io/github-action) (ou uma versao mais recente) no _pipeline_ de integração contínua do GitHub Actions.
 
 ## Recapitulando
 
