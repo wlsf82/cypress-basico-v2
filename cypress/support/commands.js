@@ -5,3 +5,14 @@ Cypress.Commands.add('filMandatoryFieldsAndSubmit', function(){
     cy.get('#open-text-area').type('Teste')
     cy.get('button[type="submit"]').click()
 })
+
+Cypress.Commands.add('RealizaLogin', function() {
+    cy.get('#usucpf').type('48361145869')
+    cy.get('#ususenha').type('simecdti')
+    cy.get('button[type="submit"]').click()
+})
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    return false
+})
+
