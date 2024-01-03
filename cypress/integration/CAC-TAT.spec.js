@@ -15,6 +15,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#phone').type('44998219935')
         cy.get('#support-type > :nth-child(3)').click()
         cy.get('#phone-checkbox').click()
+        cy.get('input#phone'). should('have.value', '44998219935')
         cy.get('#open-text-area').type(longText, {delay:0})
         cy.get('button[type="submit"]').click()
         cy.get('.success').should('be.visible')
@@ -25,5 +26,11 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#email').type('testeana@gmail')
         cy.get('button[type="submit"]').click()
         cy.get('.error').should('be.visible')
+    })
+
+    it.only('não deixa letras no campo de telefone', function(){
+        cy.get('#phone')
+        .type('asdfasgaerbhytewrwh')
+        .should('have.value','')
     })
 })
