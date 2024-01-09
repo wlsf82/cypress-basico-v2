@@ -99,5 +99,5 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#check > [for="phone"]')
         cy.get('#phone').type('000000000')
         cy.contains('button', 'Enviar').click()
-    })
+    }) //Teste de commit 
   })
