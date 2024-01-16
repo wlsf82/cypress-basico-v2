@@ -23,3 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('preenchecamposobrigatoriosenvia', function(){
+    const longText= 'primeiro teste da ana, Gostaria de enfatizar que o novo modelo estrutural aqui preconizado pode nos levar a considerar a reestruturação das posturas dos órgãos dirigentes com relação às suas atribuições, Caros amigos, a revolução dos costumes promove a alavancagem dos modos de operação convencionais.'
+    cy.get('#firstName').type('Ana Maria')
+    cy.get('#lastName').type('Teste da Silva Sauro')
+    cy.get('#email').type('testezinhos@gmail.com')
+    cy.get('#phone').type('44998219935')
+    cy.get('#open-text-area').type(longText, {delay:0})
+    cy.contains('button', 'Enviar').click()
+})
