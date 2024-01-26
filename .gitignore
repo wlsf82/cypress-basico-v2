@@ -3,3 +3,4 @@ node_modules/
 cypress/downloads/
 cypress/screenshots/
 cypress/videos/
+package-lock.json
