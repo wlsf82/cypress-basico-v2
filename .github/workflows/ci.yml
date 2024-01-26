@@ -1,12 +1,50 @@
-name: End-to-end tests 🧪
-on: [push]
+name: Continuos testing
+
+on:
+  pull_request:
+    branches: [ master, release/develop ]
+
+  workflow_dispatch:
+    inputs:
+      amb:
+        description: 'Selecionar algum destes ambientes: dev / stg / hlg / prd'
+        required: false
+        default: 'qa'
+      browser:
+        description: 'Selecionar algum destes browsers: chrome / electron'
+        required: true
+        default: 'chrome'
+      tag:
+        description: 'Selecionar alguma tag, por exemplo: @regressivo / @smoke / @demo'
+        required: false
+        default: '@demo'
+
 jobs:
-  cypress-run:
-    runs-on: ubuntu-20.04
+  cypress-run-tests:
+    name: Cypress run
+    runs-on: self-hosted
+    container: 
+      image: cypress/browsers:node18.12.0-chrome103-ff107
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
+
+      - name: Cypress run tests
+        uses: cypress-io/github-action@v4
+        with:
+          record: true
+          parallel: true
+          group: 'CI-Testing'
+          browser: ${{ github.event.inputs.browser || 'chrome' }}
+        env:
+          # inserir key do cloud cypress da board criada
+          CYPRESS_RECORD_KEY: 'inserir-record-key-dashboard'
+          # ambiente padrão para execução dos testes, por default será o valor a direita do condicional quando ocorrer merge
+          CYPRESS_environment: ${{ github.event.inputs.amb || 'dev' }}
+          # tag ser utilizada na execução do teste, por default será o valor a direita do condicional quando ocorrer merge
+          CYPRESS_TAGS: ${{ github.event.inputs.tag || '@demo'}}
+          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
