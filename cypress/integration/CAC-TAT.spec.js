@@ -87,7 +87,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
         cy.get('#phone-checkbox')
             .should('be.visible')
             .should('be.not.checked')
-            .click()
+            .check()
             .should('be.checked')
 
         cy.get('.phone-label-span')
@@ -151,4 +151,63 @@ describe('Central de Atendimento ao Cliente TAT', () => {
             .should('be.visible')
 
     })
+
+    it('seleciona um produto (YouTube) por seu texto', () => {
+        cy.get('#product')
+            .select('YouTube')
+            .should('have.value', 'youtube')
+    })
+
+    it('seleciona um produto (Mentoria) por seu valor (value)', () => {
+        cy.get('#product')
+            .select('mentoria')
+            .should('have.value', 'mentoria')
+
+    })
+
+    it('seleciona um produto (Blog) por seu índice', () => {
+        cy.get('#product')
+            .select(1)
+            .should('have.value', 'blog')
+
+    })
+
+    it('marca o tipo de atendimento "Feedback"', () => {
+        cy.get('input[value="feedback"]')
+            .check()
+            .should('be.checked')
+
+    })
+
+    it('marca cada tipo de atendimento', () => {
+        cy.get('input[type="radio"]')
+            .should('have.length', 3)
+            .each(function ($radio) {
+                cy.wrap($radio).check()
+                cy.wrap($radio).should('be.checked')
+            })
+
+
+    })
+
+    it('marca ambos checkboxes, depois desmarca o último', ()=> {
+        cy.get('input[type="checkbox"]')
+        .check()
+        .should('be.checked')
+        .last()
+        .uncheck()
+        .should('not.be.checked')
+    })
+
+    // it('', ()=> {
+
+    // })
+
+    // it('', ()=> {
+
+    // })
+
+    // it('', ()=> {
+
+    // })
 })

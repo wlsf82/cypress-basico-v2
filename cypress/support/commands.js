@@ -1,5 +1,5 @@
 
-Cypress.Commands.add('fillMandatoryFieldsAndSubmit', (name, lastName, email, longTest) => {
+Cypress.Commands.add('fillMandatoryFieldsAndSubmit', (name, lastName, email, longText) => {
     cy.get('#firstName')
         .should('be.visible')
         .type(name)
@@ -17,10 +17,10 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit', (name, lastName, email, lon
 
     cy.get('#open-text-area')
         .should('be.visible')
-        .type(longTest)
-        .should('have.value', longTest)
+        .type(longText)
+        .should('have.value', longText)
 
-    cy.get('.button')
+    cy.contains('button', 'Enviar')
         .should('be.visible')
         .click()
 
