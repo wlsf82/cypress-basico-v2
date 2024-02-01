@@ -223,6 +223,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
             })
     })
 
+
     it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
         cy.fixture('example.json').as('sampleFile')
 
