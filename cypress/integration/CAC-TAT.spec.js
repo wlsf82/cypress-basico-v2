@@ -190,24 +190,64 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     })
 
-    it('marca ambos checkboxes, depois desmarca o último', ()=> {
+    it('marca ambos checkboxes, depois desmarca o último', () => {
         cy.get('input[type="checkbox"]')
-        .check()
-        .should('be.checked')
-        .last()
-        .uncheck()
-        .should('not.be.checked')
+            .check()
+            .should('be.checked')
+            .last()
+            .uncheck()
+            .should('not.be.checked')
     })
 
-    // it('', ()=> {
+    it('seleciona um arquivo da pasta fixtures', () => {
+        cy.get('#file-upload')
+            .should('be.visible')
+            .should('not.have.value')
+            .selectFile('./cypress/fixtures/example.json')
+            .should(function ($inputFile) {
+                //console.log($inputFile)
+                expect($inputFile[0].files[0].name).to.equal('example.json')
 
-    // })
+            })
+    })
 
-    // it('', ()=> {
+    it('seleciona um arquivo simulando um drag-and-drop', () => {
+        cy.get('#file-upload')
+            .should('be.visible')
+            .should('not.have.value')
+            .selectFile('./cypress/fixtures/example.json', { action: 'drag-drop' })
+            .should(function ($inputFile) {
+                //console.log($inputFile)
+                expect($inputFile[0].files[0].name).to.equal('example.json')
 
-    // })
+            })
+    })
 
-    // it('', ()=> {
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+        cy.fixture('example.json').as('sampleFile')
 
-    // })
+        cy.get('#file-upload')
+            .should('be.visible')
+            .should('not.have.value')
+            .selectFile('@sampleFile')
+            .should(function ($inputFile) {
+                //console.log($inputFile)
+                expect($inputFile[0].files[0].name).to.equal('example.json')
+            })
+    })
+
+    it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+        cy.get('#privacy a')
+            .should('have.attr', 'target', '_blank')//atributo target que determina se o link vai ser aberto em outra aba. Esse compotamento existe em qualquer navegador 
+    })
+
+    it('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+        cy.get('#privacy a')
+            .invoke('removeAttr', 'target')//remove o atributo target, que faz o navegador abrir em outra aba. Dessa forma ele abre o link na mesma aba
+            .click()
+        cy.contains('Talking About Testing')
+            .should('be.be.visible')
+
+    })
+
 })
