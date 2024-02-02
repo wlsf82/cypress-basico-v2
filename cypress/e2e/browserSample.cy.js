@@ -1,5 +1,6 @@
-
-    describe('Browser testing', () =>{
+    <reference types="Cypress"/>
+   
+   describe('Browser testing', () =>{
         it('Directs the user to the login page', () => {
             cy.visit('https://notes-serverless-app.com')
             cy.contains('.nav a', 'Login')
