@@ -22,6 +22,11 @@
   "license": "MIT",
   "homepage": "https://github.com/wlsf82/cypress-basico-v2#readme",
   "dependencies": {
-    "cypress": "^13.6.3"
+    "cypress": "^13.6.3",
+    "faker-js": "^1.0.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.0",
+    "faker": "^6.6.6"
   }
 }

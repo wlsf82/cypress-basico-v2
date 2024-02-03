@@ -1,3 +1,5 @@
+/// <reference types="Cypress"/>
+
 
 describe('Code duplication bad pratice - repetitives actions and assertions', () => {
     beforeEach( () => {

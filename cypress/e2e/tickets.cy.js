@@ -1,3 +1,5 @@
+/// <reference types="Cypress"/>  
+
 describe('Tickets', () => {
     const data = require("../fixtures/data.json")
 

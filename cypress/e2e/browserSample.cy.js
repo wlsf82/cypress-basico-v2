@@ -1,4 +1,4 @@
-    <reference types="Cypress"/>
+/// <reference types="Cypress"/>  
    
    describe('Browser testing', () =>{
         it('Directs the user to the login page', () => {

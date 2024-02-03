@@ -1,3 +1,4 @@
+/// <reference types="Cypress"/>
 
 describe('Code duplication bad pratice - repetitives tests', () => {
     beforeEach( () => {

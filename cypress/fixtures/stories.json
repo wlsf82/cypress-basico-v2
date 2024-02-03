@@ -1,0 +1,20 @@
+{
+    "hits": [
+        {
+            "objectID": "0",
+            "title":"Agile Testing",
+            "author": "Lisa Crispin & Janet Gregory",
+            "url": "https://example.com/lc-jg",
+            "num_comments": 85,
+            "points": 1000
+        },
+        {
+            "objectID": "1",
+            "title":"Clean Code",
+            "author": "Robert C. Martin",
+            "url": "https://example.com/rm",
+            "num_comments": 98,
+            "points": 1953
+        }
+    ]
+}

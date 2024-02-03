@@ -1,4 +1,5 @@
-    /// <reference types="Cypress"/>     //buscar como referencia os tipos do cypress (Algumas funcionaldiades)
+      //buscar como referencia os tipos do cypress (Algumas funcionaldiades)
+/// <reference types="Cypress"/>  
 
 describe('Customer Service Center TAT', () => {
   beforeEach(function(){

@@ -1,4 +1,5 @@
-  
+/// <reference types="Cypress"/>
+
 describe('Code duplication bad pratice - repetitives steps', () => {
     beforeEach( () => {
         cy.intercept(
