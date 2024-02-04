@@ -29,3 +29,10 @@ Cypress.Commands.add('search', term => {
       .clear()
       .type(`${term}{enter}`)
 })
+
+Cypress.Commands.add('randomlyTogglePurchaseAgreement', () => {
+  if (Math.random() > 0.5) {
+    cy.get('#agree')
+      .click()
+  }
+})

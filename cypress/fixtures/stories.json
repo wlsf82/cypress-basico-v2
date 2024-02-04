@@ -15,6 +15,14 @@
             "url": "https://example.com/rm",
             "num_comments": 98,
             "points": 1953
-        }
+        },
+        {
+            "objectID": "2",
+            "title": "Software Craftsmanship",
+            "author": "Sandro Mancuso",
+            "url": "https://example.com/sm",
+            "num_comments": 133,
+            "points": 420
+          }
     ]
 }
