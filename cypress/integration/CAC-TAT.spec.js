@@ -9,6 +9,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
     it('preenche os campos e envia o formulário', function() {
         const longText = 'primeiro teste da ana, Gostaria de enfatizar que o novo modelo estrutural aqui preconizado pode nos levar a considerar a reestruturação das posturas dos órgãos dirigentes com relação às suas atribuições, Caros amigos, a revolução dos costumes promove a alavancagem dos modos de operação convencionais. '
+        cy.clock()
         cy.get('#firstName').type('Ana Maria')
         cy.get('#lastName').type('Teste da Silva Sauro')
         cy.get('#email').type('testezinhos@gmail.com')
@@ -19,15 +20,22 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#open-text-area').type(longText, {delay:0})
         cy.contains('button', 'Enviar').click()
         cy.get('.success').should('be.visible')
+        cy.tick(3000)
+
+        cy.get('.success').should('not.be.visible')
     })
     
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function(){
+        cy.clock()
         cy.get('#firstName').type('Ana Maria')
         cy.get('#lastName').type('Teste da Silva Sauro')
         cy.get('#email').type('testeana@gmail')
         cy.get('#open-text-area').type('testesss', {delay:0})
         cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
+        cy.tick(3000)
+
+        cy.get('.error').should('not.be.visible')
     })
 
     it('não deixa letras no campo de telefone', function(){
@@ -36,7 +44,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .should('have.value','')
     })
 
-    it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+        cy.clock()
         cy.get('#firstName').type('Ana Maria')
         cy.get('#lastName').type('Teste da Silva Sauro')
         cy.get('#email').type('testezinhos@gmail.com')
@@ -44,6 +53,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#open-text-area').type('testesss', {delay:0})
         cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')  
+        cy.tick(3000)
+
+        cy.get('.error').should('not.be.visible')
     })
 
     it('preenche e limpa os campos nome, sobrenome email e telefone', function(){
@@ -54,13 +66,19 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function(){
+        cy.clock()
         cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
+        cy.tick(3000)
+        cy.get('.error').should('not.be.visible')
     })
 
     it('envia o formuário com sucesso usando um comando customizado', function(){
+        cy.clock()
         cy.preenchecamposobrigatoriosenvia()
         cy.get('.success').should('be.visible')
+        cy.tick(3000)
+        cy.get('.success').should('not.be.visible')
     })
 
     it('seleciona um produto - YouTube - por seu texto', function(){
@@ -104,5 +122,57 @@ describe('Central de Atendimento ao Cliente TAT', function() {
             .should('be.not.checked')
         })
     })
+
+    it('seleciona um arquivo da pasta fixtures', function(){
+        cy.get('input[type="file"]#file-upload')
+        .should('not.have.value')
+        .selectFile('./cypress/fixtures/example.json')
+        .should(function($input) {
+            expect($input[0].files[0].name).to.be.equal('example.json')
+
+        })
+    })
+
+    it('seleciona um arquivo simulando drag-and-drop', function(){
+        cy.get('input[type="file"]#file-upload')
+        .should('not.have.value')
+        .selectFile('./cypress/fixtures/example.json', { action: 'drag-drop'})
+        .should(function($input) {
+            expect($input[0].files[0].name).to.be.equal('example.json')
+        })
+
+    })
+    it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function(){
+        cy.get('#privacy a').should('have.attr', 'target', '_blank')
+    })
+
+    it('acessa a página da política de privacidade removendo o target e então clicando no link', function(){
+        cy.get('#privacy a')
+        .invoke('removeAttr', 'target')
+        .click()
+    })
+
+    it('exibe mensagem por 3 segundos', function(){
+        const longText = 'primeiro teste da ana, Gostaria de enfatizar que o novo modelo estrutural aqui preconizado pode nos levar a considerar a reestruturação das posturas dos órgãos dirigentes com relação às suas atribuições, Caros amigos, a revolução dos costumes promove a alavancagem dos modos de operação convencionais. '
+        cy.clock()
+        cy.get('#firstName').type('Ana Maria')
+        cy.get('#lastName').type('Teste da Silva Sauro')
+        cy.get('#email').type('testezinhos@gmail.com')
+        cy.get('#phone').type('44998219935')
+        cy.get('#support-type > :nth-child(3)').click()
+        cy.get('#phone-checkbox').click()
+        cy.get('input#phone'). should('have.value', '44998219935')
+        cy.get('#open-text-area').type(longText, {delay:0})
+        cy.contains('button', 'Enviar').click()
+
+        cy.get('.success').should('be.visible')
+
+        cy.tick(3000)
+
+        cy.get('.success').should('not.be.visible')
+       
+    })
+    
+
 
 })
