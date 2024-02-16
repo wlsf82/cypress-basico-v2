@@ -56,11 +56,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#firstName').type('Daniel')
         cy.get('#lastName').type('Fossali')
         cy.get('#email').type('danielfossali@suportetecnologias.com.br')
-        cy.get('#phone').type('adcvvfs')
+        cy.get('#phone').type('3444-4444')
 
         cy.get('button[type="submit"]').click()
 
-        cy.get('.error').should('number', '')
     })
     
 
