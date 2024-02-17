@@ -6,7 +6,7 @@ module.exports = {
     specPattern: "cypress/tests/**/*.spec.{js,jsx,ts,tsx}",
     supportFile: "cypress/support/e2e.js",
     // supportFile: false,
-    // viewportHeight: 1000, // Resolução de 1280x1000 pixels do navegador em que os testes serão executados
+    // viewportHeight: 1000 ou 720, // Resolução de 1280x1000 pixels do navegador em que os testes serão executados
     // viewportWidth: 1280,
     // defaultCommandTimeout: 5000,
     video: true,
