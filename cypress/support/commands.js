@@ -37,6 +37,5 @@ Cypress.Commands.add('teste', function () {
     cy.get('#open-text-area')
         .type('Verdão')
 
-    cy.get('.button[type="submit"]')
-        .click()
+    
 })
