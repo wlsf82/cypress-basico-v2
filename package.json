@@ -1,10 +1,15 @@
 {
   "name": "curso-cypress-v2",
   "version": "1.0.0",
-  "description": "Repositório da versão 2 do curso básico de Cypress da Escola Talking About Testing",
+  "description": "Projeto Testes Automatizados",
   "main": "src/index.html",
+  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "cypress open --config viewportWidth=1280 viewportHeight=1000",
+    "cy:run:headless": "cypress run",
+    "clean:cypress:cache": "rm -rf .cache/Cypress",
+    "cy:open:mobile": "cypress open --config viewportWidth=410 viewportHeight=860",
+    "cy:run:mobile:headless": "cypress run --config viewportWidth=410 viewportHeight=860"
   },
   "repository": {
     "type": "git",
@@ -19,5 +24,8 @@
   ],
   "author": "Walmyr Filho <wlsf82@gmail.com> (https://walmyr.dev/)",
   "license": "MIT",
-  "homepage": "https://github.com/wlsf82/cypress-basico-v2#readme"
+  "homepage": "https://github.com/wlsf82/cypress-basico-v2#readme",
+  "devDependencies": {
+    "cypress": "^13.2.0"
+  }
 }
