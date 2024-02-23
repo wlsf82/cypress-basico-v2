@@ -5,11 +5,11 @@ const { CacTatObject } = require ('../pageobject/CAC-TAT-objects');
 
 /// <reference types="Cypress" /> 
 
-describe('TAT Customer Service Center', () => {
+describe('TAT Customer Service Center', function() {
 
     var cacTatObject;
 
-    beforeEach(() => {
+    beforeEach(function() {
         cacTatObject = new CacTatObject();
         cy.visit('../../src/index.html');
     })
