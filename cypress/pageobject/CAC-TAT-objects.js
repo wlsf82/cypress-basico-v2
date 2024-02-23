@@ -12,7 +12,7 @@ export class CacTatObject{
 
   inputLastName(lastName) {
     cy.get('#lastName').type(lastName);
-    return this
+    return this;
   }
 
   inputEmail(email) {
