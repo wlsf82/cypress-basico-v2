@@ -1,4 +1,4 @@
-
+const { TypeValues } = require ('../support/type-values');
 /// <reference types="Cypress" /> 
 
 export class CacTatObject{
@@ -36,6 +36,18 @@ export class CacTatObject{
 
   checkingMessageSuccess(){
     cy.get('.success').should('be.visible');
+    return this;
+  }
+  
+  checkingMessageError(){
+    cy.get('.error').should('be.visible');
+    return this;
+  }
+
+  inputPhone(phoneNumber) {
+    const idPhone = cy.get('#phone');
+
+    TypeValues.typeValuePhoneNumber(idPhone, phoneNumber);
     return this;
   }
 }

@@ -10,7 +10,6 @@ describe('TAT Customer Service Center', function() {
     var cacTatObject;
 
     beforeEach(function() {
-        cacTatObject = new CacTatObject();
         cy.visit('../../src/index.html');
     })
 
@@ -21,11 +20,12 @@ describe('TAT Customer Service Center', function() {
 
     it('Fill in the required fields and submit the form', function () {
         const text = 'Lorem ipsum dolor sit amet, consectetur';
+        cacTatObject = new CacTatObject();
 
         cacTatObject.inputFirstName('Amy')
                     .inputLastName('Lee')
                     .inputEmail('amylee@gmail.com')
-                    .boxTextHowCanWeHelpYou(text)
+                    .boxTextHowCanWeHelpYou(text,0)
                     .buttonSend()
                     .checkingMessageSuccess();
     })
@@ -36,6 +36,8 @@ describe('TAT Customer Service Center', function() {
         'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet,'+
         'consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'+
         'consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+        
+        cacTatObject = new CacTatObject();
 
         cacTatObject.inputFirstName('Joe')
                     .inputLastName('Ju')
@@ -43,5 +45,24 @@ describe('TAT Customer Service Center', function() {
                     .boxTextHowCanWeHelpYou(longText, 0)
                     .buttonSend()
                     .checkingMessageSuccess();
+    })
+    it('Fill in the required fields with a invalid email, to get a error', function () {
+        const text = 'Lorem ipsum dolor sit amet, consectetur';
+        cacTatObject = new CacTatObject();
+
+        cacTatObject.inputFirstName('Bruce')
+                    .inputLastName('Lee')
+                    .inputEmail('bruceleegmailcom')
+                    .boxTextHowCanWeHelpYou(text, 0)
+                    .buttonSend()
+                    .checkingMessageError();
+    })
+    it('Fill in the required fields with a invalid ´hone, to get a empty input phone', function () {
+        cacTatObject = new CacTatObject();
+
+        cacTatObject.inputFirstName('Bruce')
+                    .inputLastName('James')
+                    .inputEmail('jamesb@gmailcom')
+                    .inputPhone('weiori')
     })
 })
