@@ -20,6 +20,21 @@ export class CacTatObject{
     return this;
   }
 
+  selectPhoneToPreferentialCommunication(){
+    cy.get('#phone-checkbox').check();
+    return this;
+  }
+
+  selectEmailToPreferentialCommunication(){
+    cy.get('#email-checkbox').check();
+    return this;
+  }
+
+  selectEmailAndPhoneToPreferencialCommunication(){
+    selectPhoneToPreferentialCommunication();
+    selectEmailToPreferentialCommunication();
+    return this;
+  }
   boxTextHowCanWeHelpYou(textAskingForHelp, timeDelay = 10) {
     const boxText = cy.get('#open-text-area');
 

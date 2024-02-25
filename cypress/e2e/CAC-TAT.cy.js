@@ -46,6 +46,7 @@ describe('TAT Customer Service Center', function() {
                     .buttonSend()
                     .checkingMessageSuccess();
     })
+
     it('Fill in the required fields with a invalid email, to get a error', function () {
         const text = 'Lorem ipsum dolor sit amet, consectetur';
         cacTatObject = new CacTatObject();
@@ -57,6 +58,7 @@ describe('TAT Customer Service Center', function() {
                     .buttonSend()
                     .checkingMessageError();
     })
+
     it('Fill in the required fields with a invalid ´hone, to get a empty input phone', function () {
         cacTatObject = new CacTatObject();
 
@@ -64,5 +66,32 @@ describe('TAT Customer Service Center', function() {
                     .inputLastName('James')
                     .inputEmail('jamesb@gmailcom')
                     .inputPhone('weiori')
+    })
+
+    it('Fill in the required fields without a phone, after the phone get required', function () {
+        const text = 'Lorem ipsum dolor sit amet, consectetur';
+        cacTatObject = new CacTatObject();
+
+        cacTatObject.inputFirstName('Bruce')
+                    .inputLastName('Lee')
+                    .inputEmail('bruceleegmailcom')
+                    .selectPhoneToPreferentialCommunication()
+                    .boxTextHowCanWeHelpYou(text, 0)
+                    .buttonSend()
+                    .checkingMessageError();
+    })
+
+    it('Send without Fill in the required fields', function () {
+        cacTatObject = new CacTatObject();
+
+        cacTatObject.buttonSend()
+                    .checkingMessageError();
+    })
+    it('Send a complet form with custon command', function () {
+        const text = 'Lorem ipsum dolor sit amet, consectetur';
+
+        cy.sendForm('Bruce','Jonas', 'bjonas@gmail.com', text).then(()=> {
+            expect(cacTatObject = new CacTatObject().checkingMessageSuccess())
+        })
     })
 })

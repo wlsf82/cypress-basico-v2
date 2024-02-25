@@ -1,3 +1,5 @@
+const { CacTatObject } = require ('../pageobject/CAC-TAT-objects');
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,3 +25,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('sendForm', function(name, lastName, email, txt){
+  const cacTatObject = new CacTatObject()
+                      .inputFirstName(name)
+                      .inputLastName(lastName)
+                      .inputEmail(email)
+                      .selectEmailToPreferentialCommunication()
+                      .boxTextHowCanWeHelpYou(txt,0)
+                      .buttonSend()
+})
