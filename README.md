@@ -7,4 +7,4 @@ Run 'npm install', instale nas dependencias.
 Run 'npm test', rode em modo headless, ou run cy:open em modo de integração.
 
 Att,
-Danilo Sousa ###
+Danilo Sousa ##########
