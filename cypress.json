@@ -1,5 +1,6 @@
 {
     "pluginsFile": false,
     "viewportHeight": 880,
-    "viewportWidth": 1280
-  }
+    "viewportWidth": 1280,
+    "chromeWebSecurity": false
+}
