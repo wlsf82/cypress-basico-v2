@@ -1,4 +1,4 @@
-name: End-to-end tests 🧪
+name: Cypress Tests
 on: [push]
 jobs:
   cypress-run:
@@ -21,7 +21,7 @@ jobs:
           # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
           start: npm start
           wait-on: 'http://localhost:3000' # Waits for above
-          # Records to Cypress Cloud
+          # Records to Cypress Cloud 
           # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
           record: true
           parallel: true # Runs test in parallel using settings above
