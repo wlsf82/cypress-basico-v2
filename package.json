@@ -4,7 +4,8 @@
   "description": "Repositório da versão 2 do curso básico de Cypress da Escola Talking About Testing",
   "main": "src/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "cypress open",
+    "test": "cypress run"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,8 @@
     "Cypress Básico",
     "Escola TAT"
   ],
-  "author": "Walmyr Filho <wlsf82@gmail.com> (https://walmyr.dev/)",
-  "license": "MIT",
-  "homepage": "https://github.com/wlsf82/cypress-basico-v2#readme"
+  "author": "Everaldo Barros",
+  "devDependencies": {
+    "cypress": "^13.15.2"
+  }
 }
