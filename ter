@@ -1,0 +1,139 @@
+[33mcommit e6f5a5b211224f7119e582b1b1e92567b74680c4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Wed Nov 8 19:52:09 2023 +0100
+
+    Minor update on congratulations lesson
+
+[33mcommit 687b1b4a3d35a223c8e40714a88daaf0754f70f8[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Wed Nov 1 18:40:09 2023 +0100
+
+    Fix lesson title
+
+[33mcommit 4369a0ea8cec6f16554eace2f5b2d46062c6af9f[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Thu Jul 6 16:13:16 2023 +0200
+
+    Add extra info to the congratulations lesson
+
+[33mcommit 48464550cf54c5cc1b730ae57093f945abb10704[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Thu Jul 6 15:54:13 2023 +0200
+
+    Add new observation to lesson 0
+
+[33mcommit 922a389303ed484275ab2d896fdf1b745068e8dc[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Tue May 30 15:12:51 2023 +0200
+
+    Fix typo on lesson 11
+
+[33mcommit 8febfbe05e78f5e5c0cff5e010b73b5831f17150[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Sun Feb 19 19:54:46 2023 +0100
+
+    Fix typo on lesson 2
+
+[33mcommit 36aef665b4ae79de8b6317a7240e6694496897c1[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Sat Feb 18 02:24:49 2023 +0100
+
+    Oops, fix issue made by the last commit
+    
+    This is what happens when you decide to "code" on GitHub via a web browser.
+
+[33mcommit c15a4604452297a424410328a5e523d47b32c9e9[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Sat Feb 18 02:23:19 2023 +0100
+
+    Improve link reference
+
+[33mcommit 8103ae3a0af3d5c398c51926aab6f993b2446719[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Sat Feb 18 02:22:18 2023 +0100
+
+    Remove link leading to 404 and add new resource
+
+[33mcommit abb528f278eb5a00d885e237a6e6474cbc5d81ad[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Sat Feb 18 02:14:12 2023 +0100
+
+    Remove duplicated word
+
+[33mcommit a18129ee7729a034c2e45597e6f69498c15a4a06[m
+Author: jotadeoliveira <60558334+jotadeoliveira@users.noreply.github.com>
+Date:   Mon Jan 23 19:20:37 2023 -0300
+
+    Update 09.md
+    
+    Correção de ortografia para a palavra instalação, que consta na linha 9 do documento.
+
+[33mcommit b8af4faf8016a5575787fbd3511763639eb9b5b2[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Wed Nov 23 11:55:40 2022 +0100
+
+    Fix app typo
+
+[33mcommit 4f7c83be01a2d9cbf4a9c4dd75e45f86eb85df4c[m
+Author: Vini Santos <46813491+santosvini@users.noreply.github.com>
+Date:   Sun Nov 6 19:35:26 2022 -0300
+
+    Update 11.md
+    
+    Correção da palavra retornou, no EXE extra 4
+
+[33mcommit 1f22b7489075f1babc757c46321a30d7d7d6e417[m
+Author: Vini Santos <46813491+santosvini@users.noreply.github.com>
+Date:   Sun Oct 30 22:33:56 2022 -0300
+
+    Update 07.md
+    
+    Correções das palavras clicando e privacidade nos títulos dos testes dos exercício extras
+
+[33mcommit 8b832bff9d453cf5b50722e4ef595d3ff5014c63[m
+Author: Vini Santos <46813491+santosvini@users.noreply.github.com>
+Date:   Sat Oct 29 22:55:01 2022 -0300
+
+    Update 07.md
+    
+    Correção da palavra "funcionar", linkada ao multipleTabs
+
+[33mcommit 24a7f8acbfb59ec81ea9eb3a2ef0bc460a321bd7[m
+Author: Saulo Alexandre de Barros <31544944+DinoSaulo@users.noreply.github.com>
+Date:   Wed Jun 8 14:05:18 2022 -0300
+
+    Correção de um errinho gramatical
+    
+    exercíco -> exercício
+
+[33mcommit e5a5f170b2055738e679db486ff7ed2baf771dd7[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Mon May 23 02:30:57 2022 +0200
+
+    Fix typo
+
+[33mcommit 9887f1978c55d68418e7aeeca0a690315d27e9e7[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Sun Apr 10 15:29:41 2022 +0200
+
+    Fix type on lesson 0
+
+[33mcommit 133510de17cfa30c4355c193d1fd55c29f2dfc7f[m
+Author: Hélvio Poletti <43101203+hpoletti@users.noreply.github.com>
+Date:   Thu Mar 24 09:35:01 2022 -0300
+
+    Update 08.md
+
+[33mcommit 556b13ec65ea47ec47d0e6dbe9823d6cd0010b59[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Sun Mar 20 19:12:25 2022 +0100
+
+    Update suggested content section
+    
+    About cy.clock and cy.tick.
+
+[33mcommit f5946a1cb4407a9b7164c91385504eb933c7a802[m
+Author: Walmyr <wlsf82@gmail.com>
+Date:   Mon Feb 7 01:27:59 2022 +0100
+
+    Create cypress course v2
