@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 describe('Central de Atendimento ao Cliente TAT', () => {
 
     const tresSegundos = 3000
