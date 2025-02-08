@@ -169,7 +169,8 @@
     "yauzl": "^2.10.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx cypress run",
+    "cypress.open": "npx cypress open"
   },
   "author": "",
   "license": "ISC",
