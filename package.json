@@ -24,6 +24,7 @@
   "license": "MIT",
   "homepage": "https://github.com/wlsf82/cypress-basico-v2#readme",
   "devDependencies": {
-    "cypress": "^9.7.0"
+    "cypress": "^14.0.2",
+    "cypress-plugin-steps": "^1.1.1"
   }
 }
