@@ -9,6 +9,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: List files (debug)
+        run: ls -R
+
       - name: Install dependencies
         run: npm install
 
