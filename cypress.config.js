@@ -1,9 +1,9 @@
+const { defineConfig } = require('cypress')
+
 module.exports = defineConfig({
-  video: true, // Grava vídeos dos testes
-  screenshotOnRunFailure: true, // Tira screenshots em caso de falha
-    viewportHeight: 960,
-  viewportWidth: 1440,
+  viewportHeight: 880,
+  viewportWidth: 1280,
   e2e: {
     setupNodeEvents(on, config) {},
   },
-});
+})
