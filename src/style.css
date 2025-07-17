@@ -5,14 +5,14 @@
 }
 
 #title {
-    color: #fffffe;
+    color: #fec7d7;
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 #subtitle {
-    color: #fffffe;
+    color: #fec7d7;
     text-align: center;
 }
 
@@ -35,7 +35,6 @@ input, select, textarea, button {
 
 .field {
     margin-bottom: 1em;
-
 }
 
 .field label {
@@ -70,14 +69,14 @@ textarea {
 }
 
 .field input:focus, .field select:focus, .field textarea:focus {
-    background-color: #fffffe;
+    background-color: #fec7d7;
 }
 
 .button {
     font-size: 1.2em;
-    background: #4fc4cf;
+    background: #0e172c;
     border: #181818 solid 2px;
-    color: #181818;
+    color: #fffffe;
     padding: 0.8em 1.2em;
     font-weight: bold;
     margin: auto;
@@ -86,9 +85,9 @@ textarea {
 }
 
 .button:hover {
-    background: #181818;
-    border: #4fc4cf solid 2px;
-    color: #4fc4cf;
+    background: #fffffe;
+    border: #0e172c solid 2px;
+    color: #0e172c;
 }
 
 #check {
@@ -105,7 +104,7 @@ textarea {
 }
 
 #white-background {
-    background:#fffffe;
+    background:#fec7d7;
     display: inline-block;
     padding: 20px;
     border-radius: 10px;
@@ -116,24 +115,19 @@ input[type="radio"] {
 }
 
 .success {
-    display: none;
-    background-color: #4fc4cf;
-    color: #181818;
-    padding: 8px 10px;
-    border-radius: 5px;
-    margin-bottom: 12px;
+    background-color: #d9d4e7;
 }
 
 .error {
+    background-color: #a786df;
+}
+
+.success, .error {
     display: none;
-    background-color: #fbdd74;
     color: #181818;
     padding: 8px 10px;
     border-radius: 5px;
     margin-bottom: 12px;
-}
-
-.success, .error {
     text-align: center;
 }
 
@@ -156,12 +150,13 @@ input[type="radio"] {
 }
 
 #privacy a {
-    color: #4fc4cf;
+    color: #0e172c;
     font-weight: bold;
+    text-decoration: none;
 }
 
 #privacy a:hover {
-    color: #181818;
+    text-decoration: underline;
 }
 
 .privacy h2 {

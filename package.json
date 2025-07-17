@@ -1,7 +1,25 @@
 {
- "scripts": {
-  "cy:open": "cypress open",
-  "test": "cypress run",
-  "test:mobile": "cypress run --config viewportWidth=370 viewportHeight=660"
-}
+  "name": "cypress-do-zero-a-nuvem",
+  "version": "1.0.0",
+  "description": "Curso 'Cypress, do Zero à Nuvem' da Escola Talking About Testing.",
+  "main": "src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wlsf82/cypress-do-zero-a-nuvem.git"
+  },
+  "keywords": [
+    "Testing",
+    "Cypress.io",
+    "Talking About Testing",
+    "Cypress, do Zero à Nuvem",
+    "Cypress Cloud",
+    "GitHub Actions",
+    "Escola TAT"
+  ],
+  "author": "Walmyr <wlsf82@gmail.com> (https://walmyr.dev/)",
+  "license": "MIT",
+  "homepage": "https://github.com/wlsf82/cypress-do-zero-a-nuvem#readme"
 }
